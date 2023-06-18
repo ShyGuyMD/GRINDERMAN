@@ -92,3 +92,43 @@
     </div>
   </ng-template>
 </p-dataView>
+
+<h2>Form Example</h2>
+
+<div class="p-fluid">
+  <div class="p-field">
+    <label for="name">Name</label>
+    <input id="name" type="text" pInputText [(ngModel)]="formData.name" />
+  </div>
+
+  <div class="p-field">
+    <label for="email">Email</label>
+    <input id="email" type="email" pInputText [(ngModel)]="formData.email" />
+  </div>
+
+  <div class="p-field">
+    <label for="age">Age</label>
+    <p-inputNumber id="age" [(ngModel)]="formData.age" name="age" mode="decimal" locale="en-US"></p-inputNumber>
+  </div>
+
+  <div class="p-field">
+    <label for="avatar">Avatar</label>
+    <p-fileUpload
+      id="avatar"
+      mode="basic"
+      accept="image/*"
+      chooseLabel="Select Avatar"
+      [(ngModel)]="formData.avatar"
+    ></p-fileUpload>
+  </div>
+
+  <div class="p-field">
+    <label for="description">Description</label>
+    <textarea id="description" pInputTextarea [(ngModel)]="formData.description"></textarea>
+  </div>
+
+  <div class="p-field">
+    <button pButton type="button" label="Submit" (click)="submitForm()"></button>
+  </div>
+</div>
+

@@ -12,6 +12,7 @@ export class StyleTemplateComponent {
   public items!: any[];
   public images!: any[];
   public books!: Book[];
+  public formData: any = {};
 
   ngOnInit() {
     this.items = [
@@ -101,6 +102,11 @@ export class StyleTemplateComponent {
     } else {
       return 'success';
     }
+  }
+
+  submitForm() {
+    // Handle form submission logic here
+    console.log('Form submitted:', this.formData);
   }
   
 }
