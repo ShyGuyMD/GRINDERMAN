@@ -31,6 +31,7 @@ import { TimelineModule } from 'primeng/timeline';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
+import { TagModule } from 'primeng/tag';
 
 const modules = [
   BreadcrumbModule,
@@ -61,6 +62,7 @@ const modules = [
   TabMenuModule,
   TabViewModule,
   TableModule,
+  TagModule,
   TimelineModule,
   ToastModule,
   ToolbarModule,

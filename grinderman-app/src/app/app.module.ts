@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 // PrimeNG
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 // Application Components and Modules
 import { AppComponent } from './app.component';
@@ -23,7 +23,7 @@ import { StyleTemplateComponent } from './style-template/style-template.componen
     CoreModule,
     AppRoutingModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
