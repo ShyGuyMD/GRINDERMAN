@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { StyleTemplateComponent } from './style-template/style-template.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { StyleTemplateComponent } from './style-template/style-template.componen
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     SharedModule,
     CoreModule,
     AppRoutingModule
