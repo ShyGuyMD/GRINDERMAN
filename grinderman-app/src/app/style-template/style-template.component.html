@@ -1,2 +1,94 @@
-<p>style-template works!</p>
-<button pButton pRipple label="Example"></button>
+<h1>PrimeNG Modules Example</h1>
+
+<h2>Breadcrumb</h2>
+<p-breadcrumb [model]="items"></p-breadcrumb>
+
+<h2>Button</h2>
+<button pButton type="button" label="Click me"></button>
+
+<h2>Card</h2>
+<div class="book-catalog grid">
+  <ng-container *ngFor="let book of books">
+    <div class="col-4">
+      <p-card>
+        <ng-template pTemplate="content">
+          <div class="book-details">
+            <div class="book-image">
+              <img [src]="book.cover" [alt]="book.title" />
+            </div>
+            <div class="book-info">
+              <div class="book-title">{{ book.title }}</div>
+              <div><strong>Author:</strong> {{ book.author }}</div>
+              <div><strong>Price:</strong> {{ book.price | currency }}</div>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </ng-container>
+</div>
+<h2>Carousel</h2>
+<p-carousel [value]="images" [numVisible]="3" [numScroll]="1">
+  <ng-template let-image pTemplate="item">
+    <img [src]="image.source" [alt]="image.alt" [title]="image.title" />
+  </ng-template>
+</p-carousel>
+
+<h2>Checkbox</h2>
+<p-checkbox label="Checkbox" [(ngModel)]="checked"></p-checkbox>
+
+<h2>Confirm Dialog</h2>
+<button
+  pButton
+  type="button"
+  label="Confirm"
+  (click)="confirmDialog()"
+></button>
+<p-confirmDialog></p-confirmDialog>
+
+<h2>DataView</h2>
+<p-dataView #dv [value]="books">
+  <ng-template let-book pTemplate="listItem">
+    <div class="col-12">
+      <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+        <img
+          class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+          [src]="book.cover"
+          [alt]="book.title"
+        />
+        <div
+          class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
+        >
+          <div
+            class="flex flex-column align-items-center sm:align-items-start gap-3"
+          >
+            <div class="text-2xl font-bold text-900">{{ book.title }}</div>
+            <p-rating
+              [(ngModel)]="book.rating"
+              [readonly]="true"
+              [cancel]="false"
+            ></p-rating>
+            <div class="flex align-items-center gap-3">
+              <span class="flex align-items-center gap-2">
+                <i class="pi pi-tag"></i>
+                <span class="font-semibold">{{ book.genre }}</span>
+              </span>
+              <p-tag [value]="book.inventoryStatus" [severity]="getSeverity(book)"></p-tag>
+            </div>
+          </div>
+          <div
+            class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2"
+          >
+            <span class="text-2xl font-semibold">{{ "$" + book.price }}</span>
+            <button
+              pButton
+              icon="pi pi-shopping-cart"
+              class="md:align-self-end mb-2 p-button-rounded"
+              [disabled]="book.inventoryStatus === 'OUTOFSTOCK'"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dataView>
