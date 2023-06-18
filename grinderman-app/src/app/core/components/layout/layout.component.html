@@ -1,4 +1,12 @@
-<p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
-<main class="m-8 -mt-2">
-    <router-outlet></router-outlet>
+<div class="grid mt-2">
+  <div class="col-fixed ml-8">
+    <div class="logo-container p-d-flex p-ai-center p-jc-center -mb-8">
+      <img class="logo-image" [src]="logo" alt="Logo" />
+    </div>
+  </div>
+  <app-searchbar class="col-4 mt-4"></app-searchbar>
+  <app-menu class="col-12"></app-menu>
+</div>
+<main class="m-8 mt-2">
+  <router-outlet></router-outlet>
 </main>
