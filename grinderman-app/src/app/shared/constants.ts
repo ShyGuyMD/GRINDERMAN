@@ -1,1 +1,0 @@
-export const UNACONSTANTE = 'Una Constante';
