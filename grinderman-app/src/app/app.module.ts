@@ -1,10 +1,17 @@
+// Angular Core
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+// PrimeNG
+import { ConfirmationService, MessageService } from 'primeng/api';
+
+// Application Components and Modules
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
-import { StyleTemplateComponent } from './style-template/style-template.component';
 import { AppRoutingModule } from './app-routing.module';
+import { CoreModule } from '@core/core.module';
+import { SharedModule } from '@shared/shared.module';
+import { StyleTemplateComponent } from './style-template/style-template.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -13,10 +20,12 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     SharedModule,
+    CoreModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [MessageService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
