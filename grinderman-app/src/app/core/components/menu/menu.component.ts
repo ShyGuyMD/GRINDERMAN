@@ -12,7 +12,6 @@ import { MenuItem } from 'primeng/api';
 export class MenuComponent {
   public menuItems: MenuItem[] = [];
   public activeItem: MenuItem | undefined;
-  public logo: String = 'assets/images/logo.jpg';
 
   ngOnInit() {
     this.menuItems = [
