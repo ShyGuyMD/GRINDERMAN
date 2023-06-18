@@ -11,6 +11,6 @@ pipelines:
         - step:
             name: Build and Test
             script:
-              #- npm install
-              #- npm run build
-              #- npm test
+              - npm install
+              - npm run build
+              - npm run test
