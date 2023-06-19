@@ -6,7 +6,8 @@
 image: node:18.16.0
 
 pipelines:
-  default:
+  branches:
+    '{master,develop}'
     - parallel:
         - step:
             name: Build and Test
