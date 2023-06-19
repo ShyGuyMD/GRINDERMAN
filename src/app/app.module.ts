@@ -1,5 +1,5 @@
 // Angular Core
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 // PrimeNG
@@ -12,6 +12,7 @@ import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { StyleTemplateComponent } from './style-template/style-template.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ExceptionService } from '@core/services';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,10 @@ import { HttpClientModule } from '@angular/common/http';
     CoreModule,
     AppRoutingModule
   ],
-  providers: [MessageService, ConfirmationService],
+  providers: [
+    MessageService,
+    ConfirmationService,
+    { provide : ErrorHandler, useClass: ExceptionService }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
