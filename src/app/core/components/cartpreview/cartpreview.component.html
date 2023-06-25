@@ -4,8 +4,9 @@
     </div>
     <div class="cart-info col-8">
         <div class="grid p-jc-end">
-            <div class="item-count col-12">3 items</div>
-            <div class="amount col-12 -mt-3">$150</div>
+            <div class="item-count col-12">{{quantity}} items</div>
+            <div class="amount col-12 -mt-3">{{ totalAmount | currency }}</div>
+
         </div>
     </div>
   </div>

@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./cartpreview.component.css']
 })
 export class CartpreviewComponent {
+ public quantity: number = 3;
+ public totalAmount: number = 1500;
 
 }
