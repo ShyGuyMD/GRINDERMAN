@@ -1,0 +1,23 @@
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  .top-bar li {
+    list-style-type: none;
+  }
+  
+  .top-bar li:not(:last-child)::after {
+    content: "|";
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .top-bar li a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+  

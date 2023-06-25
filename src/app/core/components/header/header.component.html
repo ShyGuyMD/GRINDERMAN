@@ -1,0 +1,18 @@
+<div class="grid mt-2">
+  <div class="col-fixed ml-8">
+    <div class="logo-container p-d-flex p-ai-center p-jc-center -mb-8">
+      <img class="logo-image" [src]="logo" alt="Logo" />
+    </div>
+  </div>
+  <app-searchbar class="col-4 mt-4"></app-searchbar>
+  <div class="p-d-flex p-flex-column p-jc-center p-ai-end col-4 mt-4">
+    <div *ngIf="isLoggedIn; else elseBlock">
+      <app-user-menu></app-user-menu>
+    </div>
+    <ng-template #elseBlock>
+      <button pButton type="button" label="Registrate" icon="pi pi-user-plus" style="float:right"></button>
+    </ng-template>
+  </div>
+  <app-cartpreview class="col-1 mt-4"></app-cartpreview>
+  <app-menu class="col-12"></app-menu>
+</div>

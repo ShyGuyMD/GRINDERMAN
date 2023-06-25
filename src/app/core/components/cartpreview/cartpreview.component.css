@@ -1,0 +1,35 @@
+.cart-container {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    border-radius: 4px;
+    width: 150px;
+    height: 60px;
+  }
+  
+  .cart-icon {
+    color: #555555;
+  }
+  
+  .cart-icon i.pi {
+    font-size: 2rem;
+  }
+
+  .cart-info {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    /*gap: 8px;*/
+  }
+  
+  .item-count {
+    font-size: 14px;
+    color: #555555;
+  }
+  
+  .amount {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333333;
+  }

@@ -1,5 +1,6 @@
 // Angular Core
 import { Component } from '@angular/core';
+import { AuthenticationService } from '@core/services';
 
 @Component({
   selector: 'layout',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
-  public logo: String = 'assets/images/logo.jpg';
+  constructor(private _authService: AuthenticationService) {}
+
+  public checkLoginStatus(): void {
+    const loggedInStatus = this._authService.getLoggedInStatus();
+    console.log('Logged in status:', loggedInStatus);
+  }
 }
