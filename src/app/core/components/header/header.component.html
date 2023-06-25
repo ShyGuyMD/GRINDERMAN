@@ -5,7 +5,14 @@
     </div>
   </div>
   <app-searchbar class="col-4 mt-4"></app-searchbar>
-  <div class="col-4 mt-4"> Aca van cosas </div>
+  <div class="p-d-flex p-flex-column p-jc-center p-ai-end col-4 mt-4">
+    <div *ngIf="isLoggedIn; else elseBlock">
+      <app-user-menu></app-user-menu>
+    </div>
+    <ng-template #elseBlock>
+      <button pButton type="button" label="Registrate" icon="pi pi-user-plus" style="float:right"></button>
+    </ng-template>
+  </div>
   <app-cartpreview class="col-1 mt-4"></app-cartpreview>
   <app-menu class="col-12"></app-menu>
 </div>
