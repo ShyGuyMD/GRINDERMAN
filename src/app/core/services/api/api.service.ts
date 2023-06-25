@@ -1,22 +1,18 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiBodyRequest } from '@core/models/request/apiBodyRequest';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private readonly _API_URL = '';
-  constructor(
-    private _httpClient: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
-  public post<T extends ApiBodyRequest, V>(endpoint: string, body:T): Observable<V>{
-    return this._httpClient.post<V>(`${this._API_URL}/${endpoint}`, body);
+  public post(url: string, body: any, headers: HttpHeaders = new HttpHeaders()): Observable<any>{
+    return this.http.post(url, body, { headers });
   }
 
-  public get<T>(endpoint: string): Observable<T> {
-    return this._httpClient.get<T>(`${this._API_URL}/${endpoint}`);
+  public get(url: string, headers: HttpHeaders = new HttpHeaders(), params: HttpParams = new HttpParams()): Observable<any> {
+    return this.http.get(url, { headers, params });
   }
 }

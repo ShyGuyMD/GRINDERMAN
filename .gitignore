@@ -3,6 +3,10 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+
+# Sensitive information
+/src/environments
+
 # Compiled output
 /dist
 /tmp
