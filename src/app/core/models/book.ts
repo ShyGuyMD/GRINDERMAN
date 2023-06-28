@@ -1,14 +1,19 @@
 export interface Book {
-  id: number;
+  isbn: string;
   title: string;
   author: string;
   genre: string;
-  publicationYear: number;
   publisher: string;
   price: number;
-  inventoryStatus: string;
+  inventoryStatus: string;  // good to have
+
+  id?: number;
+  synopsis?: string;
+  availableUnits?: number;
   cover?: string;
   images?: string[];
-}
 
-  
+  isNew: boolean;
+  isHardcover: boolean;
+  isActive: boolean;
+}

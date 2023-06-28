@@ -1,0 +1,61 @@
+<h1>Create New Book</h1>
+<form (ngSubmit)="save()" #bookForm="ngForm">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="title">Title:</label>
+            <input type="text" id="title" pInputText [(ngModel)]="book.title" name="title" required>
+        </div>
+        <div class="p-field">
+            <label for="author">Author:</label>
+            <input type="text" id="author" pInputText [(ngModel)]="book.author" name="author" required>
+        </div>
+        <div class="p-field">
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" pInputText [(ngModel)]="book.genre" name="genre" required>
+        </div>
+        <div class="p-field">
+            <label for="publisher">Publisher:</label>
+            <input type="text" id="publisher" pInputText [(ngModel)]="book.publisher" name="publisher" required>
+        </div>
+        <div class="p-field">
+            <label for="price">Price:</label>
+            <input type="number" id="price" class="p-inputNumber" [(ngModel)]="book.price" name="price" required>
+        </div>
+        <div class="p-field">
+            <label for="inventoryStatus">Inventory Status:</label>
+            <input type="text" id="inventoryStatus" pInputText [(ngModel)]="book.inventoryStatus" name="invStatus" required>
+        </div>
+        <div class="p-field">
+            <label for="synopsis">Synopsis:</label>
+            <textarea id="synopsis" pInputTextarea [(ngModel)]="book.synopsis" name="synopsis"></textarea>
+        </div>
+        <div class="p-field">
+            <label for="availableUnits">Available Units:</label>
+            <input type="number" id="availableUnits" pInputText [(ngModel)]="book.availableUnits" name="availableUnits">
+        </div>
+        <div class="p-field">
+            <label for="cover">Cover Image URL:</label>
+            <input type="text" id="cover" pInputText [(ngModel)]="book.cover" name="coverImage">
+        </div>
+        <div class="p-field">
+            <label for="images">Additional Images URLs:</label>
+            <input type="text" id="images" pInputText [(ngModel)]="book.images" name="additionalImages">
+        </div>
+        <div class="p-field">
+            <p-checkbox id="isNew" [(ngModel)]="book.isNew" [binary]="true" name="isNew" label="Is New"></p-checkbox>
+        </div>
+        <div class="p-field">
+            <p-checkbox id="isHardcover" [(ngModel)]="book.isHardcover" [binary]="true" name="isHardcover" label="Is Hardcover"></p-checkbox>
+        </div>
+        <div class="p-field">
+            <p-checkbox id="isActive" [(ngModel)]="book.isActive" [binary]="true" name="isActive" label="Is Active"></p-checkbox>
+        </div>
+    </div>
+    <div class="p-formgroup-inline">
+        <button type="submit" class="p-button p-component">Guardar</button>
+        <button type="button" class="p-button p-component" (click)="cleanup()">Guardar y Nuevo</button>
+    </div>
+
+    <!-- control div for resetting form classes on cleanup -->
+    <div style="display: none;" #formElement></div>
+</form>

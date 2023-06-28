@@ -33,58 +33,73 @@ export class StyleTemplateComponent {
     this.books = [
       {
         id: 1,
+        isbn: '1111111111',
         title: 'One Hundred Years of Solitude',
         author: 'Gabriel Garcia Marquez',
         genre: 'Novel',
-        publicationYear: 1967,
         publisher: 'Harper Perennial',
         price: 15.99,
         inventoryStatus: 'IN_STOCK',
-        cover: 'assets/images/placeholder-small.jpg'
+        cover: 'assets/images/placeholder-small.jpg',
+        isNew: true,
+        isHardcover: true,
+        isActive: true
       },
       {
         id: 2,
+        isbn: '2222222222',
         title: 'Don Quixote',
         author: 'Miguel de Cervantes Saavedra',
         genre: 'Novel',
-        publicationYear: 1605,
         publisher: 'Penguin Classics',
         price: 12.99,
         inventoryStatus: 'OUT_OF_STOCK',
-        cover: 'assets/images/placeholder-small.jpg'
+        cover: 'assets/images/placeholder-small.jpg',
+        isNew: true,
+        isHardcover: true,
+        isActive: true
       },
       {
         id: 3,
+        isbn: '3333333333',
         title: 'Catch-22',
         author: 'Joseph Heller',
         genre: 'Satire',
-        publicationYear: 1961,
         publisher: 'Simon & Schuster',
         price: 9.99,
         inventoryStatus: 'IN_STOCK',
-        cover: 'assets/images/placeholder-small.jpg'
+        cover: 'assets/images/placeholder-small.jpg',
+        isNew: true,
+        isHardcover: true,
+        isActive: true
       },
       {
         id: 4,
+        isbn: '4444444444',
         title: 'To Kill a Mockingbird',
         author: 'Harper Lee',
         genre: 'Novel',
-        publicationYear: 1960,
         publisher: 'Harper Perennial',
         price: 14.99,
         inventoryStatus: 'IN_STOCK',
-        cover: 'assets/images/placeholder-small.jpg'
+        cover: 'assets/images/placeholder-small.jpg',
+        isNew: true,
+        isHardcover: true,
+        isActive: true
       },
       {
         id: 5,
+        isbn: '5555555555',
         title: '1984',
         author: 'George Orwell',
         genre: 'Dystopian Fiction',
-        publicationYear: 1949,
         publisher: 'Penguin Books',
         price: 11.99,
         inventoryStatus: 'IN_STOCK',
-        cover: 'assets/images/placeholder-small.jpg'
+        cover: 'assets/images/placeholder-small.jpg',
+        isNew: true,
+        isHardcover: true,
+        isActive: true
       }
     ];
     
