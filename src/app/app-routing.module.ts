@@ -13,10 +13,11 @@ const routes: Routes = [
       {
         path: 'style-template',
         component: StyleTemplateComponent
-      }
+      },
+      { path: 'book-create', component: BookCreateComponent }
     ] 
   },
-  { path: 'book-create', component: BookCreateComponent }
+  
 ];
 
 @NgModule({
