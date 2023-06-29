@@ -5,7 +5,7 @@ export interface Book {
   genre: string;
   publisher: string;
   price: number;
-  inventoryStatus: string;  // good to have
+  inventoryStatus?: string;  // good to have
 
   id?: number;
   synopsis?: string;
