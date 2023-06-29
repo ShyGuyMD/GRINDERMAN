@@ -1,4 +1,4 @@
-<h1>Create New Book</h1>
+<h1>Crear Nuevo Libro</h1>
 <form (ngSubmit)="save()" #bookForm="ngForm" class="p-mt-4">
     <div class="p-fluid">
         <div class="p-field">
@@ -16,7 +16,7 @@
               [options]="genreOptions"
               [(ngModel)]="book.genre"
               name="genre"
-              placeholder="Select Genres"
+              placeholder="Selccione los géneros"
               optionLabel="label"
               optionValue="value"
             ></p-multiSelect>
@@ -43,7 +43,7 @@
               id="cover"
               name="coverImage"
               accept="image/*"
-              chooseLabel="Select Avatar"
+              chooseLabel="Seleccione una Portada"
               [(ngModel)]="book.cover"
             ></p-fileUpload>
         </div>
@@ -53,7 +53,7 @@
               id="images"
               name="image[]"
               accept="image/*"
-              chooseLabel="Select Images"
+              chooseLabel="Seleccione imagenes adicionales"
               (onSelect)="onFileSelect($event)"
               [multiple]="true"
               url="https://www.primefaces.org/cdn/api/upload.php"
