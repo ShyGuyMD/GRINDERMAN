@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 // Import your components for routing
 import { StyleTemplateComponent } from './style-template/style-template.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
-import { BookCreateComponent } from '@core/components/book';
+import { BookCreateComponent, BookDetailComponent } from '@core/components/book';
 
 const routes: Routes = [
   { path: '', redirectTo: 'style-template', pathMatch: 'full'},
@@ -14,7 +14,8 @@ const routes: Routes = [
         path: 'style-template',
         component: StyleTemplateComponent
       },
-      { path: 'book-create', component: BookCreateComponent }
+      { path: 'book-create', component: BookCreateComponent },
+      { path: 'book-detail', component: BookDetailComponent },
     ] 
   },
   

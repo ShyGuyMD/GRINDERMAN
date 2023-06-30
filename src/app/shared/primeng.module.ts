@@ -6,6 +6,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
+import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
@@ -13,6 +14,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputTextModule } from 'primeng/inputtext';
+import { ImageModule } from 'primeng/image';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
@@ -41,6 +43,7 @@ const modules = [
   CheckboxModule,
   ConfirmDialogModule,
   DataViewModule,
+  DividerModule,
   DropdownModule,
   FileUploadModule,
   GalleriaModule,
@@ -48,6 +51,7 @@ const modules = [
   InputSwitchModule,
   InputTextareaModule,
   InputTextModule,
+  ImageModule,
   KeyFilterModule,
   MenubarModule,
   MessagesModule,

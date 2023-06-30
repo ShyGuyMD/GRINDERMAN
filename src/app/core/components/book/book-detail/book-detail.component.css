@@ -1,0 +1,9 @@
+.book-details p{
+    margin:0;
+}
+.book-details {
+    margin-top: 2rem;
+}
+.book-title h2, .book-title h3, .book-title h4 {
+    margin: 0;
+}
