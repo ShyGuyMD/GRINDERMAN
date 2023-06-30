@@ -10,13 +10,13 @@ import { AppRoutingModule } from '../app-routing.module';
     CommonModule,
     FormsModule,
     AppRoutingModule,
-    PrimengModule
+    PrimengModule,
   ],
   exports: [
     CommonModule,
     FormsModule,
     AppRoutingModule,
-    PrimengModule
+    PrimengModule,
   ]
 })
 export class SharedModule { }

@@ -1,6 +1,8 @@
 // Angular Core
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 // PrimeNG
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -21,6 +23,7 @@ import { ExceptionService } from '@core/services';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
     CoreModule,

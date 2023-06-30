@@ -1,4 +1,5 @@
 import { BlankPageComponent } from "./blank-page";
+import { BookCreateComponent, BookDetailComponent } from "./book";
 import { CartpreviewComponent } from "./cartpreview";
 import { HeaderComponent } from "./header";
 import { LayoutComponent } from "./layout";
@@ -13,9 +14,12 @@ export * from './layout';
 export * from './menu';
 export * from './searchbar';
 export * from './user-menu';
+export * from './book';
 
 export const components = [
     BlankPageComponent,
+    BookCreateComponent,
+    BookDetailComponent,
     CartpreviewComponent,
     HeaderComponent,
     LayoutComponent,
