@@ -23,7 +23,7 @@
         <p-divider></p-divider>
         <p>{{ book.synopsis }}</p>
     </div>
-    <div class="p-d-flex p-jc-end">
+    <div class="flex justify-content-end mt-4">
         <button pButton label="Add to Cart" class="add-to-cart-button" *ngIf="book.isActive" (click)="addToCart()"></button>
     </div>
     </div>

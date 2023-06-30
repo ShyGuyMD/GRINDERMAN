@@ -7,3 +7,12 @@
 .book-title h2, .book-title h3, .book-title h4 {
     margin: 0;
 }
+
+.book-title h4 {
+    margin-top: -10px;
+    font-weight: normal;
+    font-style: italic;
+    color: #494949
+}
+
+  
