@@ -23,9 +23,29 @@ export class WooCommerceApiService {
 
   getProducts() {
     const url = `${this.baseUrl}/products`;
+    
     return this.apiService.get(url, this.headers);
   }
 
+  getProductAttributes() {
+    const url = `${this.baseUrl}/products/attributes`;
+
+    return this.apiService.get(url, this.headers);
+  }
+
+  getProductAttributeTerms(productId: number) {
+    const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
+
+    return this.apiService.get(url, this.headers);
+  }
+
+  postProductAttributeTerms(productId: number, termValue: string) {
+    const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
+    const body = { name: termValue };
+
+    return this.apiService.post(url, body, this.headers);
+  }
+  
   createProduct(product: Book) {
     const url = `${this.baseUrl}/products`;
 
@@ -39,6 +59,5 @@ export class WooCommerceApiService {
       images: [],
       meta_data: []
     }
-
   }
 }
