@@ -1,9 +1,9 @@
-<div class="grid">
+<div *ngIf="books" class="grid">
     <ng-container *ngFor="let book of books">
       <p-card class="col-2">
         <ng-template pTemplate="content">
           <div class="book-details">
-            <a [routerLink]="['/detail', book.id]">
+            <a [routerLink]="['/book-detail', book.id]">
             <div class="book-image">
               <p-image [src]="book.cover" alt="book.title" class="carousel-image" width="100%"></p-image>
             </div>
