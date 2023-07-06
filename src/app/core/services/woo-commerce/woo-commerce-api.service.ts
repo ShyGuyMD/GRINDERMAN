@@ -15,7 +15,7 @@ export class WooCommerceApiService {
   private apiSecret = config.apiSecret;
 
   private headers = new HttpHeaders({
-    'Authorization': `Basic ${this.apiKey}:${this.apiSecret}`,
+    'Authorization': 'Basic ' + btoa(`${this.apiKey}:${this.apiSecret}`),
     'Content-Type': 'application/json'
   });
 
@@ -24,7 +24,13 @@ export class WooCommerceApiService {
   getProducts() {
     const url = `${this.baseUrl}/products`;
     
-    return this.apiService.get(url, this.headers);
+   return this.apiService.get(url, this.headers);
+  }
+
+  getProduct(id: number) {
+    const url = `${this.baseUrl}/products/${id}`;
+    
+   return this.apiService.get(url, this.headers);
   }
 
   getProductAttributes() {

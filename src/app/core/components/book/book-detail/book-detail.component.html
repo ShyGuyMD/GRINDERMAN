@@ -1,4 +1,4 @@
-<div class="grid mt-4">
+<div *ngIf="book" class="grid mt-4">
     <div class="col-6">
         <p-carousel *ngIf="book && book.images" [value]="book.images">
             <ng-template let-image pTemplate="item">

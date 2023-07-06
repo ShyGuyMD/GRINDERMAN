@@ -1,50 +1,56 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { BookService } from '@core/services';
+import { BookService, WooCommerceApiService } from '@core/services';
 import { InventoryStatus } from '@shared/constants';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-book-detail',
   templateUrl: './book-detail.component.html',
-  styleUrls: ['./book-detail.component.css']
+  styleUrls: ['./book-detail.component.css'],
 })
 export class BookDetailComponent implements OnInit {
+  id!: number;
   book!: Book;
 
-  constructor(private _bookService: BookService) { }
+
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _bookService: BookService,
+    private _wooCommerceService: WooCommerceApiService
+  ) {}
 
   ngOnInit() {
-    // Fetch the book data from your API or any other source
-    this.book = {
-      isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-      genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true
-    };
+    const idParam = this._route.snapshot.paramMap.get('id');
+    this.id = Number(idParam);
 
-    // Move the cover image to the first position in the images array
-    if (this.book.cover && this.book.images) {
-      this.book.images.unshift(this.book.cover);
+    if (!idParam || isNaN(this.id)) {
+       // Invalid ID or non-number value, redirect to blank component with error message
+      const errorMessage = 'Invalid ID or non-number value.';
+      this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+      return;
     }
 
+    this._wooCommerceService.getProduct(this.id).subscribe({
+      next: (response) => {
+        this.book = this._bookService.mapProductToBook(response);
+      },
+      error: (error) => {
+        console.error(error);
+        const errorMessage = 'Error retrieving product.';
+        this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+      }
+    });
+    
   }
 
   addToCart() {
     // Implement the logic to add the book to the cart
   }
 
-  getSeverity(book: Book){
+  getSeverity(book: Book) {
     return this._bookService.getSeverity(book);
   }
 }
