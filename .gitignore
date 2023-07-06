@@ -5,7 +5,7 @@
 
 
 # Sensitive information
-/src/environments
+src/environments/*
 
 # Compiled output
 /dist
