@@ -1,85 +1,86 @@
 <h1>Crear Nuevo Libro</h1>
 <form (ngSubmit)="save()" #bookForm="ngForm" class="p-mt-4">
-    <div class="p-fluid">
-        <div class="p-field">
-            <label for="title">Título:</label>
-            <input type="text" id="title" pInputText [(ngModel)]="book.title" name="title" required class="p-inputtext p-d-block">
+    <div *ngIf="isLoading">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+    <div *ngIf="!isLoading">
+        <div class="p-fluid">
+            <div class="p-field">
+                <label for="title">Título:</label>
+                <input type="text" id="title" pInputText [(ngModel)]="book.title" name="title" required class="p-inputtext p-d-block">
+            </div>
+            <div class="p-field">
+                <label for="author">Autor:</label>
+                <input type="text" id="author" pInputText [(ngModel)]="book.author" name="author" required class="p-inputtext p-d-block">
+            </div>
+            <div class="p-field">
+                <label for="genre">Género:</label>
+                <p-multiSelect
+                id="genre"
+                [options]="genreOptions"
+                [(ngModel)]="book.genre"
+                name="genre"
+                placeholder="Selccione los géneros"
+                optionLabel="name"
+                
+                ></p-multiSelect>
+            </div>
+            <div class="p-field">
+                <label for="publisher">Editorial:</label>
+                <input type="text" id="publisher" pInputText [(ngModel)]="book.publisher" name="publisher" required class="p-inputtext p-d-block">
+            </div>
+            <div class="p-field">
+                <label for="synopsis">Sinopsis:</label>
+                <textarea id="synopsis" pInputTextarea [(ngModel)]="book.synopsis" name="synopsis" class="p-inputtextarea p-d-block"></textarea>
+            </div>
+            <div class="p-field">
+                <label for="price">PVP:</label>
+                <input type="text" id="price" pInputNumber [(ngModel)]="book.price" name="price" required class="p-inputtext p-d-block" mode="currency" currency="USD">
+            </div>
+            <div class="p-field">
+                <label for="availableUnits">Unidades disponibles:</label>
+                <input type="number" id="availableUnits" pInputText [(ngModel)]="book.availableUnits" name="availableUnits" class="p-inputtext p-d-block">
+            </div>
+            <div class="p-field">
+                <label for="cover">Portada:</label>
+                <p-fileUpload
+                id="cover"
+                name="cover"
+                accept="image/*"
+                chooseLabel="Seleccione una Portada"
+                [(ngModel)]="book.cover"
+                ></p-fileUpload>
+            </div>
+            <div class="p-field">
+                <label for="images">Imagenes adicionales:</label>
+                <p-fileUpload
+                id="images"
+                name="image[]"
+                accept="image/*"
+                chooseLabel="Seleccione imagenes adicionales"
+                (onSelect)="onFileSelect($event)"
+                [multiple]="true"
+                url="https://www.primefaces.org/cdn/api/upload.php"
+                ><ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload>
+            </div>
+            <div class="p-field">
+                <p-checkbox id="isNew" [(ngModel)]="book.isNew" [binary]="true" name="isNew" label="Es nuevo"></p-checkbox>
+            </div>
+            <div class="p-field">
+                <p-checkbox id="isHardcover" [(ngModel)]="book.isHardcover" [binary]="true" name="isHardcover" label="Es tapadura"></p-checkbox>
+            </div>
+            <div class="p-field">
+                <p-checkbox id="isActive" [(ngModel)]="book.isActive" [binary]="true" name="isActive" label="Está disponible"></p-checkbox>
+            </div>
         </div>
-        <div class="p-field">
-            <label for="author">Autor:</label>
-            <input type="text" id="author" pInputText [(ngModel)]="book.author" name="author" required class="p-inputtext p-d-block">
-        </div>
-        <div class="p-field">
-            <label for="genre">Género:</label>
-            <p-multiSelect
-              id="genre"
-              [options]="genreOptions"
-              [(ngModel)]="book.genre"
-              name="genre"
-              placeholder="Selccione los géneros"
-              optionLabel="label"
-              optionValue="value"
-            ></p-multiSelect>
-        </div>
-        <div class="p-field">
-            <label for="publisher">Editorial:</label>
-            <input type="text" id="publisher" pInputText [(ngModel)]="book.publisher" name="publisher" required class="p-inputtext p-d-block">
-        </div>
-        <div class="p-field">
-            <label for="synopsis">Sinopsis:</label>
-            <textarea id="synopsis" pInputTextarea [(ngModel)]="book.synopsis" name="synopsis" class="p-inputtextarea p-d-block"></textarea>
-        </div>
-        <div class="p-field">
-            <label for="price">PVP:</label>
-            <input type="text" id="price" pInputNumber [(ngModel)]="book.price" name="price" required class="p-inputtext p-d-block" mode="currency" currency="USD">
-        </div>
-        <div class="p-field">
-            <label for="availableUnits">Unidades disponibles:</label>
-            <input type="number" id="availableUnits" pInputText [(ngModel)]="book.availableUnits" name="availableUnits" class="p-inputtext p-d-block">
-        </div>
-        <div class="p-field">
-            <label for="cover">Portada:</label>
-            <p-fileUpload
-              id="cover"
-              name="coverImage"
-              accept="image/*"
-              chooseLabel="Seleccione una Portada"
-              [(ngModel)]="book.cover"
-            ></p-fileUpload>
-        </div>
-        <div class="p-field">
-            <label for="images">Imagenes adicionales:</label>
-            <p-fileUpload
-              id="images"
-              name="image[]"
-              accept="image/*"
-              chooseLabel="Seleccione imagenes adicionales"
-              (onSelect)="onFileSelect($event)"
-              [multiple]="true"
-              url="https://www.primefaces.org/cdn/api/upload.php"
-            ><ng-template pTemplate="content">
-                <ul *ngIf="uploadedFiles.length">
-                    <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
-                </ul>
-            </ng-template>
-        </p-fileUpload>
-        </div>
-        <div class="p-field">
-            <p-checkbox id="isNew" [(ngModel)]="book.isNew" [binary]="true" name="isNew" label="Es nuevo"></p-checkbox>
-        </div>
-        <div class="p-field">
-            <p-checkbox id="isHardcover" [(ngModel)]="book.isHardcover" [binary]="true" name="isHardcover" label="Es tapadura"></p-checkbox>
-        </div>
-        <div class="p-field">
-            <p-checkbox id="isActive" [(ngModel)]="book.isActive" [binary]="true" name="isActive" label="Está disponible"></p-checkbox>
+        <div class="p-formgroup-inline mt-4">
+            <button type="submit" class="p-button">Guardar</button>
+            <button type="button" class="p-button ml-2" (click)="cleanup()">Guardar y Nuevo</button>
         </div>
     </div>
-    <div class="p-formgroup-inline mt-4">
-        <button type="submit" class="p-button">Guardar</button>
-        <button type="button" class="p-button ml-2" (click)="cleanup()">Guardar y Nuevo</button>
-    </div>
-
-
-    <!-- control div for resetting form classes on cleanup -->
-    <div style="display: none;" #formElement></div>
 </form>
