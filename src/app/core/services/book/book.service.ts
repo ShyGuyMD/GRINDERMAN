@@ -63,8 +63,8 @@ export class BookService {
     );
   }
 
-  private extractGenre(product: Product): string {
-    return product.categories.map((category: any) => category.name).join(', ');
+  private extractGenre(product: Product): any {
+    return product.attributes.map((attr: any) => attr.name);
   }
 
   private determinePublisher(product: any): string {

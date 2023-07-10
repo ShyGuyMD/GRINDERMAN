@@ -4,6 +4,8 @@ import { ApiService } from '../api';
 import { config } from 'src/environments/environment';
 import { Book } from '@core/models/book';
 import { CreateProductRequest } from '@core/models/request/createProductRequest';
+import { BookService } from '../book';
+import { elementAt } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,51 +21,62 @@ export class WooCommerceApiService {
     'Content-Type': 'application/json'
   });
 
-  constructor(private apiService: ApiService) { }
+  constructor(
+    private _apiService: ApiService,
+    private _bookService: BookService) { }
 
   getProducts() {
     const url = `${this.baseUrl}/products`;
     
-   return this.apiService.get(url, this.headers);
+   return this._apiService.get(url, this.headers);
   }
 
   getProduct(id: number) {
     const url = `${this.baseUrl}/products/${id}`;
     
-   return this.apiService.get(url, this.headers);
+   return this._apiService.get(url, this.headers);
   }
 
   getProductAttributes() {
     const url = `${this.baseUrl}/products/attributes`;
 
-    return this.apiService.get(url, this.headers);
+    return this._apiService.get(url, this.headers);
   }
 
-  getProductAttributeTerms(productId: number) {
-    const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
+  getProductAttributeTerms(attrId: number) {
+    const url = `${this.baseUrl}/products/attributes/${attrId}/terms`;
 
-    return this.apiService.get(url, this.headers);
+    return this._apiService.get(url, this.headers);
+  }
+
+  postProduct(book: Book) {
+    const url = `${this.baseUrl}/products`;
+    
+    console.log('This is the Book: ', book);
+
+    const body: CreateProductRequest = {
+        name: book.title,
+        regular_price: book.price,
+        description: book.synopsis,
+        manage_stock: true,
+        meta_data: [],
+        attributes: [{
+          "name" : "Genero", 
+          "options" : book.genre?.map((element: any) => (element.name))
+        }],
+        status: 'publish'
+    }
+
+    console.log('Request URL: ', url);
+    console.log('Request Body: ', body);
+
+    return this._apiService.post(url, body, this.headers);
   }
 
   postProductAttributeTerms(productId: number, termValue: string) {
     const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
     const body = { name: termValue };
 
-    return this.apiService.post(url, body, this.headers);
-  }
-  
-  createProduct(product: Book) {
-    const url = `${this.baseUrl}/products`;
-
-    const body: CreateProductRequest = {
-      name: product.title,
-      regular_price: product.price,
-      description: product.synopsis,
-      stock_quantity: product.availableUnits,
-      manage_stock: true,
-      categories: [],
-      images: [],
-      meta_data: []
-    }
+    return this._apiService.post(url, body, this.headers);
   }
 }
