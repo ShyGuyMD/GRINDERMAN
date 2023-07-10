@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { InventoryStatus } from '@shared/constants';
+import { BookService, WooCommerceApiService } from '@core/services';
 
 @Component({
   selector: 'app-book-catalog',
@@ -10,104 +11,27 @@ import { InventoryStatus } from '@shared/constants';
 export class BookCatalogComponent implements OnInit {
   books: Book[] = []; // Replace with your own book array
 
-  constructor() { }
+  constructor(private _wooCommerceService : WooCommerceApiService, 
+    private _bookService: BookService,
+    private _router: Router,) { }
 
   ngOnInit() {
-    // Initialize your books array with data
-    this.books = [
-      {isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-      //genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true},
-      {isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-      //genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true},
-      {isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-      //genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true},
-      {isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-     //genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true},
-      {isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-      //genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true},
-      {isbn: '1234567890',
-      title: 'Book Title',
-      author: 'Author Name',
-      //genre: 'Book Genre',
-      publisher: 'Publisher Name',
-      price: 9.99,
-      inventoryStatus: InventoryStatus.IN_STOCK,
-      id: 1,
-      synopsis: 'Book synopsis...',
-      availableUnits: 10,
-      cover: 'assets/images/placeholder.png',
-      images: ['assets/images/placeholder.png', 'assets/images/placeholder.png'],
-      isNew: true,
-      isHardcover: false,
-      isActive: true},
-      
-      // Add more books as needed
-    ];
+
+    this._wooCommerceService.getProducts().subscribe({
+      next: (response) => {
+         // Map each product to a book
+      this.books = response.map((product: any) =>
+      this._bookService.mapProductToBook(product)
+    );
+
+      },
+      error: (error) => {
+        console.error(error);
+        const errorMessage = 'Error retrieving cataloge.';
+        this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+      }
+    });
+
   }
 
   addToCart(book: Book) {
