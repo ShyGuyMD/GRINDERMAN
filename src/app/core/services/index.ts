@@ -7,7 +7,6 @@ import { UserService } from './user';
 import { UtilsService } from './utils';
 import { WooCommerceApiService } from './woo-commerce';
 
-
 export * from './api';
 export * from './authentication';
 export * from './book';

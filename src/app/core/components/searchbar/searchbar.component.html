@@ -1,8 +1,8 @@
 <div class="search-bar p-inputgroup">
-  <input #searchTerm type="text" pInputText placeholder="Buscar..." class="p-inputtext"
-         (input)="handleSearchEvent(searchTerm.value)"  />
-  <span class="p-inputgroup-addon">
-      <i class="pi pi-search pointer" *ngIf="!isLoading" (click)="handleSearchEvent(searchTerm.value)"></i>
-      <i class="pi pi-spinner pi-spin" *ngIf="isLoading"></i>
-  </span>
+    <input #searchTerm type="text" pInputText placeholder="Buscar..." class="p-inputtext"
+        (input)="handleSearchEvent(searchTerm.value)" />
+    <span class="p-inputgroup-addon">
+        <i class="pi pi-search pointer" *ngIf="!isLoading" (click)="handleSearchEvent(searchTerm.value)"></i>
+        <i class="pi pi-spinner pi-spin" *ngIf="isLoading"></i>
+    </span>
 </div>

@@ -11,5 +11,5 @@ export interface Product {
     //images?: Image[];           // all images
     meta_data: Metadata[];      // all other attributes  
     attributes: [];
-    status: string;  
+    status: string;
 }

@@ -17,22 +17,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { ExceptionService } from '@core/services';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    StyleTemplateComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    SharedModule,
-    CoreModule,
-    AppRoutingModule
-  ],
-  providers: [
-    MessageService,
-    ConfirmationService,
-    { provide : ErrorHandler, useClass: ExceptionService }],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        StyleTemplateComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        SharedModule,
+        CoreModule,
+        AppRoutingModule
+    ],
+    providers: [
+        MessageService,
+        ConfirmationService,
+        { provide: ErrorHandler, useClass: ExceptionService }],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

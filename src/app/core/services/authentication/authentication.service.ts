@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthenticationService {
-  
-  private isLoggedIn: boolean = false;
 
-  constructor() { }
+    private isLoggedIn: boolean = false;
 
-  login(username: string, password: string): boolean {
-    // Placeholder login request and authentication logic
-    if (username === 'example' && password === 'password') {
-      this.isLoggedIn = true;
-      return true;
+    constructor() { }
+
+    login(username: string, password: string): boolean {
+        // Placeholder login request and authentication logic
+        if (username === 'example' && password === 'password') {
+            this.isLoggedIn = true;
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
-  logout(): void {
-    // Placeholder logout and reset login status
-    this.isLoggedIn = false;
-  }
+    logout(): void {
+        // Placeholder logout and reset login status
+        this.isLoggedIn = false;
+    }
 
-  getLoggedInStatus(): boolean {
-    return true;
-    //return this.isLoggedIn;
-  }
+    getLoggedInStatus(): boolean {
+        return true;
+        //return this.isLoggedIn;
+    }
 }

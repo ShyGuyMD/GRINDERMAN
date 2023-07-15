@@ -6,10 +6,10 @@
 @import '~primeicons/primeicons.css';
 
 body {
-	font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial,
-    Lucida Grande, sans-serif;
-	font-size: 1.2rem;
-	line-height: 1.4; /* 1.5 */
-	margin: 0px;
+    font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial,
+        Lucida Grande, sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    /* 1.5 */
+    margin: 0px;
 }
-

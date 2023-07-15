@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  private userData: any; // Placeholder for user data
+    private userData: any; // Placeholder for user data
 
-  constructor() { }
+    constructor() { }
 
-  public setUserData(userData: any): void {
-    this.userData = userData;
-  }
+    public setUserData(userData: any): void {
+        this.userData = userData;
+    }
 
-  public getUserData(): any {
-    return this.userData;
-  }
+    public getUserData(): any {
+        return this.userData;
+    }
 
-  public getUserName(): string {
-    return 'Bilbo Baggins';
-  }
+    public getUserName(): string {
+        return 'Bilbo Baggins';
+    }
 }

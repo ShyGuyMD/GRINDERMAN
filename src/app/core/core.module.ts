@@ -12,8 +12,8 @@ import { SharedModule } from "@shared/shared.module";
 
 @NgModule({
     declarations: [...components],
-    imports: [ SharedModule, PrimengModule, FormsModule ],
+    imports: [SharedModule, PrimengModule, FormsModule],
     providers: []
-  })
+})
 
-  export class CoreModule { }
+export class CoreModule { }

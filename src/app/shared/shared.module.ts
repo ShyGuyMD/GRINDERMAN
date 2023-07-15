@@ -5,18 +5,18 @@ import { PrimengModule } from './primeng.module';
 import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    FormsModule,
-    AppRoutingModule,
-    PrimengModule,
-  ],
-  exports: [
-    CommonModule,
-    FormsModule,
-    AppRoutingModule,
-    PrimengModule,
-  ]
+    declarations: [],
+    imports: [
+        CommonModule,
+        FormsModule,
+        AppRoutingModule,
+        PrimengModule,
+    ],
+    exports: [
+        CommonModule,
+        FormsModule,
+        AppRoutingModule,
+        PrimengModule,
+    ]
 })
 export class SharedModule { }
