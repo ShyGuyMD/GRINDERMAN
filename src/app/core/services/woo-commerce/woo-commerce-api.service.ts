@@ -4,8 +4,6 @@ import { ApiService } from '../api';
 import { config } from 'src/environments/environment';
 import { Book } from '@core/models/book';
 import { CreateProductRequest } from '@core/models/request/createProductRequest';
-import { BookService } from '../book';
-import { elementAt } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +20,12 @@ export class WooCommerceApiService {
   });
 
   constructor(
-    private _apiService: ApiService,
-    private _bookService: BookService) { }
+    private _apiService: ApiService
+  ) { }
 
-  getProducts() {
-    const url = `${this.baseUrl}/products`;
+  getProducts(keyword?: string) {
+    let url = `${this.baseUrl}/products`;
+    url += keyword ? `?search=${keyword}` : '';
     
    return this._apiService.get(url, this.headers);
   }
@@ -34,7 +33,7 @@ export class WooCommerceApiService {
   getProduct(id: number) {
     const url = `${this.baseUrl}/products/${id}`;
     
-   return this._apiService.get(url, this.headers);
+    return this._apiService.get(url, this.headers);
   }
 
   getProductAttributes() {

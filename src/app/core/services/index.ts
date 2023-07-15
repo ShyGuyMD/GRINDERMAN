@@ -1,25 +1,29 @@
 import { ApiService } from './api';
 import { AuthenticationService } from './authentication';
+import { BookService } from './book';
 import { ExceptionService } from './exception';
-import { WooCommerceApiService } from './woo-commerce';
+import { SharedService } from './shared';
 import { UserService } from './user';
 import { UtilsService } from './utils';
-import { BookService } from './book';
+import { WooCommerceApiService } from './woo-commerce';
+
 
 export * from './api';
-export * from './exception';
-export * from './woo-commerce';
 export * from './authentication';
-export * from './utils';
-export * from './user';
 export * from './book';
+export * from './exception';
+export * from './shared';
+export * from './user';
+export * from './utils';
+export * from './woo-commerce';
 
 export const components = [
     ApiService,
+    AuthenticationService,
     BookService,
     ExceptionService,
-    WooCommerceApiService,
-    AuthenticationService,
+    SharedService,
+    UserService,
     UtilsService,
-    UserService
+    WooCommerceApiService
 ]
