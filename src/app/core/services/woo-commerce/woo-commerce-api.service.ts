@@ -50,8 +50,6 @@ export class WooCommerceApiService {
     postProduct(book: Book) {
         const url = `${this.baseUrl}/products`;
 
-        console.log('This is the Book: ', book);
-
         const body: CreateProductRequest = {
             name: book.title,
             regular_price: book.price,
@@ -65,9 +63,6 @@ export class WooCommerceApiService {
             status: 'publish'
         }
 
-        console.log('Request URL: ', url);
-        console.log('Request Body: ', body);
-
         return this._apiService.post(url, body, this.headers);
     }
 
@@ -76,5 +71,9 @@ export class WooCommerceApiService {
         const body = { name: termValue };
 
         return this._apiService.post(url, body, this.headers);
+    }
+
+    putProductData(productId: number, body: any) {
+        return this._apiService.put(`${this.baseUrl}/products/${productId}`, body, this.headers);
     }
 }
