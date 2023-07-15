@@ -6,6 +6,7 @@ import { LandingAdminComponent, LandingComponent, LandingDevelopComponent } from
 import { LayoutComponent } from "./layout";
 import { MenuComponent } from "./menu";
 import { SearchbarComponent } from "./searchbar";
+import { SectionTitleComponent } from "./section-title";
 import { UserMenuComponent } from "./user-menu";
 
 export * from './blank-page';
@@ -17,6 +18,7 @@ export * from './searchbar';
 export * from './user-menu';
 export * from './book';
 export * from './landing';
+export * from './section-title';
 
 export const components = [
     BlankPageComponent,
@@ -31,5 +33,6 @@ export const components = [
     LayoutComponent,
     MenuComponent,
     SearchbarComponent,
+    SectionTitleComponent,
     UserMenuComponent
 ]
