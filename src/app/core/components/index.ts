@@ -2,6 +2,7 @@ import { BlankPageComponent } from "./blank-page";
 import { BookCatalogComponent, BookCreateComponent, BookDetailComponent } from "./book";
 import { CartpreviewComponent } from "./cartpreview";
 import { HeaderComponent } from "./header";
+import { LandingComponent } from "./landing";
 import { LayoutComponent } from "./layout";
 import { MenuComponent } from "./menu";
 import { SearchbarComponent } from "./searchbar";
@@ -15,6 +16,7 @@ export * from './menu';
 export * from './searchbar';
 export * from './user-menu';
 export * from './book';
+export * from './landing';
 
 export const components = [
     BlankPageComponent,
@@ -23,6 +25,7 @@ export const components = [
     BookDetailComponent,
     CartpreviewComponent,
     HeaderComponent,
+    LandingComponent,
     LayoutComponent,
     MenuComponent,
     SearchbarComponent,
