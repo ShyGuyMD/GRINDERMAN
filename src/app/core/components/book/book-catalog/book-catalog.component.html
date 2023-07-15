@@ -1,4 +1,7 @@
-<div *ngIf="books" class="grid">
+<div *ngIf="isLoading">
+  <p-progressSpinner></p-progressSpinner>
+</div>
+<div *ngIf="!isLoading && books" class="grid">
     <ng-container *ngFor="let book of books">
       <p-card class="col-2">
         <ng-template pTemplate="content">
