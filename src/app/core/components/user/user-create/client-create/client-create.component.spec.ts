@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ClientCreateComponent } from './client-create.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { activatedRouteMock } from '@core/mocks/activatedroute.mock';
 import { routerMock } from '@core/mocks/router.mock';
@@ -20,7 +20,7 @@ describe('ClientCreateComponent', () => {
   beforeEach(waitForAsync( () => {
     TestBed.configureTestingModule({
       declarations: [ ClientCreateComponent ],
-      imports: [FormsModule],
+      imports: [FormsModule, ReactiveFormsModule],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },

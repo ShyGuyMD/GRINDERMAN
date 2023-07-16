@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AdminCreateComponent } from './admin-create.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '@core/services';
 import { activatedRouteMock } from '@core/mocks/activatedroute.mock';
 import { routerMock } from '@core/mocks/router.mock';
@@ -20,7 +20,7 @@ describe('AdminCreateComponent', () => {
   beforeEach(waitForAsync( () => {
     TestBed.configureTestingModule({
       declarations: [ AdminCreateComponent ],
-      imports: [FormsModule],
+      imports: [FormsModule, ReactiveFormsModule],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteMock },
         { provide: Router, useValue: routerMock },
