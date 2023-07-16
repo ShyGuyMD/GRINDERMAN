@@ -1,3 +1,4 @@
+<app-section-title title="Alta de Cliente"></app-section-title>
 <form [formGroup]="clientForm" (ngSubmit)="save()" class="p-mt-4">
   <div *ngIf="isLoading; else showForm">
     <p-progressSpinner></p-progressSpinner>

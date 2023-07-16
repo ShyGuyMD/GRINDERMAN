@@ -33,8 +33,9 @@ export class UserService {
     return this._wooCommerceApiService.postCustomer(bodyRequest)
   }
 
-  public registerAdministrator(admin: Admin): void {
-    // Registration logic for administrator
+  public registerAdministrator(admin: Admin): Observable<any> {
+    const bodyRequest = this.mapCreateAdminRequest(admin);
+    return this._wooCommerceApiService.postCustomer(bodyRequest)
   }
 
   private encryptPassword(password: string): string {
@@ -47,5 +48,12 @@ export class UserService {
       password: this.encryptPassword(client.password),
       role: UserRole.CLIENT
     }
+}
+public mapCreateAdminRequest(admin: Admin): CreateCustomerRequest {
+  return {
+    email: admin.email,
+    password: this.encryptPassword(admin.password),
+    role: UserRole.ADMIN
+  }
 }
 }
