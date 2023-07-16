@@ -56,6 +56,13 @@ export class BookDetailComponent implements OnInit {
         });
     }
 
+    escapeSynopsis() {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = this.book?.synopsis || '';
+
+        return tempElement.innerText;
+    }
+
     getSeverity(book: Book) {
         return this._bookService.getSeverity(book);
     }

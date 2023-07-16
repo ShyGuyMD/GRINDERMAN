@@ -2,16 +2,16 @@ export interface Book {
     isbn: string;
     title: string;
     author: string;
-    genre?: [];
+    genre?: any;
     publisher: string;
     price: number;
-    inventoryStatus?: string;  // good to have
 
+    inventoryStatus?: string;  // good to have
     id?: number;
     synopsis?: string;
     availableUnits?: number;
-    cover?: string;
-    images?: string[];
+    cover?: any;
+    images?: any;
 
     isNew: boolean;
     isHardcover: boolean;
