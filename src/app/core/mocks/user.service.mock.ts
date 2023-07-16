@@ -6,6 +6,4 @@ export const userServiceMock: Partial<UserService> = {
     registerAdministrator: jest.fn(),
     registerClient: jest.fn(),
     setUserData: jest.fn(),
-    validatePassword: jest.fn(),
-    valitdateEmail: jest.fn()
   };
