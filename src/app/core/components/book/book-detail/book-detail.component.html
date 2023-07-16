@@ -22,11 +22,12 @@
                 <p><b>Condition:</b> {{ book.isNew ? 'New' : 'Used' }}</p>
             </div>
             <p-divider></p-divider>
-            <p>{{ book.synopsis }}</p>
+            <p>{{ escapeSynopsis() }}</p>
         </div>
-        <div class="flex justify-content-end mt-4">
+        <div class="flex justify-content-evenly mt-4">
             <button pButton label="Add to Cart" class="add-to-cart-button" *ngIf="book.isActive"
                 (click)="addToCart()"></button>
+            <button pButton label="Dar de Baja" *ngIf="book.isActive" (click)="deactivate()"></button>
         </div>
     </div>
 </div>

@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
 import { BookService, WooCommerceApiService } from '@core/services';
-import { InventoryStatus } from '@shared/constants';
-import { map } from 'rxjs';
 
 @Component({
     selector: 'app-book-detail',
@@ -14,12 +12,11 @@ export class BookDetailComponent implements OnInit {
     id!: number;
     book!: Book;
 
-
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
         private _bookService: BookService,
-        private _wooCommerceService: WooCommerceApiService
+        private _wooCommerceAPIService: WooCommerceApiService
     ) { }
 
     ngOnInit() {
@@ -33,7 +30,7 @@ export class BookDetailComponent implements OnInit {
             return;
         }
 
-        this._wooCommerceService.getProductsById(this.id).subscribe({
+        this._wooCommerceAPIService.getProductsById(this.id).subscribe({
             next: (response) => {
                 this.book = this._bookService.mapProductToBook(response);
             },
@@ -48,6 +45,22 @@ export class BookDetailComponent implements OnInit {
 
     addToCart() {
         // Implement the logic to add the book to the cart
+    }
+
+    deactivate() {
+        const data = { "meta_data": [{ "key": "isActive", "value": false }] };
+
+        this._wooCommerceAPIService.putProductData(this.id, data).subscribe({
+            next: (v) => console.log(`Book ID: ${this.id} deactivated`),
+            error: (e) => console.log("Error in deactivation")
+        });
+    }
+
+    escapeSynopsis() {
+        const tempElement = document.createElement('div');
+        tempElement.innerHTML = this.book?.synopsis || '';
+
+        return tempElement.innerText;
     }
 
     getSeverity(book: Book) {

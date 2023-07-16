@@ -20,67 +20,58 @@ export class BookService {
     }
 
     public mapProductToBook(product: Product): Book {
+        const metadata = product.meta_data;
+        const attributes = product.attributes;
+        const images = product.images;
+
         return {
             id: product.id,
-            isbn: this.extractIsbn(product) || '',
-            title: product.name || '',
-            author: this.extractAuthor(product),
-            genre: this.extractGenre(product),
-            publisher: this.determinePublisher(product),
-            price: product.price || 0,
-            inventoryStatus: product.stock_status || '',
-            synopsis: product.description || '',
+
+            // Mandatory Fields
+            author: this.extractMetadata('author', metadata),
+            genre: this.extractGenres(attributes),
+            isbn: this.extractMetadata('isbn', metadata),
+            price: product.regular_price,
+            publisher: this.extractMetadata('publisher', metadata),
+            title: product.name,
+
+            // Optional Fields
             availableUnits: product.stock_quantity,
-            cover: this.determineCoverImage(product),
-            images: this.extractImageURLs(product),
-            isNew: this.isNew(product),
-            isHardcover: this.isHadcover(product),
-            isActive: product.status === 'publish',
+            cover: this.extractCover(images),
+            images: this.extractImageURLs(images),
+            inventoryStatus: product.stock_status,
+            synopsis: product.description,
+
+            // Control Fields
+            isNew: this.extractMetadataAndEvaluate('isNew', metadata),
+            isHardcover: this.extractMetadataAndEvaluate('isHardcover', metadata),
+            isActive: this.extractMetadataAndEvaluate('isActive', metadata),
         };
     }
 
-    private isHadcover(product: Product): boolean {
-        return product.meta_data.some(
-            (meta: any) => meta.key === 'isHardcover' && meta.value === 'true'
+    private extractCover(images: any): any {
+        const cover = this.extractImageURLs(images).find((element) => element.name === 'cover');
+        return cover || { 'name' : 'placeholder', 'src' : 'assets/images/placeholder.png' };
+    }
+
+    private extractGenres(attributes: any): any {
+        const options = attributes.find((attr: any) => attr.name === 'Genero')?.options;
+        return options.toString().replace(/,/g, ', ') || [];
+    }
+
+    private extractImageURLs(images: any): any[] {
+        return images.map((image: any) => { image.name, image.src });
+    }
+
+    private extractMetadata(meta_field: string, metadata: any): string {
+        return metadata.find(
+            (element: any) => element.key === meta_field
+        )?.value || '';
+    }
+
+    private extractMetadataAndEvaluate(meta_field: string, metadata: any): boolean {
+        return metadata.some(
+            (element: any) => element.key === meta_field && element.value === 'true'
         );
-    }
-
-    private isNew(product: Product): boolean {
-        return product.meta_data.some(
-            (meta: any) => meta.key === 'isNew' && meta.value === 'true'
-        );
-    }
-
-    private extractIsbn(product: Product): string {
-        return (
-            product.meta_data.find((meta: any) => meta.key === 'isbn')?.value || ''
-        );
-    }
-
-    private extractAuthor(product: Product): string {
-        return (
-            product.meta_data.find((meta: any) => meta.key === 'author')?.value || ''
-        );
-    }
-
-    private extractGenre(product: Product): any {
-        return product.attributes.map((attr: any) => attr.name);
-    }
-
-    private determinePublisher(product: any): string {
-        return (
-            product.meta_data.find((meta: any) => meta.key === 'publisher')?.value ||
-            ''
-        );
-    }
-
-    private determineCoverImage(product: any): string {
-        return product.images.length > 0
-            ? product.images[0].src
-            : 'assets/images/placeholder.png';
-    }
-
-    private extractImageURLs(product: any): string[] {
-        return product.images.map((image: any) => image.src);
     }
 }

@@ -27,7 +27,8 @@ export class BookCatalogueComponent implements OnInit {
                 console.error(e);
                 const errorMessage = 'Error retrieving searched catalogue.';
                 this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
-            }
+            },
+            complete: () => console.log('Results (after searching): ', this.books) // DEBUG
         });
 
         if (!this.books.length) {
@@ -48,10 +49,9 @@ export class BookCatalogueComponent implements OnInit {
                 console.error(e);
                 const errorMessage = 'Error retrieving initial catalogue.';
                 this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
-            }
+            },
+            complete: () => console.log('Results (initial catalogue): ', this.books) // DEBUG
         });
-
-        console.log('results: ', this.books);
     }
 
     addToCart(book: Book) {

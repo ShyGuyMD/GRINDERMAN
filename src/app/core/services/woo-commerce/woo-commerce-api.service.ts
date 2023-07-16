@@ -4,6 +4,7 @@ import { ApiService } from '../api';
 import { config } from 'src/environments/environment';
 import { Book } from '@core/models/book';
 import { CreateProductRequest } from '@core/models/request/createProductRequest';
+import { ProductService } from '../product';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,7 @@ export class WooCommerceApiService {
 
     constructor(
         private _apiService: ApiService
+        , private _productService: ProductService
     ) { }
 
     getAllProducts() {
@@ -50,22 +52,8 @@ export class WooCommerceApiService {
     postProduct(book: Book) {
         const url = `${this.baseUrl}/products`;
 
-        console.log('This is the Book: ', book);
+        const body = this._productService.mapBookToProduct(book);
 
-        const body: CreateProductRequest = {
-            name: book.title,
-            regular_price: book.price,
-            description: book.synopsis,
-            manage_stock: true,
-            meta_data: [],
-            attributes: [{
-                "name": "Genero",
-                "options": book.genre?.map((element: any) => (element.name))
-            }],
-            status: 'publish'
-        }
-
-        console.log('Request URL: ', url);
         console.log('Request Body: ', body);
 
         return this._apiService.post(url, body, this.headers);
@@ -76,5 +64,9 @@ export class WooCommerceApiService {
         const body = { name: termValue };
 
         return this._apiService.post(url, body, this.headers);
+    }
+
+    putProductData(productId: number, body: any) {
+        return this._apiService.put(`${this.baseUrl}/products/${productId}`, body, this.headers);
     }
 }
