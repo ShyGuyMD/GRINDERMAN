@@ -1,1 +1,37 @@
-<p>admin-create works!</p>
+<form (ngSubmit)="save()" #adminForm="ngForm" class="p-mt-4">
+  <div *ngIf="isLoading; else showForm">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <ng-template #showForm>
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="admin-email">Email:</label>
+        <input
+          type="email"
+          id="admin-email"
+          pInputText
+          [(ngModel)]="admin.email"
+          name="email"
+          required
+        />
+      </div>
+      <div class="p-field">
+        <label for="admin-password">Password:</label>
+        <input
+          type="password"
+          id="admin-password"
+          pPassword
+          [(ngModel)]="admin.password"
+          name="password"
+          required
+        />
+      </div>
+    </div>
+    <div class="p-formgroup-inline mt-4">
+      <button type="submit" class="p-button">Guardar</button>
+      <button type="button" class="p-button ml-2" (click)="cleanup()">
+        Guardar y Nuevo
+      </button>
+    </div>
+  </ng-template>
+</form>

@@ -1,39 +1,47 @@
 import { Injectable } from '@angular/core';
+import { Admin, Client, User } from '@core/models/user';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  private activeUser: User | undefined;
 
-    private userData: any; // Placeholder for user data
+  constructor() {}
 
-    constructor() { }
+  public setUserData(user: User): void {
+    this.activeUser = user;
+  }
 
-    public setUserData(userData: any): void {
-        this.userData = userData;
+  public getUserData(): any {
+    return this.activeUser;
+  }
+
+  public getUserName(): string {
+    if (this.activeUser) {
+      return this.activeUser?.email;
     }
+    return '';
+  }
 
-    public getUserData(): any {
-        return this.userData;
-    }
+  public registerClient(client: Client): void {
+    // Registration logic for client
+  }
 
-    public getUserName(): string {
-        return 'Bilbo Baggins';
-    }
+  public registerAdministrator(admin: Admin): void {
+    // Registration logic for administrator
+  }
 
-    registerClient(email: string, password: string): void {
-        // Registration logic for client
-      }
-    
-      registerAdministrator(email: string, password: string): void {
-        // Registration logic for administrator
-      }
-    
-      validatePassword(password: string): boolean {
-        return true;
-      }
-    
-      encryptPassword(password: string): string {
-        return '';
-      }
+  public validatePassword(password: string): boolean {
+    return true;
+  }
+
+  public valitdateEmail(email: string): boolean {
+    // Add your email validation logic here
+    return true;
+  }
+
+  private encryptPassword(password: string): string {
+    return '';
+  }
 }
