@@ -1,6 +1,6 @@
 // Angular Core
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 // Application Components
 import { components } from "@core/components";
@@ -12,7 +12,7 @@ import { SharedModule } from "@shared/shared.module";
 
 @NgModule({
     declarations: [...components],
-    imports: [SharedModule, PrimengModule, FormsModule],
+    imports: [SharedModule, PrimengModule, FormsModule, ReactiveFormsModule],
     providers: []
 })
 

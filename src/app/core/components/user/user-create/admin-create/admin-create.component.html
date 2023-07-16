@@ -1,0 +1,70 @@
+<app-section-title title="Alta de Administrador"></app-section-title>
+<form [formGroup]="adminForm" (ngSubmit)="save()" class="p-mt-4">
+  <div *ngIf="isLoading; else showForm">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+  <ng-template #showForm>
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="admin-email">Email:</label>
+        <input
+          type="email"
+          id="admin-email"
+          pInputText
+          formControlName="email"
+          name="email"
+          required
+          (blur)="validateEmail()"
+        />
+        <div *ngIf="adminForm.get('email')?.invalid && adminForm.get('email')?.touched" class="p-error">
+          <ng-container *ngIf="adminForm.get('email')?.hasError('required')">
+            Email is required.
+          </ng-container>
+          <ng-container *ngIf="adminForm.get('email')?.hasError('email')">
+            Invalid email format.
+          </ng-container>
+        </div>
+        <div *ngIf="registrationError" class="p-error">
+          Existing email.
+        </div>
+      </div>
+      <div class="p-field">
+        <label for="admin-password">Password:</label>
+        <input
+          type="password"
+          id="admin-password"
+          pPassword
+          formControlName="password"
+          required
+          (blur)="validatePassword()"
+        />
+        <div *ngIf="adminForm.get('password')?.invalid && adminForm.get('password')?.touched" class="p-error">
+          <ng-container *ngIf="adminForm.get('password')?.hasError('required')">
+            Password is required.
+          </ng-container>
+          <ng-container *ngIf="adminForm.get('password')?.hasError('passwordInvalid')">
+            Password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@#$%^&+=).
+          </ng-container>
+        </div>
+      </div>
+      <!-- Double password field and error message for password mismatch -->
+      <div class="p-field">
+        <label for="admin-confirm-password">Confirm Password:</label>
+        <input
+          type="password"
+          id="admin-confirm-password"
+          pPassword
+          formControlName="confirmPassword"
+          required
+          (blur)="validatePasswordMatch()"
+        />
+        <div *ngIf="adminForm.get('confirmPassword')?.value !== adminForm.get('password')?.value && adminForm.get('confirmPassword')?.touched" class="p-error">
+          Passwords do not match.
+        </div>
+      </div>
+    </div>
+    <div class="p-formgroup-inline mt-4">
+      <button type="submit" class="p-button">Registrar</button>
+    </div>
+  </ng-template>
+</form>

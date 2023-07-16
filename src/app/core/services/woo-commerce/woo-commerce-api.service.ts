@@ -5,6 +5,7 @@ import { config } from 'src/environments/environment';
 import { Book } from '@core/models/book';
 import { CreateProductRequest } from '@core/models/request/createProductRequest';
 import { ProductService } from '../product';
+import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -68,5 +69,11 @@ export class WooCommerceApiService {
 
     putProductData(productId: number, body: any) {
         return this._apiService.put(`${this.baseUrl}/products/${productId}`, body, this.headers);
+    }
+
+    public postCustomer(body: CreateCustomerRequest): any {
+        const url = `${this.baseUrl}/customers`;
+
+        return this._apiService.post(url, body, this.headers);
     }
 }

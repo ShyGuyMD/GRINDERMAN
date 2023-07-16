@@ -9905,3 +9905,7 @@ p-multiselect.ng-dirty.ng-invalid .p-multiselect:not(.p-disabled).p-focus {
 .p-field {
     margin-top: 10px;
 }
+
+.p-progress-spinner {
+    display: block!important;
+}
