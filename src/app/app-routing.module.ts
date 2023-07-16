@@ -5,10 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { StyleTemplateComponent } from './style-template/style-template.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent } from '@core/components/book';
-import { BlankPageComponent, LandingComponent } from '@core/components';
+import { BlankPageComponent, LandingComponent, UserCreateComponent } from '@core/components';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'style-template', pathMatch: 'full' },
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: '', component: LayoutComponent,
         children: [
@@ -21,6 +21,7 @@ const routes: Routes = [
             { path: 'blank', component: BlankPageComponent },
             { path: 'catalog', component: BookCatalogueComponent },
             { path: 'home', component: LandingComponent },
+            { path: 'register', component: UserCreateComponent },
         ]
     },
 
