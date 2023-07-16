@@ -7,3 +7,12 @@ export enum InventoryStatus {
 export enum Attributes {
     ATTR_GENRE = 'Genero'
 }
+
+export enum UserRole {
+    ADMIN = 'administrator',
+    CLIENT = 'customer'
+}
+
+export enum WoocommerceError {
+    EMAIL_EXISTS = 'registration-error-email-exists'
+}

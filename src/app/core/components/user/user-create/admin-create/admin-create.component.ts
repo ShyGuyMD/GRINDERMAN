@@ -19,10 +19,7 @@ export class AdminCreateComponent {
   constructor(private _userService: UserService) {}
 
   public save(): void {
-    if (!this._userService.validatePassword(this.admin.password)) {
-      // Password validation failed
-      return;
-    }
+
 
     // Register the administrator
     this._userService.registerAdministrator(this.admin);

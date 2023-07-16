@@ -1,4 +1,4 @@
-<form (ngSubmit)="save()" #clientForm="ngForm" class="p-mt-4">
+<form [formGroup]="clientForm" (ngSubmit)="save()" class="p-mt-4">
   <div *ngIf="isLoading; else showForm">
     <p-progressSpinner></p-progressSpinner>
   </div>
@@ -10,12 +10,21 @@
           type="email"
           id="client-email"
           pInputText
-          [(ngModel)]="client.email"
+          formControlName="email"
           name="email"
           required
+          (blur)="validateEmail()"
         />
-        <div *ngIf="emailError" class="p-error">
-          {{ emailError }}
+        <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="p-error">
+          <ng-container *ngIf="clientForm.get('email')?.hasError('required')">
+            Email is required.
+          </ng-container>
+          <ng-container *ngIf="clientForm.get('email')?.hasError('email')">
+            Invalid email format.
+          </ng-container>
+        </div>
+        <div *ngIf="registrationError" class="p-error">
+          Existing email.
         </div>
       </div>
       <div class="p-field">
@@ -24,12 +33,17 @@
           type="password"
           id="client-password"
           pPassword
-          [(ngModel)]="client.password"
-          name="password"
+          formControlName="password"
           required
+          (blur)="validatePassword()"
         />
-        <div *ngIf="passwordError" class="p-error">
-          {{ passwordError }}
+        <div *ngIf="clientForm.get('password')?.invalid && clientForm.get('password')?.touched" class="p-error">
+          <ng-container *ngIf="clientForm.get('password')?.hasError('required')">
+            Password is required.
+          </ng-container>
+          <ng-container *ngIf="clientForm.get('password')?.hasError('passwordInvalid')">
+            Password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@#$%^&+=).
+          </ng-container>
         </div>
       </div>
       <!-- Double password field and error message for password mismatch -->
@@ -39,13 +53,13 @@
           type="password"
           id="client-confirm-password"
           pPassword
-          [(ngModel)]="confirmPassword"
-          name="confirmPassword"
+          formControlName="confirmPassword"
           required
+          (blur)="validatePasswordMatch()"
         />
-      </div>
-      <div *ngIf="passwordMismatchError" class="p-error">
-        Passwords do not match.
+        <div *ngIf="clientForm.get('confirmPassword')?.value !== clientForm.get('password')?.value && clientForm.get('confirmPassword')?.touched" class="p-error">
+          Passwords do not match.
+        </div>
       </div>
     </div>
     <div class="p-formgroup-inline mt-4">

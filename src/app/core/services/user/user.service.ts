@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
+import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
 import { Admin, Client, User } from '@core/models/user';
+import { UserRole } from '@shared/constants';
+import { WooCommerceApiService } from '../woo-commerce';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,7 +11,7 @@ import { Admin, Client, User } from '@core/models/user';
 export class UserService {
   private activeUser: User | undefined;
 
-  constructor() {}
+  constructor(private _wooCommerceApiService: WooCommerceApiService) {}
 
   public setUserData(user: User): void {
     this.activeUser = user;
@@ -24,24 +28,24 @@ export class UserService {
     return '';
   }
 
-  public registerClient(client: Client): void {
-    // Registration logic for client
+  public registerClient(client: Client): Observable<any> {
+    const bodyRequest = this.mapCreateClientRequest(client);
+    return this._wooCommerceApiService.postCustomer(bodyRequest)
   }
 
   public registerAdministrator(admin: Admin): void {
     // Registration logic for administrator
   }
 
-  public validatePassword(password: string): boolean {
-    return true;
-  }
-
-  public valitdateEmail(email: string): boolean {
-    // Add your email validation logic here
-    return true;
-  }
-
   private encryptPassword(password: string): string {
-    return '';
+    return password;
   }
+
+  public mapCreateClientRequest(client: Client): CreateCustomerRequest {
+    return {
+      email: client.email,
+      password: this.encryptPassword(client.password),
+      role: UserRole.CLIENT
+    }
+}
 }

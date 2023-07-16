@@ -1,2 +1,8 @@
-<h1>Error</h1>
-<p>{{ errorMessage }}</p>
+<div *ngIf="errorMessage">
+    <h1>Error</h1>
+    <p>{{ errorMessage }}</p>
+</div>
+<div *ngIf="successMessage">
+    <h1>Success!</h1>
+    <p>{{ successMessage }}</p>
+</div>
