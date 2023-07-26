@@ -6,6 +6,7 @@ import { Book } from '@core/models/book';
 import { CreateProductRequest } from '@core/models/request/createProductRequest';
 import { ProductService } from '../product';
 import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
+import { LoginRequest } from '@core/models/request/loginRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -25,6 +26,11 @@ export class WooCommerceApiService {
         private _apiService: ApiService
         , private _productService: ProductService
     ) { }
+
+    login(body: LoginRequest) {
+        const url = `https://localhost/admin/wordpress/wp-json/jwt-auth/v1/token`;
+        return this._apiService.post(url, body, this.headers)
+    }
 
     getAllProducts() {
         return this._apiService.get(`${this.baseUrl}/products/`, this.headers);

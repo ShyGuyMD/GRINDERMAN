@@ -4,6 +4,7 @@ import { CartpreviewComponent } from "./cartpreview";
 import { HeaderComponent } from "./header";
 import { LandingAdminComponent, LandingComponent, LandingDevelopComponent } from "./landing";
 import { LayoutComponent } from "./layout";
+import { LoginComponent } from "./login";
 import { MenuComponent } from "./menu";
 import { SearchbarComponent } from "./searchbar";
 import { SectionTitleComponent } from "./section-title";
@@ -14,6 +15,7 @@ export * from './blank-page';
 export * from './cartpreview';
 export * from './header';
 export * from './layout';
+export * from './login';
 export * from './menu';
 export * from './searchbar';
 export * from './book';
@@ -36,6 +38,7 @@ export const components = [
     LandingComponent,
     LandingDevelopComponent,
     LayoutComponent,
+    LoginComponent,
     MenuComponent,
     SearchbarComponent,
     SectionTitleComponent,

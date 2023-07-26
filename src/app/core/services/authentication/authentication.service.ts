@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { WooCommerceApiService } from '../woo-commerce';
+import { LoginRequest } from '@core/models/request/loginRequest';
 
 @Injectable({
     providedIn: 'root'
@@ -7,15 +9,31 @@ export class AuthenticationService {
 
     private isLoggedIn: boolean = false;
 
-    constructor() { }
+    constructor(private _wooCommerceApiService: WooCommerceApiService) { }
 
-    login(username: string, password: string): boolean {
-        // Placeholder login request and authentication logic
-        if (username === 'example' && password === 'password') {
-            this.isLoggedIn = true;
-            return true;
+    login(email: string, password: string): boolean {
+
+        const loginRequest: LoginRequest = {
+            email: email,
+            password: password
         }
-        return false;
+        this._wooCommerceApiService.login(loginRequest).subscribe({
+            next: (response) => {
+              // Authentication successful, handle the response and store the token
+              const authToken = response.token;
+              console.log('Authentication successful!', authToken);
+              // Store the token in local storage or a cookie for future use
+              // For example, to store in local storage:
+              localStorage.setItem('authToken', authToken);
+              this.isLoggedIn = true;
+            },
+            error: (e: any) => {
+              // Authentication failed, handle the error if needed
+              console.error('Authentication failed!', e);
+              this.isLoggedIn = false;
+            }
+        })
+        return this.isLoggedIn;
     }
 
     logout(): void {
