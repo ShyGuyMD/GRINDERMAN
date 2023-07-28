@@ -15,6 +15,7 @@ import { SharedModule } from '@shared/shared.module';
 import { StyleTemplateComponent } from './style-template/style-template.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ExceptionService } from '@core/services';
+import { AdminGuard } from './guards/admin.guard';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { ExceptionService } from '@core/services';
         AppRoutingModule
     ],
     providers: [
+        AdminGuard,
         MessageService,
         ConfirmationService,
         { provide: ErrorHandler, useClass: ExceptionService }],

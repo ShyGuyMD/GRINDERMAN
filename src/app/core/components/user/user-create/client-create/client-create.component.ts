@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Client } from '@core/models/user';
 import { UserService } from '@core/services';
-import { WoocommerceError } from '@shared/constants';
+import { UserRole, WoocommerceError } from '@shared/constants';
 import { passwordValidator } from '@shared/customValidators';
 
 @Component({
@@ -16,6 +16,7 @@ export class ClientCreateComponent implements OnInit {
   public client: Client = {
     email: '',
     password: '',
+    role: UserRole.CLIENT
   };
   public confirmPassword: string = '';
   public registrationError: boolean = false;

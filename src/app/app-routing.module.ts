@@ -6,25 +6,34 @@ import { StyleTemplateComponent } from './style-template/style-template.componen
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent } from '@core/components/book';
 import { BlankPageComponent, LandingComponent, LoginComponent, UserCreateComponent } from '@core/components';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     {
         path: '', component: LayoutComponent,
         children: [
-            {
-                path: 'style-template',
-                component: StyleTemplateComponent
-            },
-            { path: 'book-create', component: BookCreateComponent },
             { path: 'book-detail/:id', component: BookDetailComponent },
             { path: 'blank', component: BlankPageComponent },
-            { path: 'catalog', component: BookCatalogueComponent },
-            { path: 'home', component: LandingComponent },
+            { path: 'home', component: BookCatalogueComponent },
             { path: 'register', component: UserCreateComponent },
             { path: 'login', component: LoginComponent}
         ]
     },
+    {
+        path: 'admin',
+        component: LayoutComponent,
+        canActivate: [AdminGuard],
+        children: [
+          { path: 'style-template', component: StyleTemplateComponent },
+          { path: 'book-create', component: BookCreateComponent },
+          { path: 'book-detail/:id', component: BookDetailComponent },
+          { path: 'blank', component: BlankPageComponent },
+          { path: 'catalog', component: BookCatalogueComponent },
+          { path: 'home', component: LandingComponent},
+          { path: '', redirectTo: 'home', pathMatch: 'full' }, // Default admin route
+        ]
+      },
 
 ];
 

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Admin } from '@core/models/user';
 import { UserService } from '@core/services';
-import { WoocommerceError } from '@shared/constants';
+import { UserRole, WoocommerceError } from '@shared/constants';
 import { passwordValidator } from '@shared/customValidators';
 
 @Component({
@@ -16,6 +16,7 @@ export class AdminCreateComponent implements OnInit {
   public admin: Admin = {
     email: '',
     password: '',
+    role: UserRole.ADMIN
   };
   public confirmPassword: string = '';
   public registrationError: boolean = false;

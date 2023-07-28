@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { WooCommerceApiService } from '@core/services';
+import { AuthenticationService, WooCommerceApiService } from '@core/services';
 import { Attributes } from '@shared/constants';
 import { mergeMap } from 'rxjs/operators';
 @Component({
@@ -33,7 +33,8 @@ export class BookCreateComponent {
     constructor(
         private _wooCommerceAPIService: WooCommerceApiService,
         private _route: ActivatedRoute,
-        private _router: Router,) { }
+        private _router: Router,
+        private _authService: AuthenticationService) { }
 
     ngOnInit(): void {
 
@@ -55,6 +56,8 @@ export class BookCreateComponent {
                 console.log('Error in getting Terms: ', e);
             }
         });
+
+        console.log(this._authService.getCurrentUser())
     }
 
     save(redirect: boolean = true) {

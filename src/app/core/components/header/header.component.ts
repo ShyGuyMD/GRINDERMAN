@@ -13,7 +13,7 @@ export class HeaderComponent {
     constructor(private _authService: AuthenticationService) { }
 
     ngOnInit(): void {
-        this.isLoggedIn = this._authService.getLoggedInStatus();
+        this.isLoggedIn = this._authService.isAuthenticatedUser();
     }
 
 }

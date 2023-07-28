@@ -11,7 +11,7 @@ export class LayoutComponent {
     constructor(private _authService: AuthenticationService) { }
 
     public checkLoginStatus(): void {
-        const loggedInStatus = this._authService.getLoggedInStatus();
+        const loggedInStatus = this._authService.isAuthenticatedUser();
         console.log('Logged in status:', loggedInStatus);
     }
 }

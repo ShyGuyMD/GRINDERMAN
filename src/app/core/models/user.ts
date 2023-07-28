@@ -1,6 +1,9 @@
+import { UserRole } from "@shared/constants";
+
 export interface User {
   email: string;
   password: string;
+  role: UserRole;
 }
 
 export interface Client extends User {
