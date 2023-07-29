@@ -16,3 +16,9 @@ export enum UserRole {
 export enum WoocommerceError {
     EMAIL_EXISTS = 'registration-error-email-exists'
 }
+
+export enum Severity {
+    DANGER = 'danger',
+    WARNING = 'warn',
+    SUCCESS = 'success'
+}

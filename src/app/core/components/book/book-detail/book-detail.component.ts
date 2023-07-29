@@ -64,6 +64,6 @@ export class BookDetailComponent implements OnInit {
     }
 
     getSeverity(book: Book) {
-        return this._bookService.getSeverity(book);
+        return this._bookService.getInventorySeverity(book);
     }
 }

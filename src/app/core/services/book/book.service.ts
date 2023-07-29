@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Book } from '@core/models/book';
 import { Product } from '@core/models/product';
-import { InventoryStatus } from '@shared/constants';
+import { InventoryStatus, Severity } from '@shared/constants';
 
 @Injectable({
     providedIn: 'root',
@@ -9,13 +9,13 @@ import { InventoryStatus } from '@shared/constants';
 export class BookService {
     constructor() { }
 
-    public getSeverity(book: Book): string {
+    public getInventorySeverity(book: Book): string {
         if (book.inventoryStatus === InventoryStatus.OUT_OF_STOCK) {
-            return 'danger';
+            return Severity.DANGER;
         } else if (book.inventoryStatus === InventoryStatus.LIMITED_STOCK) {
-            return 'warn';
+            return Severity.WARNING;
         } else {
-            return 'success';
+            return Severity.SUCCESS;
         }
     }
 
