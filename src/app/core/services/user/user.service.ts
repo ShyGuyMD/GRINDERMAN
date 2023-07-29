@@ -45,14 +45,14 @@ export class UserService {
   public mapCreateClientRequest(client: Client): CreateCustomerRequest {
     return {
       email: client.email,
-      password: this.encryptPassword(client.password),
+      password: this.encryptPassword(client.password!),
       role: UserRole.CLIENT
     }
 }
 public mapCreateAdminRequest(admin: Admin): CreateCustomerRequest {
   return {
     email: admin.email,
-    password: this.encryptPassword(admin.password),
+    password: this.encryptPassword(admin.password!),
     role: UserRole.ADMIN
   }
 }

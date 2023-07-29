@@ -2,7 +2,7 @@ import { UserRole } from "@shared/constants";
 
 export interface User {
   email: string;
-  password: string;
+  password?: string;
   role: UserRole;
 }
 
