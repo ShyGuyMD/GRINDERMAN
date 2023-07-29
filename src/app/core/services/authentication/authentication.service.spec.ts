@@ -6,6 +6,7 @@ import { wooCommerceApiServiceMock } from '@core/mocks/woocommerceapi.service.mo
 
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
+    let _wooCommerceApiService: WooCommerceApiService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -14,6 +15,7 @@ describe('AuthenticationService', () => {
             ],
           });
         service = TestBed.inject(AuthenticationService);
+        _wooCommerceApiService = TestBed.inject(WooCommerceApiService);
     });
 
     it('should be created', () => {

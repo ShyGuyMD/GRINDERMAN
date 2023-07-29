@@ -2,7 +2,7 @@ import { Book } from "@core/models/book";
 import { BookService } from "@core/services";
 
 export const bookServiceMock: Partial<BookService> = {
-    getSeverity: jest.fn(),
+    getInventorySeverity: jest.fn(),
     mapProductToBook: jest.fn()
   };
 
