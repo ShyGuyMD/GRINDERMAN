@@ -52,7 +52,9 @@ export class ProductService {
     }
 
     private injectImages(bookImages: any): any {
-        return bookImages.map((image: any) => { image.name, image.src });
+        //const imagenes = bookImages.map((image: any) => { return {'name' : image.name, 'src' : image.src } });
+        //console.log('imagenes:',  imagenes);
+        return [];
     }
 
     private injectStockStatus(inventoryStatus?: string): string {

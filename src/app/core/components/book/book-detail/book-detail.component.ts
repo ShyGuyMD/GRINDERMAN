@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
 import { BookService, WooCommerceApiService } from '@core/services';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { BookEditModalComponent } from '../book-edit-modal/book-edit-modal.component';
 
 @Component({
     selector: 'app-book-detail',
@@ -12,11 +14,14 @@ export class BookDetailComponent implements OnInit {
     id!: number;
     book!: Book;
 
+    ref!: DynamicDialogRef;
+
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
         private _bookService: BookService,
-        private _wooCommerceAPIService: WooCommerceApiService
+        private _wooCommerceAPIService: WooCommerceApiService,
+        private _dialogService: DialogService
     ) { }
 
     ngOnInit() {
@@ -40,7 +45,10 @@ export class BookDetailComponent implements OnInit {
                 this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
             }
         });
+    }
 
+    ngOnDestroy() {
+        if (this.ref) this.ref.close();
     }
 
     addToCart() {
@@ -56,11 +64,35 @@ export class BookDetailComponent implements OnInit {
         });
     }
 
+    edit() {
+        console.log('edit');
+        this.ref = this._dialogService.open(
+            BookEditModalComponent, {
+                header: this.book.title,
+                dismissableMask: true,
+                contentStyle:  {
+                    'max-height': '700px',
+                    overflow: 'auto'
+                },
+                baseZIndex: 10000,
+                data: {
+                    'bookId' : this.id,
+                    'bookData' :this.book
+                },
+                modal: true
+            }
+        )
+    }
+
     escapeSynopsis() {
         const tempElement = document.createElement('div');
         tempElement.innerHTML = this.book?.synopsis || '';
 
         return tempElement.innerText;
+    }
+
+    listGenres() {
+        return this.book.genre.map((obj : any) => obj.name).join(', ');
     }
 
     getSeverity(book: Book) {
