@@ -74,7 +74,7 @@ export class BookService {
     }
 
     private extractImageURLs(images: any): any[] {
-        return images.map((image: any) => { image.name, image.src });
+        return images.map((image: any) => ({ name: image.name, src: image.src }));
     }
 
     private extractMetadata(meta_field: string, metadata: any): string {
