@@ -8,6 +8,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
 import { DividerModule } from 'primeng/divider';
 import { DropdownModule } from 'primeng/dropdown';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { GalleriaModule } from 'primeng/galleria';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -45,6 +46,7 @@ const modules = [
     DataViewModule,
     DividerModule,
     DropdownModule,
+    DynamicDialogModule,
     FileUploadModule,
     GalleriaModule,
     InputNumberModule,

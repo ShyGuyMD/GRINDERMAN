@@ -5,15 +5,25 @@ import { mockBook1, mockBook2, mockBook3 } from '@core/mocks/book.service.mock';
 import { InventoryStatus, Severity } from '@shared/constants';
 import { mockProduct } from '@core/mocks/product.service.mock';
 import { Product } from '@core/models/product';
+import { WooCommerceApiService } from '../woo-commerce';
+import { wooCommerceApiServiceMock } from '@core/mocks/woocommerceapi.service.mock';
+import { UtilsService } from '../utils';
+import { utilServiceMock } from '@core/mocks/utilService.mock';
 
 describe('BookService', () => {
   let bookService: BookService;
+  let _wooCommerceApiService: WooCommerceApiService;
+  let _utilService: UtilsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [BookService],
+      providers: [BookService,  
+        { provide: WooCommerceApiService, useValue: wooCommerceApiServiceMock },
+        { provide: UtilsService, useValue: utilServiceMock },],
     });
     bookService = TestBed.inject(BookService);
+    _wooCommerceApiService = TestBed.inject(WooCommerceApiService);
+    _utilService = TestBed.inject(UtilsService);
   });
 
   describe('getSeverity', () => {

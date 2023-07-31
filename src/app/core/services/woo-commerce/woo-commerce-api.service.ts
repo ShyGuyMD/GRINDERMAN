@@ -79,6 +79,8 @@ export class WooCommerceApiService {
   }
 
   putProductData(productId: number, body: any) {
+    console.log('This is the ID for the API: ', productId);
+    console.log('This is the Data for the API: ', body);
     return this._apiService.put(
       `${this.baseUrl}/products/${productId}`,
       body,

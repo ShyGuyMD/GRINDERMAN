@@ -3,9 +3,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 // PrimeNG
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 // Application Components and Modules
 import { AppComponent } from './app.component';
@@ -34,6 +34,7 @@ import { AdminGuard } from './guards/admin.guard';
         AdminGuard,
         MessageService,
         ConfirmationService,
+        DialogService,
         { provide: ErrorHandler, useClass: ExceptionService }],
     bootstrap: [AppComponent]
 })

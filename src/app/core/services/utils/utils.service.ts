@@ -6,4 +6,9 @@ import { Injectable } from '@angular/core';
 export class UtilsService {
 
     constructor() { }
+
+    
+    public sanitizeAndRemoveHtmlTags(input: string): string {
+        return input.replace(/<[^>]*>/g, '');
+      }
 }

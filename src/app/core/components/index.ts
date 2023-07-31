@@ -1,5 +1,5 @@
 import { BlankPageComponent } from "./blank-page";
-import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent } from "./book";
+import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookEditModalComponent } from "./book";
 import { CartpreviewComponent } from "./cartpreview";
 import { HeaderComponent } from "./header";
 import { LandingAdminComponent, LandingComponent, LandingDevelopComponent } from "./landing";
@@ -31,6 +31,7 @@ export const components = [
     BookCreateComponent,
     BookCatalogueComponent,
     BookDetailComponent,
+    BookEditModalComponent,
     CartpreviewComponent,
     ClientCreateComponent,
     HeaderComponent,
