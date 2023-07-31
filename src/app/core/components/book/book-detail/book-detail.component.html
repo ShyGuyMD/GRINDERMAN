@@ -1,8 +1,11 @@
-<div *ngIf="book" class="grid mt-4">
+<div *ngIf="isLoading">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+<div *ngIf="!isLoading && book" class="grid mt-4">
     <div class="col-6">
         <p-carousel *ngIf="book && book.images" [value]="book.images">
             <ng-template let-image pTemplate="item">
-                <p-image [src]="image" alt="Additional Image" class="carousel-image" width=100%></p-image>
+                <p-image [src]="image.src" alt="Additional Image" class="carousel-image" width=100%></p-image>
             </ng-template>
         </p-carousel>
         <p-image></p-image>
@@ -17,12 +20,12 @@
             </div>
             <div class="book-details">
                 <p><b>ISBN:</b> {{ book.isbn }}</p>
-                <p><b>Genre:</b> {{ listGenres() }}</p>
-                <p><b>Publisher:</b> {{ book.publisher }}</p>
-                <p><b>Condition:</b> {{ book.isNew ? 'New' : 'Used' }}</p>
+                <p><b>Género:</b> {{ listGenres() }}</p>
+                <p><b>Editorial:</b> {{ book.publisher }}</p>
+                <p><b>Condición:</b> {{ book.isNew ? 'New' : 'Used' }}</p>
             </div>
             <p-divider></p-divider>
-            <p>{{ escapeSynopsis() }}</p>
+            <p>{{ book.synopsis }}</p>
         </div>
         <div class="flex justify-content-evenly mt-4">
             <button pButton label="Add to Cart" class="add-to-cart-button" *ngIf="book.isActive"
