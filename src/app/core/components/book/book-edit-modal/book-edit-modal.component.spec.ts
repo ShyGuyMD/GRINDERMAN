@@ -1,20 +1,40 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { bookServiceMock } from "@core/mocks/book.service.mock";
+import { dynamicDialogConfigMock } from "@core/mocks/dynamicdialogconfig.mock";
+import { dynamicDialogRefMock } from "@core/mocks/dynamicdialogref.mock";
+import { productServiceMock } from "@core/mocks/product.service.mock";
+import { wooCommerceApiServiceMock } from "@core/mocks/woocommerceapi.service.mock";
+import { BookService, ProductService, WooCommerceApiService } from "@core/services";
+import { DynamicDialogRef, DynamicDialogConfig, DialogService } from "primeng/dynamicdialog";
+import { BookEditModalComponent } from "./book-edit-modal.component";
+import { FormsModule } from "@angular/forms";
 
-import { BookEditModalComponent } from './book-edit-modal.component';
 
 describe('BookEditModalComponent', () => {
   let component: BookEditModalComponent;
   let fixture: ComponentFixture<BookEditModalComponent>;
+  let _bookService: BookService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ BookEditModalComponent ]
+
+  beforeEach(waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ BookEditModalComponent ],
+        imports: [FormsModule],
+        providers: [
+          { provide: BookService, useClass: bookServiceMock },
+          { provide: ProductService, useClass: productServiceMock },
+          { provide: WooCommerceApiService, useClass: wooCommerceApiServiceMock },
+          { provide: DynamicDialogRef, useClass: dynamicDialogRefMock },
+          { provide: DynamicDialogConfig, useClass: dynamicDialogConfigMock },
+          DialogService,]
+      }).compileComponents();
     })
-    .compileComponents();
-
+  );
+  beforeEach( () => {
     fixture = TestBed.createComponent(BookEditModalComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    _bookService = TestBed.inject(BookService);
+    console.log('Component created:', component);
   });
 
   it('should create', () => {
