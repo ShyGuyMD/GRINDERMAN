@@ -66,7 +66,7 @@ export class BookService {
       // Optional Fields
       availableUnits: product.stock_quantity,
       cover: this.extractCover(extractedImages),
-      images:  extractedImages.length > 0 ? extractedImages.length : [{ name: 'placeholder', src: 'assets/images/placeholder.png' }],
+      images:  extractedImages.length > 0 ? extractedImages : [{ name: 'placeholder', src: 'assets/images/placeholder.png' }],
       inventoryStatus: this.extractStockStatus(product.stock_status),
       synopsis: this._utilService.sanitizeAndRemoveHtmlTags(product.description),
 
