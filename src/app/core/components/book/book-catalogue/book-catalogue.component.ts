@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { BookService, SharedService, WooCommerceApiService } from '@core/services';
+import { BookService, CartService, SharedService, WooCommerceApiService } from '@core/services';
 
 @Component({
     selector: 'app-book-catalogue',
@@ -16,7 +16,8 @@ export class BookCatalogueComponent implements OnInit {
     constructor(private _wooCommerceService: WooCommerceApiService,
         private _bookService: BookService,
         private _sharedService: SharedService,
-        private _router: Router) { }
+        private _router: Router,
+        private _cartService: CartService) { }
 
     ngOnInit() {
         this._sharedService.searchResult$.subscribe({
@@ -55,7 +56,6 @@ export class BookCatalogueComponent implements OnInit {
     }
 
     addToCart(book: Book) {
-        // Implement your logic to add the book to the cart
-        console.log('Book added to cart:', book);
+        this._cartService.addToCart(book);
     }
 }

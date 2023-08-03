@@ -1,0 +1,15 @@
+<div *ngIf="cartItems.length > 0; else emptyCart">
+    <app-cart-item
+      *ngFor="let item of cartItems; let i = index"
+      [item]="item"
+      (remove)="removeFromCart(item)"
+    ></app-cart-item>
+  
+    <div class="total">
+      Total: {{ total | currency: 'USD' }}
+    </div>
+  </div>
+  
+  <ng-template #emptyCart>
+    <p>Your cart is empty.</p>
+  </ng-template>

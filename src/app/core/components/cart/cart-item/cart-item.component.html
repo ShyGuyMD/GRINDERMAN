@@ -1,0 +1,7 @@
+<div class="cart-item">
+  <span class="book-title">{{ item.book.title }}</span>
+  <span class="book-author">{{ item.book.author }}</span>
+  <span class="price">{{ item.book.price | currency : "USD" }}</span>
+  <span class="quantity">x{{ item.quantity }}</span>
+  <button class="remove-button" (click)="remove.emit()">Remove</button>
+</div>
