@@ -4,6 +4,7 @@ import { Book } from '@core/models/book';
 import {
   BookService,
   ProductService,
+  UtilsService,
   WooCommerceApiService,
 } from '@core/services';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -25,6 +26,7 @@ export class BookEditModalComponent {
     private _bookService: BookService,
     private _productService: ProductService,
     private _wooCommerceAPIService: WooCommerceApiService,
+    private _utilService: UtilsService,
     private _ref: DynamicDialogRef,
     private _config: DynamicDialogConfig,
   ) {}
@@ -32,7 +34,7 @@ export class BookEditModalComponent {
   ngOnInit() {
     this.genreOptions = this._bookService.genreOptions;
     this.id = this._config.data.bookId;
-    this.book = structuredClone(this._config.data.bookData);
+    this.book = this._utilService.cloneObject(this._config.data.bookData);
     this.book.genre = this.book.genre.map((bookGenre: any) => {
       const matchedGenre = this.genreOptions.find(
         (genreOption: any) => genreOption.name === bookGenre.name
@@ -61,7 +63,6 @@ export class BookEditModalComponent {
         console.log('id:', this.id);
         console.log('submitting: ', this.book);
         console.log('response: ', v);
-        // TODO: REDIRECT TO DETAIL?
         this._bookService.setBookData(this.book);
       },
       error: (e) => {
