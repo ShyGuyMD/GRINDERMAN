@@ -8,5 +8,6 @@ export const wooCommerceApiServiceMock: Partial<WooCommerceApiService> = {
     getProductAttributeTerms: jest.fn().mockReturnValue(of([])),
     postProduct: jest.fn().mockReturnValue(of({})),
     getAllProducts: jest.fn().mockReturnValue(of([])),
-    postCustomer: jest.fn()
+    postCustomer: jest.fn(),
+    putProductData: jest.fn(() => of())
   };

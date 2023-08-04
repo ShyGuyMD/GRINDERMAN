@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { StyleTemplateComponent } from './style-template/style-template.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent } from '@core/components/book';
-import { BlankPageComponent, LandingComponent, LoginComponent, UserCreateComponent } from '@core/components';
+import { BlankPageComponent, CartComponent, LandingComponent, LoginComponent, UserCreateComponent } from '@core/components';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
@@ -17,7 +17,8 @@ const routes: Routes = [
             { path: 'blank', component: BlankPageComponent },
             { path: 'home', component: BookCatalogueComponent },
             { path: 'register', component: UserCreateComponent },
-            { path: 'login', component: LoginComponent}
+            { path: 'login', component: LoginComponent},
+            { path: 'cart', component: CartComponent}
         ]
     },
     {

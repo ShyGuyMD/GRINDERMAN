@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
 export class UtilsService {
+  constructor() {}
 
-    constructor() { }
+  public sanitizeAndRemoveHtmlTags(input: string): string {
+    return input.replace(/<[^>]*>/g, '');
+  }
 
-    
-    public sanitizeAndRemoveHtmlTags(input: string): string {
-        return input.replace(/<[^>]*>/g, '');
-      }
+  public cloneObject(obj: any): any {
+    return JSON.parse(JSON.stringify(obj));
+  }
 }

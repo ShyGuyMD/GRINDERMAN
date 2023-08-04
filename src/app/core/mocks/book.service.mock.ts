@@ -1,16 +1,24 @@
 import { Book } from "@core/models/book";
+import { Genre } from "@core/models/genre";
 import { BookService } from "@core/services";
 
 export const bookServiceMock: Partial<BookService> = {
-    getInventorySeverity: jest.fn(),
-    mapProductToBook: jest.fn()
-  };
+  genreOptions: [],
+  setBookData: jest.fn(),
+  getInventorySeverity: jest.fn(),
+  mapProductToBook: jest.fn(),
+};
+
+export const mockGenres: Genre[] = [
+  { id: 1, name: 'Fantasy', slug: 'fantasy' },
+  { id: 2, name: 'Adventure', slug: 'adventure' },
+]
 
 export const mockBook1: Book = {
     isbn: '9788408172619',
     title: 'Ciudad de Hueso',
     author: 'Cassandra Clare',
-    genre: [],
+    genre: mockGenres,
     publisher: 'Destino',
     price: 12.99,
     inventoryStatus: 'En Stock',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { BookService } from '@core/services';
+import { BookService, CartService } from '@core/services';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BookEditModalComponent } from '../book-edit-modal/book-edit-modal.component';
 
@@ -21,7 +21,8 @@ export class BookDetailComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _bookService: BookService,
-    private _dialogService: DialogService
+    private _dialogService: DialogService,
+    private _cartService: CartService,
   ) {}
 
   ngOnInit() {
@@ -62,7 +63,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   addToCart() {
-    // Implement the logic to add the book to the cart
+   this._cartService.addToCart(this.book);
   }
 
   deactivate() {

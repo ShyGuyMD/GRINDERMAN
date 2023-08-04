@@ -33,3 +33,14 @@
     font-weight: bold;
     color: #333333;
 }
+
+a.cart-button {
+    display: inline; /* Reset the display property to inline */
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Use the default text color */
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+    /* Add any additional styles you may need */
+  }
