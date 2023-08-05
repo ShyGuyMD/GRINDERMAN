@@ -1,15 +1,28 @@
-<div *ngIf="cartItems.length > 0; else emptyCart">
-    <app-cart-item
-      *ngFor="let item of cartItems; let i = index"
-      [item]="item"
-      (remove)="removeFromCart(item)"
-    ></app-cart-item>
-  
-    <div class="total">
-      Total: {{ total | currency: 'USD' }}
+<h2>Tu Carrito</h2>
+<div *ngIf="cartItems.length > 0; else emptyCart" class="p-d-flex p-flex-column p-mb-4">
+<p class="-mt-5">Tienes {{ totalQuantity }} items en tu carrito.</p>
+<div class="grid">
+  <div class="col-5">Item</div>
+  <div class="col-2 flex justify-content-center flex-wrap">Cantidad</div>
+  <div class="col-2 flex justify-content-center flex-wrap">Precio</div>
+  <div class="col-2 flex justify-content-center flex-wrap">Subtotal</div>
+</div>
+<p-divider></p-divider>
+  <div *ngFor="let cartItem of cartItems" class="p-mb-3">
+    <app-cart-item [item]="cartItem" (remove)="removeFromCart(cartItem)"></app-cart-item>
+  </div>
+  <p-divider></p-divider>
+  <div class="grid">
+    <div class="col-offset-7 col-2 flex justify-content-center flex-wrap">Total:</div>
+    <div class=" col-2 flex justify-content-center flex-wrap">{{ total | currency }}</div>
+    <div class="col-1 flex align-content-center flex-wrap">
+      <button pButton class="p-button-rounded p-button-success" icon="pi pi-arrow-right" ></button>
     </div>
+  </div>
   </div>
   
   <ng-template #emptyCart>
-    <p>Your cart is empty.</p>
+    <p>Tu carrito de compras está vacío.</p>
   </ng-template>
+
+  

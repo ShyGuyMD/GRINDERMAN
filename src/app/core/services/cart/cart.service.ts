@@ -24,14 +24,16 @@ export class CartService {
   addToCart(book: Book): void {
     const existingItem = this.cartItemsSubject.getValue().find((item) => item.book.id === book.id);
     const cartItems = this.cartItemsSubject.getValue().slice();
-
+  
     if (existingItem) {
-      existingItem.quantity++;
-    } else {
+      if (existingItem.quantity < existingItem.book.availableUnits) {
+        existingItem.quantity++;
+        this.saveCart(cartItems);
+      }
+    } else if (book.availableUnits > 0) {
       cartItems.push({ book, quantity: 1 });
+      this.saveCart(cartItems);
     }
-
-    this.saveCart(cartItems);
   }
   removeFromCart(book: Book): void {
     const cartItems = this.cartItemsSubject.getValue().slice();
@@ -39,6 +41,36 @@ export class CartService {
 
     if (index !== -1) {
       cartItems.splice(index, 1);
+      this.saveCart(cartItems);
+    }
+  }
+
+  incrementQuantity(book: Book): void {
+    const cartItems = this.cartItemsSubject.getValue().slice();
+    const cartItem = cartItems.find((item) => item.book.id === book.id);
+
+    if (cartItem && cartItem.quantity < cartItem.book.availableUnits) {
+      cartItem.quantity++;
+      this.saveCart(cartItems);
+    }
+  }
+
+  decrementQuantity(book: Book): void {
+    const cartItems = this.cartItemsSubject.getValue().slice();
+    const cartItem = cartItems.find((item) => item.book.id === book.id);
+
+    if (cartItem && cartItem.quantity > 1) {
+      cartItem.quantity--;
+      this.saveCart(cartItems);
+    }
+  }
+
+  updateQuantity(book: Book, quantity: number): void {
+    const cartItems = this.cartItemsSubject.getValue().slice();
+    const cartItem = cartItems.find((item) => item.book.id === book.id);
+  
+    if (cartItem) {
+      cartItem.quantity = quantity;
       this.saveCart(cartItems);
     }
   }

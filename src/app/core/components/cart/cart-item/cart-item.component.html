@@ -1,7 +1,61 @@
-<div class="cart-item">
-  <span class="book-title">{{ item.book.title }}</span>
-  <span class="book-author">{{ item.book.author }}</span>
-  <span class="price">{{ item.book.price | currency : "USD" }}</span>
-  <span class="quantity">x{{ item.quantity }}</span>
-  <button class="remove-button" (click)="remove.emit()">Remove</button>
+<div class="grid">
+  <div class="col-1">
+    <a [routerLink]="['/book-detail', item.book.id]">
+      <div class="book-image">
+        <p-image
+          [src]="item.book.cover.src"
+          alt="book.title"
+          class="carousel-image"
+          width="100%"
+        ></p-image>
+      </div>
+    </a>
+  </div>
+  <div class="col-4">
+    <div class="book-title"><strong>{{ item.book.title }}</strong></div>
+    <div class="p-text-secondary">{{ item.book.author }}</div>
+  </div>
+  <div class="col-2 flex align-content-center flex-wrap">
+
+        <p-inputNumber
+          [(ngModel)]="item.quantity"
+          inputId="minmax"
+          mode="decimal"
+          [min]="1"
+          [max]="item.book.availableUnits"
+          [showButtons]="true"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          spinnerMode="horizontal"
+          [step]="1"
+          buttonLayout="horizontal"
+          (ngModelChange)="onQuantityChange()"
+          class="input-styling"
+        >
+        </p-inputNumber>
+      
+    
+
+    <div class="justify-content-center">
+      <span class="avilable-stock"
+        >{{ item.book.availableUnits }} unidades en stock</span
+      >
+    
+  </div>
+</div>
+  <div class="col-2 flex justify-content-center flex-wrap">
+    <span class="flex align-items-center justify-content-center">{{ item.book.price | currency }}</span>
+  </div>
+  <div class="col-2 flex justify-content-center flex-wrap">
+    <span class="flex align-items-center justify-content-center">{{ getSubtotal() | currency }}</span>
+  </div>
+  <div class="col-1 flex align-content-center flex-wrap">
+    <button
+      (click)="remove.emit()"
+      pButton
+      type="button"
+      icon="pi pi-trash"
+      class="p-button-rounded p-button-danger"
+    ></button>
+  </div>
 </div>

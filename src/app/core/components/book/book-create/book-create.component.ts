@@ -23,6 +23,7 @@ export class BookCreateComponent {
         genre: [],
         publisher: '',
         price: 0,
+        availableUnits: 1,
         isActive: true,
         isHardcover: false,
         isNew: false

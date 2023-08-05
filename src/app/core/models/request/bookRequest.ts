@@ -1,4 +1,4 @@
-export interface Book {
+export interface BookRequest {
     isbn: string;
     title: string;
     author: string;
@@ -9,7 +9,7 @@ export interface Book {
     inventoryStatus?: string;  // good to have
     id?: number;
     synopsis?: string;
-    availableUnits: number;
+    availableUnits?: number;
     cover?: any;
     images?: any;
 
