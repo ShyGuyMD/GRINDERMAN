@@ -1,11 +1,11 @@
 <div class="login-container p-fluid">
     <h2>Login</h2>
     <div class="p-field">
-      <label for="username">Email:</label>
-      <input type="text" id="username" pInputText [(ngModel)]="username" />
+      <label for="email">Email:</label>
+      <input type="text" id="email" pInputText [(ngModel)]="email" />
     </div>
     <div class="p-field">
-      <label for="password">Contraseña:</label>
+      <label for="password">constraseña:</label>
       <input type="password" id="password" pPassword [(ngModel)]="password" />
     </div>
     <div *ngIf="loginError" class="error-message">Invalid email or password.</div>

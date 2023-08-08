@@ -3,30 +3,26 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@a
 import { AuthenticationService } from '@core/services';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class AdminGuard {
-    constructor(private _router: Router, private _authService: AuthenticationService) { }
+export class AdminGuard{
+  constructor(private _router: Router, private _authService: AuthenticationService) { }
 
-    canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): boolean | UrlTree {
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): boolean | UrlTree {
 
-        return true;
-/*
-        console.log('currUser', this._authService.getCurrentUser())
-        const isAdmin = this._authService.isAdmin();
+    console.log('currUser', this._authService.getCurrentUser())
+    const isAdmin = this._authService.isAdmin();
 
-        if (isAdmin) {
-            return true;
-        } else {
-            // If the user is not an admin, redirect them to a page indicating unauthorized access.
-            return this._router.createUrlTree(['/blank'], {
-                queryParams: { reason: 'You need administrator privileges to access this page.' }
-            });
-        }
-
-*/
+    if (isAdmin) {
+      return true;
+    } else {
+      // If the user is not an admin, redirect them to a page indicating unauthorized access.
+      return this._router.createUrlTree(['/blank'], {
+        queryParams: { reason: 'You need administrator privileges to access this page.' }
+      });
     }
-
+  }
+  
 }

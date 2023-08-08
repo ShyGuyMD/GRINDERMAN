@@ -1,47 +1,74 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
-//---
-import { HttpHeaders } from '@angular/common/http';
-import { UserLoginResponse } from '@core/models/response/userLoginResponse';
-import { CoCartApiService } from '../co-cart-api';
+import { WooCommerceApiService } from '../woo-commerce';
+import { LoginRequest } from '@core/models/request/loginRequest';
+import { User } from '@core/models/user';
+import { UserRole } from '@shared/constants';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class AuthenticationService {
-    private readonly jwtHelper = new JwtHelperService();
+  private isAuthenticated: boolean = false;
+  private currentUser: User | null = null;
 
-    constructor(private _coCartApiService: CoCartApiService) { }
+  constructor(private _wooCommerceApiService: WooCommerceApiService) {}
 
-    public login(username: string, password: string): Observable<UserLoginResponse> {
-        return this._coCartApiService.login(username, password);
+  login(email: string, password: string): boolean {
+    console.log(email, password);
+    const loginRequest: LoginRequest = {
+      email: email,
+      password: password,
+    };
+
+    if (email === 'cliente@mail.com') {
+      console.log('es cliente');
+      this.currentUser = { email: email, password: '', role: UserRole.CLIENT };
+      this.isAuthenticated = true;
+    } else if (email === 'admin@mail.com') {
+      console.log('es admin');
+      this.currentUser = { email: email, password: '', role: UserRole.ADMIN };
+      this.isAuthenticated = true;
+    } else {
+      // If the email is not found in the hardcoded users, authentication fails.
+      this.isAuthenticated = false;
     }
+    /*this._wooCommerceApiService.login(loginRequest).subscribe({
+      next: (response) => {
+        const authToken = response.token;
+        console.log('Authentication successful!', authToken);
+        localStorage.setItem('authToken', authToken);
+        this.isAuthenticated = true;
+      },
+      error: (e: any) => {
+        console.error('Authentication failed!', e);
+        this.isAuthenticated = false;
+      },
+    });*/
+    return this.isAuthenticated;
+  }
 
-    public isAuthenticated(): boolean {
-        const token = this.getJwtToken();
-        return !this.jwtHelper.isTokenExpired(token);
-    }
+  logout(): void {
+    this.isAuthenticated = false;
+    this.currentUser = null;
+  }
 
-    public getJwtToken(): string | null {
-        return localStorage.getItem('jwt_token');
-    }
+  isAuthenticatedUser(): boolean {
+    return this.isAuthenticated;
+  }
 
-    public setJwtToken(token: string): void {
-        localStorage.setItem('jwt_token', token);
+  isAdmin(): boolean {
+    console.log('isAdmin?', this.currentUser);
+    if (
+      this.isAuthenticated &&
+      this.currentUser &&
+      this.currentUser.role === UserRole.ADMIN
+    ) {
+      return true;
     }
+    return false;
+  }
 
-    public removeJwtToken(): void {
-        localStorage.removeItem('jwt_token');
-    }
-
-    public getAuthorizationHeader(): HttpHeaders {
-        const token = this.getJwtToken();
-        return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    }
-
-    // test
-    public isAuthenticatedUser(): boolean {
-        return true;
-    }
+  getCurrentUser(): any {
+    return this.currentUser;
+  }
 }

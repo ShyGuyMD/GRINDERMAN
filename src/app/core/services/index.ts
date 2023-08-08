@@ -2,7 +2,6 @@ import { ApiService } from './api';
 import { AuthenticationService } from './authentication';
 import { BookService } from './book';
 import { CartService } from './cart';
-import { CoCartApiService } from './co-cart-api';
 import { ExceptionService } from './exception';
 import { LocalStorageService } from './local-storage';
 import { ProductService } from './product';
@@ -15,7 +14,6 @@ export * from './api';
 export * from './authentication';
 export * from './book';
 export * from './cart';
-export * from './co-cart-api';
 export * from './exception';
 export * from './product';
 export * from './local-storage';
@@ -29,7 +27,6 @@ export const services = [
     AuthenticationService,
     BookService,
     CartService,
-    CoCartApiService,
     ExceptionService,
     LocalStorageService,
     ProductService,
