@@ -1,30 +1,43 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { UserLoginResponse } from '@core/models/response/userLoginResponse';
 import { AuthenticationService } from '@core/services';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  loginError: boolean = false;
+    username: string = '';
+    password: string = '';
+    loginError: boolean = false;
 
-  constructor(private _authService: AuthenticationService,
-    private _router: Router) {}
+    constructor(
+        private _authService: AuthenticationService
+    ) { }
 
-  login(): void {
-    const isLoggedIn = this._authService.login(this.email, this.password);
-    if (!isLoggedIn) {
-      this.loginError = true;
-    } else {
-      if (this._authService.isAdmin()){
-        this._router.navigate(['/admin']);
-      } else{
-        this._router.navigate(['/home']);
-      }
+    login(): void {
+
+        this._authService.login(this.username, this.password).subscribe({
+            next: (response: UserLoginResponse) => {
+                
+            },
+            error: (error) => console.log('login error: ', error)
+        });
+
+        /*
+        this._authService.login(this.username, this.password).pipe(
+            concatMap((loginResponse: any) => {
+                this._authService.setJwtToken(loginResponse.token);
+                return this._userService(); 
+            })
+        ).subscribe({
+            next: (response) => {
+
+            },
+            error: (error) => {
+
+            }
+        });*/
     }
-  }
 }

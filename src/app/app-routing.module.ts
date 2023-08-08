@@ -24,7 +24,7 @@ const routes: Routes = [
     {
         path: 'admin',
         component: LayoutComponent,
-        canActivate: [AdminGuard],
+        //canActivate: [AdminGuard],
         children: [
           { path: 'style-template', component: StyleTemplateComponent },
           { path: 'book-create', component: BookCreateComponent },
