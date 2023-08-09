@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { StyleTemplateComponent } from './style-template/style-template.component';
 import { LayoutComponent } from '@core/components/layout/layout.component';
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent } from '@core/components/book';
-import { BlankPageComponent, CartComponent, CheckoutComponent, LandingComponent, LoginComponent, UserCreateComponent } from '@core/components';
+import { BlankPageComponent, CartComponent, CheckoutComponent, LandingComponent, LoginComponent, OrderDetailsComponent, UserCreateComponent } from '@core/components';
 import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
@@ -18,8 +18,12 @@ const routes: Routes = [
             { path: 'home', component: BookCatalogueComponent },
             { path: 'register', component: UserCreateComponent },
             { path: 'login', component: LoginComponent},
-            { path: 'cart', component: CartComponent},
-            { path: 'checkout', component: CheckoutComponent},
+            { path: 'checkout', component: CheckoutComponent, children: [
+                { path: '', redirectTo: 'cart', pathMatch: 'full' },
+                { path: 'cart', component: CartComponent },
+                { path: 'delivery-options', component: OrderDetailsComponent },
+                { path: 'payment', component: OrderDetailsComponent }
+              ]},
         ]
     },
     {
@@ -36,6 +40,7 @@ const routes: Routes = [
           { path: '', redirectTo: 'home', pathMatch: 'full' }, // Default admin route
         ]
       },
+
 
 ];
 
