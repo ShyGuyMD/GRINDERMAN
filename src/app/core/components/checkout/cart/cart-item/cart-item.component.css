@@ -1,7 +1,9 @@
 ::ng-deep .input-styling input {
     width: 100% !important;
+    text-align: center;
   }
 
 .avilable-stock{
  font-size: medium;
   }
+

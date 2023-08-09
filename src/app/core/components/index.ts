@@ -1,7 +1,8 @@
 import { BlankPageComponent } from "./blank-page";
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookEditModalComponent } from "./book";
-import { CartComponent, CartItemComponent } from "./cart";
 import { CartPreviewComponent } from "./cart-preview";
+import { CartComponent, CartItemComponent, CheckoutComponent, ContactDetailsComponent, DeliveryOptionsComponent, OrderDetailsComponent, OrderSummaryComponent} from "./checkout";
+
 import { HeaderComponent } from "./header";
 import { LandingAdminComponent, LandingComponent, LandingDevelopComponent } from "./landing";
 import { LayoutComponent } from "./layout";
@@ -10,11 +11,11 @@ import { MenuComponent } from "./menu";
 import { SearchbarComponent } from "./searchbar";
 import { SectionTitleComponent } from "./section-title";
 import { UserMenuComponent } from "./user-menu";
-import { AdminCreateComponent, ClientCreateComponent, UserCreateComponent } from "./user/user-create";
+import { AdminCreateComponent, ClientCreateComponent, UserCreateComponent } from "./user";
 
 export * from './blank-page';
-export * from './cart';
 export * from './cart-preview';
+export * from './checkout';
 export * from './header';
 export * from './layout';
 export * from './login';
@@ -37,7 +38,10 @@ export const components = [
     CartComponent,
     CartItemComponent,
     CartPreviewComponent,
+    CheckoutComponent,
     ClientCreateComponent,
+    ContactDetailsComponent,
+    DeliveryOptionsComponent,
     HeaderComponent,
     LandingAdminComponent,
     LandingComponent,
@@ -45,6 +49,8 @@ export const components = [
     LayoutComponent,
     LoginComponent,
     MenuComponent,
+    OrderDetailsComponent,
+    OrderSummaryComponent,
     SearchbarComponent,
     SectionTitleComponent,
     UserCreateComponent,

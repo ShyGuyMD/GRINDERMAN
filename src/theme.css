@@ -9909,3 +9909,13 @@ p-multiselect.ng-dirty.ng-invalid .p-multiselect:not(.p-disabled).p-focus {
 .p-progress-spinner {
     display: block!important;
 }
+
+h4 {
+    background-color: #0a0a0a;
+    padding: 3px;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: normal;
+    letter-spacing: 3px;
+}

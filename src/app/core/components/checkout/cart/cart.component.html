@@ -1,0 +1,52 @@
+<app-section-title title="Mi Carrito"></app-section-title>
+<div
+  *ngIf="cartItems.length > 0; else emptyCart"
+  class="p-d-flex p-flex-column p-mb-4"
+>
+  <div class="grid">
+    <div class="col-8">
+      <div class="grid">
+      <div class="col-5">Item</div>
+      <div class="col-2 flex justify-content-center flex-wrap">Cantidad</div>
+      <div class="col-2 flex justify-content-center flex-wrap">Precio</div>
+      <div class="col-2 flex justify-content-center flex-wrap">Subtotal</div>
+    </div>
+    <p-divider></p-divider>
+      <div *ngFor="let cartItem of cartItems" class="p-mb-3 col-12">
+        <app-cart-item
+          [item]="cartItem"
+          (remove)="removeFromCart(cartItem)"
+        ></app-cart-item>
+      </div>
+      <p-divider></p-divider>
+      <p class="w-full">Tienes {{ totalQuantity }} items en tu carrito.</p>
+    </div>
+    <div class="col-offset-1 col-3">
+      <h4>Resumen</h4>
+      <div class="grid">
+        <div class="col-6">Total:</div>
+        <div class="col-6 text-right">
+          {{ total | currency }}
+        </div>
+      </div>
+        <button
+          pButton
+          class="p-button-success w-full mt-5"
+          label="Continuar con la compra"
+          (click)="goToNextStep()"
+        ></button>
+        <div class="deliveryAvilability mt-2">
+          <div *ngIf="checkDeliveryAvilability() else deliveryWarningMessage">
+            ¡Genial! Tu compra califica para el envío a domicilio.
+           </div>
+          <ng-template #deliveryWarningMessage>
+            ¡Importante! Para optar por el envío a domicilio, tu compra debe superar los ${{ MIN_DELIVERY }}. 
+          </ng-template>
+        </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <p>Tu carrito de compras está vacío.</p>
+</ng-template>
