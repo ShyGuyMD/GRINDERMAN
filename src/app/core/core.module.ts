@@ -4,12 +4,11 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 // Application Components
 import { components } from "@core/components";
+import { services } from "@core/services";
 
 // Shared Modules
 import { PrimengModule } from "@shared/primeng.module";
 import { SharedModule } from "@shared/shared.module";
-import { services } from "./services";
-
 
 @NgModule({
     declarations: [...components],

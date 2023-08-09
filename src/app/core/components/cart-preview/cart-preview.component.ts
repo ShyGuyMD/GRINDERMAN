@@ -3,10 +3,10 @@ import { CartService } from '@core/services';
 
 @Component({
     selector: 'app-cartpreview',
-    templateUrl: './cartpreview.component.html',
-    styleUrls: ['./cartpreview.component.css']
+    templateUrl: './cart-preview.component.html',
+    styleUrls: ['./cart-preview.component.css']
 })
-export class CartpreviewComponent {
+export class CartPreviewComponent {
     public quantity: number = 3;
     public totalAmount: number = 1500;
 

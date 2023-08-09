@@ -1,15 +1,18 @@
-import { UserRole } from "@shared/constants";
-
 export interface User {
-  email: string;
-  password?: string;
-  role: UserRole;
+    username: string;
+    password?: string;
+
+    userId?: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
 }
 
 export interface Client extends User {
-  // Additional properties specific to the client
+    // Additional properties specific to the client
 }
 
 export interface Admin extends User {
-  // Additional properties specific to the administrator
+    // Additional properties specific to the administrator
 }

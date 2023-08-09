@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from '@core/services';
+import {  UserService } from '@core/services';
 
 @Component({
     selector: 'app-header',
@@ -10,10 +10,10 @@ export class HeaderComponent {
     public logo: String = 'assets/images/logo.jpg';
     public isLoggedIn: boolean = false;
 
-    constructor(private _authService: AuthenticationService) { }
+    constructor(private _userService: UserService) { }
 
     ngOnInit(): void {
-        this.isLoggedIn = this._authService.isAuthenticatedUser();
+        this.isLoggedIn = this._userService.isUserLoggedIn();
     }
 
 }
