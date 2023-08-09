@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartItem } from '@core/models/cartItem';
 import { CartService } from '@core/services';
 import { MIN_DELIVERY } from '@shared/constants';
@@ -14,7 +15,7 @@ export class CartComponent implements OnInit {
   totalQuantity: number = 0;
   MIN_DELIVERY = MIN_DELIVERY;
 
-  constructor(private _cartService: CartService) {}
+  constructor(private _cartService: CartService, private _router: Router) {}
 
   ngOnInit(): void {
     this._cartService.cartItems$.subscribe((cartItems) => {
@@ -31,6 +32,10 @@ export class CartComponent implements OnInit {
 
   public checkDeliveryAvilability(): boolean {
     return this.total >= MIN_DELIVERY;
+  }
+
+  public goToNextStep(): void {
+    this._router.navigate(['/checkout/delivery-options']);
   }
 
   

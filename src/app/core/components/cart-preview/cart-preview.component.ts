@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartService } from '@core/services';
 
 @Component({
@@ -10,7 +11,7 @@ export class CartPreviewComponent {
     public quantity: number = 3;
     public totalAmount: number = 1500;
 
-    constructor(private _cartService: CartService) {}
+    constructor(private _cartService: CartService, private _router: Router) {}
     
       ngOnInit(): void {
         this._cartService.cartItems$.subscribe(() => {
@@ -18,4 +19,5 @@ export class CartPreviewComponent {
           this.totalAmount = this._cartService.getTotalAmount();
         });
       }
+    
 }

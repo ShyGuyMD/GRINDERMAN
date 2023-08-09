@@ -33,6 +33,7 @@
           pButton
           class="p-button-success w-full mt-5"
           label="Continuar con la compra"
+          (click)="goToNextStep()"
         ></button>
         <div class="deliveryAvilability mt-2">
           <div *ngIf="checkDeliveryAvilability() else deliveryWarningMessage">

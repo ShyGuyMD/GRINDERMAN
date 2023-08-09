@@ -1,8 +1,7 @@
 import { BlankPageComponent } from "./blank-page";
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookEditModalComponent } from "./book";
-import { CartComponent, CartItemComponent } from "./cart";
 import { CartPreviewComponent } from "./cart-preview";
-import { CheckoutComponent, ContactDetailsComponent, DeliveryOptionsComponent, OrderDetailsComponent, OrderSummaryComponent} from "./checkout";
+import { CartComponent, CartItemComponent, CheckoutComponent, ContactDetailsComponent, DeliveryOptionsComponent, OrderDetailsComponent, OrderSummaryComponent} from "./checkout";
 
 import { HeaderComponent } from "./header";
 import { LandingAdminComponent, LandingComponent, LandingDevelopComponent } from "./landing";
@@ -15,7 +14,6 @@ import { UserMenuComponent } from "./user-menu";
 import { AdminCreateComponent, ClientCreateComponent, UserCreateComponent } from "./user";
 
 export * from './blank-page';
-export * from './cart';
 export * from './cart-preview';
 export * from './checkout';
 export * from './header';
