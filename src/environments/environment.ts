@@ -1,6 +1,12 @@
 export const config = {
-  production: false,
-  baseUrl: 'https://api.example.com',
-  apiKey: 'your-api-key',
-  apiSecret: 'your-api-secret'
+	production: false,
+    // ya no importan, pero dejarlas por las dudas
+	apiKey: 'ck_32671dda4ad57451d2eb69ea9a7f1e4813964a50',
+	apiSecret: 'cs_c3adc0c3b8abe9a8c1b9d530e3015d1100cbda3f',
+    // -----
+    baseUrl: 'https://localhost/wordpress/wp-json/',
+    cc: 'cocart/v2',
+    jwt: 'jwt-auth/v1',
+    wp: 'wp/v2',
+    wc: 'wc/v3'
 };

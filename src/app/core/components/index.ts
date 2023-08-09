@@ -1,7 +1,7 @@
 import { BlankPageComponent } from "./blank-page";
 import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookEditModalComponent } from "./book";
 import { CartComponent, CartItemComponent } from "./cart";
-import { CartpreviewComponent } from "./cartpreview";
+import { CartPreviewComponent } from "./cart-preview";
 import { CheckoutComponent, ContactDetailsComponent, DeliveryOptionsComponent, OrderDetailsComponent, OrderSummaryComponent} from "./checkout";
 
 import { HeaderComponent } from "./header";
@@ -16,8 +16,7 @@ import { AdminCreateComponent, ClientCreateComponent, UserCreateComponent } from
 
 export * from './blank-page';
 export * from './cart';
-export * from './cartpreview';
-export * from './checkout';
+export * from './cart-preview';
 export * from './header';
 export * from './layout';
 export * from './login';
@@ -39,8 +38,7 @@ export const components = [
     BookEditModalComponent,
     CartComponent,
     CartItemComponent,
-    CartpreviewComponent,
-    CheckoutComponent,
+    CartPreviewComponent,
     ClientCreateComponent,
     ContactDetailsComponent,
     DeliveryOptionsComponent,
