@@ -58,7 +58,7 @@ export class BookCreateComponent {
             }
         });
 
-        console.log(this._authService.getCurrentUser())
+        //console.log(this._authService.getCurrentUser())
     }
 
     save(redirect: boolean = true) {
