@@ -17,6 +17,7 @@ import { AdminCreateComponent, ClientCreateComponent, UserCreateComponent } from
 export * from './blank-page';
 export * from './cart';
 export * from './cart-preview';
+export * from './checkout';
 export * from './header';
 export * from './layout';
 export * from './login';
@@ -39,6 +40,7 @@ export const components = [
     CartComponent,
     CartItemComponent,
     CartPreviewComponent,
+    CheckoutComponent,
     ClientCreateComponent,
     ContactDetailsComponent,
     DeliveryOptionsComponent,
