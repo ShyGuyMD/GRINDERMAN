@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from '@core/models/cartItem';
-import { CartService } from '@core/services';
+import { STEP_ADMIN_SUMMARY, STEP_DELIVERY } from '@core/models/checkout';
+import { CartService, UserService } from '@core/services';
 import { MIN_DELIVERY } from '@shared/constants';
 
 @Component({
@@ -15,7 +16,7 @@ export class CartComponent implements OnInit {
   totalQuantity: number = 0;
   MIN_DELIVERY = MIN_DELIVERY;
 
-  constructor(private _cartService: CartService, private _router: Router) {}
+  constructor(private _cartService: CartService, private _router: Router, private _userService: UserService) {}
 
   ngOnInit(): void {
     this._cartService.cartItems$.subscribe((cartItems) => {
@@ -35,7 +36,11 @@ export class CartComponent implements OnInit {
   }
 
   public goToNextStep(): void {
-    this._router.navigate(['/checkout/delivery-options']);
+    if(this._userService.isAdminUser()){
+      this._router.navigate([STEP_ADMIN_SUMMARY]);
+    }else{
+      this._router.navigate([STEP_DELIVERY]);
+    }
   }
 
   
