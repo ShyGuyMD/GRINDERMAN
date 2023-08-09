@@ -22,3 +22,5 @@ export enum Severity {
     WARNING = 'warn',
     SUCCESS = 'success'
 }
+
+export const MIN_DELIVERY = 700;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from '@core/models/cartItem';
 import { CartService } from '@core/services';
+import { MIN_DELIVERY } from '@shared/constants';
 
 @Component({
   selector: 'app-cart',
@@ -11,33 +12,25 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   total: number = 0;
   totalQuantity: number = 0;
+  MIN_DELIVERY = MIN_DELIVERY;
 
   constructor(private _cartService: CartService) {}
 
   ngOnInit(): void {
     this._cartService.cartItems$.subscribe((cartItems) => {
       this.cartItems = cartItems;
-      this.calculateTotal();
-      this.calculateTotalQuantity();
+      this.total = this._cartService.getTotalAmount();
+      this.totalQuantity = this._cartService.getTotalQuantity();
     });
   }
 
-  calculateTotal(): void {
-    this.total = this.cartItems.reduce(
-      (acc, cartItem) => acc + cartItem.book.price * cartItem.quantity,
-      0
-    );
-  }
 
-  calculateTotalQuantity(): void {
-    this.totalQuantity = this.cartItems.reduce(
-      (acc, cartItem) => acc + cartItem.quantity,
-      0
-    );
-  }
-
-  removeFromCart(item: CartItem): void {
+  public removeFromCart(item: CartItem): void {
     this._cartService.removeFromCart(item.book);
+  }
+
+  public checkDeliveryAvilability(): boolean {
+    return this.total >= MIN_DELIVERY;
   }
 
   

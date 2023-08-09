@@ -1,1 +1,14 @@
-<p>order-summary works!</p>
+<div class="order-summary-container">
+    <h4>Resumen</h4>
+    <div class="cart-item grid" *ngFor="let item of cartItems">
+          <div class="col-8"> {{ item.book.title }}
+           x {{ item.quantity }}</div>
+        <div class="col-4">{{ getSubtotal(item) | currency }}</div>
+    </div>
+    <p-divider></p-divider>
+    <div class="total-section p-d-flex p-jc-between grid">
+      <div class="col-8">Total:</div>
+      <div class="col-4"><strong>{{ total | currency }}</strong></div>
+    </div>
+  </div>
+  
