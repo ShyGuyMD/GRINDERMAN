@@ -1,4 +1,6 @@
 <app-section-title title="Carrito de compra"></app-section-title>
+<app-item-search (addItem)="addItemToCart($event)"></app-item-search>
+<p-divider></p-divider>
 <div
   *ngIf="cartItems.length > 0; else emptyCart"
   class="p-d-flex p-flex-column p-mb-4"
@@ -19,7 +21,7 @@
         ></app-cart-item>
       </div>
       <p-divider></p-divider>
-      <p class="w-full">Tienes {{ totalQuantity }} items en tu carrito.</p>
+      <p class="w-full">Hay {{ totalQuantity }} items en el carrito de compra.</p>
     </div>
     <div class="col-offset-1 col-3">
       <h4>Resumen</h4>
@@ -35,18 +37,10 @@
           label="Continuar con la compra"
           (click)="goToNextStep()"
         ></button>
-        <div class="deliveryAvilability mt-2">
-          <div *ngIf="checkDeliveryAvilability() else deliveryWarningMessage">
-            ¡Genial! Tu compra califica para el envío a domicilio.
-           </div>
-          <ng-template #deliveryWarningMessage>
-            ¡Importante! Para optar por el envío a domicilio, tu compra debe superar los ${{ MIN_DELIVERY }}. 
-          </ng-template>
-        </div>
     </div>
   </div>
 </div>
 
 <ng-template #emptyCart>
-  <p>Tu carrito de compras está vacío.</p>
+  <p>El carrito de compra está vacío.</p>
 </ng-template>

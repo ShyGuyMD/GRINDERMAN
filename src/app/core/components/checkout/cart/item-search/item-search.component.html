@@ -1,0 +1,52 @@
+<!-- item-search.component.html -->
+<div class="item-search-container grid">
+  <div class="p-inputgroup col-4">
+    <input
+      #searchTerm
+      type="text"
+      pInputText
+      placeholder="Buscar..."
+      class="p-inputtext"
+      (input)="handleSearchEvent(searchTerm.value)"
+    />
+    <span class="p-inputgroup-addon">
+      <i
+        class="pi pi-search pointer"
+        *ngIf="!isLoading"
+        (click)="handleSearchEvent(searchTerm.value)"
+      ></i>
+      <i class="pi pi-spinner pi-spin" *ngIf="isLoading"></i>
+    </span>
+  </div>
+  <div class="col-4">
+      <p-dropdown id="book-dropdown" [options]="bookOptions" [(ngModel)]="selectedBook" optionLabel="title"></p-dropdown>
+  </div>
+  <div class="col-2">
+      <p-inputNumber
+              [(ngModel)]="selectedQuantity"
+              inputId="minmax"
+              mode="decimal"
+              [min]="1"
+              [max]="selectedBook?.availableUnits"
+              [showButtons]="true"
+              incrementButtonIcon="pi pi-plus"
+              decrementButtonIcon="pi pi-minus"
+              spinnerMode="horizontal"
+              [step]="1"
+              buttonLayout="horizontal"
+              class="input-styling"
+            >
+            </p-inputNumber>
+  </div>
+  <div class="col-2 flex align-content-center flex-wrap">
+      <button
+      (click)="addItemToCart()"
+      pButton
+      type="button"
+      icon="pi pi-plus"
+      class="p-button"
+      label="Agregar"
+      id="ItemSearchAddButton"
+    ></button>
+  </div>
+</div>

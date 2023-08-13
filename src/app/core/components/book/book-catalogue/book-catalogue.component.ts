@@ -56,6 +56,6 @@ export class BookCatalogueComponent implements OnInit {
     }
 
     addToCart(book: Book) {
-        this._cartService.addToCart(book);
+        this._cartService.addToCart(book, 1);
     }
 }

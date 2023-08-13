@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from '@core/models/cartItem';
 import { CartService, UserService } from '@core/services';
 import { MIN_DELIVERY, STEP_ADMIN_SUMMARY, STEP_DELIVERY } from '@shared/constants';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  selector: 'app-cart-admin',
+  templateUrl: './cart-admin.component.html',
+  styleUrls: ['./cart-admin.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartAdminComponent {
   cartItems: CartItem[] = [];
   total: number = 0;
   totalQuantity: number = 0;
@@ -44,6 +44,4 @@ export class CartComponent implements OnInit {
       this._router.navigate([STEP_DELIVERY]);
     }
   }
-
-  
 }

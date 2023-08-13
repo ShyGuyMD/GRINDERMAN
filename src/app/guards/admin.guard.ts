@@ -17,12 +17,16 @@ export class AdminGuard {
 
         console.log('currUser', this._userService.getActiveUser());
 
+        if(!this._userService.isUserLoggedIn()){
+            return this._router.createUrlTree(['/login'])
+        }
+
         if (this._userService.isAdminUser()) {
             return true;
         } else {
             // If the user is not an admin, redirect them to a page indicating unauthorized access.
             return this._router.createUrlTree(['/blank'], {
-                queryParams: { reason: 'You need administrator privileges to access this page.' }
+                queryParams: { error: 'You need administrator privileges to access this page.' }
             });
         }
     }
