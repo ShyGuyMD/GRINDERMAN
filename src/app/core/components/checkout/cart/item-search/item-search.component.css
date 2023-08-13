@@ -1,0 +1,8 @@
+::ng-deep .input-styling input {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  :host ::ng-deep .p-dropdown, :host ::ng-deep #ItemSearchAddButton{
+    width: 100% !important;
+  }

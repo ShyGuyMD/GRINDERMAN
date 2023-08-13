@@ -21,17 +21,17 @@ export class CartService {
         this.cartItemsSubject.next(cartItems);
     }
 
-    addToCart(book: Book): void {
+    addToCart(book: Book, quantity: number): void {
         const existingItem = this.cartItemsSubject.getValue().find((item) => item.book.id === book.id);
         const cartItems = this.cartItemsSubject.getValue().slice();
 
         if (existingItem) {
-            if (existingItem.quantity < existingItem.book.availableUnits) {
-                existingItem.quantity++;
+            if (existingItem.quantity + quantity <= existingItem.book.availableUnits) {
+                existingItem.quantity += quantity;
                 this.saveCart(cartItems);
             }
         } else if (book.availableUnits > 0) {
-            cartItems.push({ book, quantity: 1 });
+            cartItems.push({ book, quantity: quantity });
             this.saveCart(cartItems);
         }
     }

@@ -63,7 +63,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   addToCart() {
-   this._cartService.addToCart(this.book);
+   this._cartService.addToCart(this.book, 1);
   }
 
   deactivate() {
