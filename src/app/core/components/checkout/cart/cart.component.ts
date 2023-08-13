@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from '@core/models/cartItem';
-import { STEP_ADMIN_SUMMARY, STEP_DELIVERY } from '@core/models/checkout';
 import { CartService, UserService } from '@core/services';
-import { MIN_DELIVERY } from '@shared/constants';
+import { MIN_DELIVERY, STEP_ADMIN_SUMMARY, STEP_DELIVERY } from '@shared/constants';
 
 @Component({
   selector: 'app-cart',
