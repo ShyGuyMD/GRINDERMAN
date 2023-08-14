@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from '@core/models/cartItem';
 import { OrderDetails } from '@core/models/orderDetails';
+import { CreateOrderResponse } from '@core/models/response/orderResponse';
 import { CartService, OrderService, UserService } from '@core/services';
 
 @Component({
@@ -44,9 +45,9 @@ export class OrderDetailsComponent {
         const request = this._orderService.mapOrderRequest(this.orderDetails);
 
         this._orderService.createOrder(request).subscribe({
-            next: (v) => {
+            next: (response: CreateOrderResponse) => {
                 console.log('Order Create Success!');
-                console.log('Order Info: ', v);
+                console.log('Order Info: ', response);
                 // TODO: Redirect to an actual page.
                 this._router.navigate(['/blank'], { queryParams: { success : 'Order Create Success!'} });
                 this._cartService.clearCart();
