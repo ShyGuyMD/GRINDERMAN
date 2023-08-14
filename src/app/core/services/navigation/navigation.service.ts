@@ -13,7 +13,7 @@ export class NavigationService {
 
     console.log(originalUrl, error, success);
 
-    const url: string = this._userService.isAdminUser() ? `/admin${originalUrl}` : originalUrl;
+    const url: string = this._userService.isAdminUser() ? `/admin/${originalUrl}` : originalUrl;
 
     return this._router.navigate([url], {
       queryParams: {

@@ -42,5 +42,5 @@ a.cart-button {
     border: none; /* Remove border */
     padding: 0; /* Remove padding */
     margin: 0; /* Remove margin */
-    /* Add any additional styles you may need */
+    cursor: pointer;
   }

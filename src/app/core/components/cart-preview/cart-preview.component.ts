@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CartService, UserService } from '@core/services';
+import { CartService, NavigationService, UserService } from '@core/services';
 import {CHECKOUT_CART } from '@shared/constants';
 
 @Component({
@@ -10,9 +10,8 @@ import {CHECKOUT_CART } from '@shared/constants';
 export class CartPreviewComponent {
     public quantity: number = 3;
     public totalAmount: number = 1500;
-    public CHECKOUT_CART = CHECKOUT_CART;
 
-    constructor(private _cartService: CartService, private _userService: UserService) {}
+    constructor(private _cartService: CartService, private _navigationService:NavigationService) {}
     
       ngOnInit(): void {
         this._cartService.cartItems$.subscribe(() => {
@@ -20,5 +19,10 @@ export class CartPreviewComponent {
           this.totalAmount = this._cartService.getTotalAmount();
         });
       }
+
+      public goToCart(){
+        this._navigationService.navigateTo(CHECKOUT_CART);
+      }
+
     
 }

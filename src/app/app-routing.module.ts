@@ -15,26 +15,27 @@ import {
   CartAdminComponent,
   CartComponent,
   CheckoutComponent,
+  ClientCreateComponent,
   LandingComponent,
   LoginComponent,
   OrderDetailsComponent,
   OrderSummaryComponent,
-  UserCreateComponent,
 } from '@core/components';
 import { AdminGuard } from './guards/admin.guard';
+import { ADMIN_CREATE, BLANK_PAGE, BOOK_CREATE, BOOK_DETAIL, CART, CATALOGUE, CHECKOUT, CLIENT_CREATE, HOME, LOGIN, ORDER_SUMMARY } from '@shared/constants';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'catalogue', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: LOGIN, pathMatch: 'full' },
+  { path: CATALOGUE, redirectTo: HOME, pathMatch: 'full' },
   {
     path: '',
     component: LayoutComponent,
     children: [
-      { path: 'book-detail/:id', component: BookDetailComponent },
-      { path: 'blank', component: BlankPageComponent },
-      { path: 'home', component: BookCatalogueComponent },
-      { path: 'register', component: UserCreateComponent },
-      { path: 'login', component: LoginComponent },
+      { path: BOOK_DETAIL, component: BookDetailComponent },
+      { path: BLANK_PAGE, component: BlankPageComponent },
+      { path: HOME, component: BookCatalogueComponent },
+      { path: CLIENT_CREATE, component: ClientCreateComponent },
+      { path: LOGIN, component: LoginComponent },
       {
         path: 'checkout',
         component: CheckoutComponent,
@@ -53,20 +54,20 @@ const routes: Routes = [
     canActivate: [AdminGuard],
     children: [
       { path: 'style-template', component: StyleTemplateComponent },
-      { path: 'book-create', component: BookCreateComponent },
-      { path: 'book-detail/:id', component: BookDetailComponent },
-      { path: 'blank', component: BlankPageComponent },
-      { path: 'catalogue', component: BookCatalogueComponent },
-      { path: 'home', component: LandingComponent },
-      { path: 'admin-create', component: AdminCreateComponent },
-      { path: '', redirectTo: 'home', pathMatch: 'full' }, // Default admin route
+      { path: BOOK_CREATE, component: BookCreateComponent },
+      { path: BOOK_DETAIL, component: BookDetailComponent },
+      { path: BLANK_PAGE, component: BlankPageComponent },
+      { path: CATALOGUE, component: BookCatalogueComponent },
+      { path: HOME, component: LandingComponent },
+      { path: ADMIN_CREATE, component: AdminCreateComponent },
+      { path: '', redirectTo: HOME, pathMatch: 'full' }, // Default admin route
       {
-        path: 'checkout',
+        path: CHECKOUT,
         component: CheckoutComponent,
         children: [
-          { path: '', redirectTo: 'cart', pathMatch: 'full' },
-          { path: 'cart', component: CartAdminComponent },
-          { path: 'order-summary', component: OrderSummaryComponent },
+          { path: '', redirectTo: CART, pathMatch: 'full' },
+          { path: CART, component: CartAdminComponent },
+          { path: ORDER_SUMMARY, component: OrderSummaryComponent },
         ],
       },
     ],

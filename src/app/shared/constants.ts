@@ -26,16 +26,20 @@ export enum Severity {
 export const MIN_DELIVERY = 700;
 
 //#region URL
-export const HOME = '/home';
-export const BLANK_PAGE = '/blank';
-export const CATALOGUE = '/catalogue';
-export const LOGIN = '/login';
-export const BOOK_CREATE = '/book-create';
-export const BOOK_DETAIL = '/book-detail/:id';
-export const BOOK_EDIT ='/book-edit';
-export const CLIENT_CREATE = '/register';
-export const ADMIN_CREATE = '/admin-create';
-export const CHECKOUT = '/checkout'
+export const HOME = 'home';
+export const BLANK_PAGE = 'blank';
+export const CATALOGUE = 'catalogue';
+export const LOGIN = 'login';
+export const BOOK_CREATE = 'book-create';
+export const BOOK_DETAIL = 'book-detail/:id';
+export const BOOK_EDIT ='book-edit';
+export const CLIENT_CREATE = 'register';
+export const ADMIN_CREATE = 'admin-create';
+export const CHECKOUT = 'checkout';
+export const CART = 'cart';
+export const DELIVERY = 'delivery-options';
+export const PAYMENT = 'payment';
+export const ORDER_SUMMARY = 'order-summary';
 
 //#endregion
 
@@ -43,7 +47,7 @@ export const CHECKOUT = '/checkout'
 export const CHECKOUT_CART = '/checkout/cart';
 export const CHECKOUT_DELIVERY = '/checkout/delivery-options';
 export const CHECKOUT_PAYMENT = '/checkout/payment';
-export const CHECKOUT_ORDER_SUMMARY = '/admin/checkout/order-summary';
+export const CHECKOUT_ORDER_SUMMARY = '/checkout/order-summary';
 
 export const CHECKOUT_ROUTEMAPPINGS: { [key: string]: number } = {
   [CHECKOUT_CART]: 0,
