@@ -3,11 +3,11 @@ import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookE
 import { CartPreviewComponent } from "./cart-preview";
 import { CartAdminComponent, CartComponent, CartItemComponent, CheckoutComponent, ContactDetailsComponent, DeliveryOptionsComponent, ItemSearchComponent, OrderDetailsComponent, OrderSummaryComponent} from "./checkout";
 
-import { HeaderComponent } from "./header";
+import { HeaderAdminComponent, HeaderComponent } from "./header";
 import { LandingAdminComponent, LandingComponent, LandingDevelopComponent } from "./landing";
-import { LayoutComponent } from "./layout";
+import { LayoutAdminComponent, LayoutComponent } from "./layout";
 import { LoginComponent } from "./login";
-import { MenuComponent } from "./menu";
+import { MenuAdminComponent, MenuComponent } from "./menu";
 import { SearchbarComponent } from "./searchbar";
 import { SectionTitleComponent } from "./section-title";
 import { UserMenuComponent } from "./user-menu";
@@ -44,13 +44,16 @@ export const components = [
     ContactDetailsComponent,
     DeliveryOptionsComponent,
     HeaderComponent,
+    HeaderAdminComponent,
     ItemSearchComponent,
     LandingAdminComponent,
     LandingComponent,
     LandingDevelopComponent,
     LayoutComponent,
+    LayoutAdminComponent,
     LoginComponent,
     MenuComponent,
+    MenuAdminComponent,
     OrderDetailsComponent,
     OrderSummaryComponent,
     SearchbarComponent,

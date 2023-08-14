@@ -3,13 +3,13 @@
     <app-section-title title="Gestión de libros"></app-section-title>
       <div class="grid">
         <div class="col-3">
-          <a routerLink="/buscar-libro" class="link">
+          <a [routerLink]="BOOK_SEARCH" class="link custom-disabled">
             <span class="pi pi-search icon"></span>
             Buscar libro
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/alta-libro" class="link">
+          <a [routerLink]="BOOK_CREATE" class="link">
             <span class="pi pi-plus icon"></span>
             Agregar un libro
           </a>
@@ -21,25 +21,25 @@
       <app-section-title title="Gestión de catálogo"></app-section-title>
       <div class="grid">
         <div class="col-3">
-          <a routerLink="/catalogo" class="link">
+          <a [routerLink]="CATALOGUE" class="link">
             <span class="pi pi-table icon"></span>
             Ver catálogo
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/actualizar-precios" class="link">
+          <a [routerLink]="CATALOGUE_UPDATE" class="link custom-disabled">
             <span class="pi pi-refresh icon"></span>
             Actualizar precios
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/exportar-catalogo" class="link">
+          <a [routerLink]="CATALOGUE_EXPORT" class="link custom-disabled">
             <span class="pi pi-download icon"></span>
             Exportar catálogo
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/importar-catalogo" class="link">
+          <a [routerLink]="CATALOGUE_IMPORT" class="link custom-disabled">
             <span class="pi pi-upload icon"></span>
             Importar catálogo desde Excel
           </a>
@@ -51,25 +51,25 @@
         <app-section-title title="Gestión de ventas"></app-section-title>
       <div class="grid">
         <div class="col-3">
-          <a routerLink="/registrar-venta" class="link">
+          <a [routerLink]="CHECKOUT" class="link">
             <span class="pi pi-check-circle icon"></span>
             Registrar venta
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/gestionar-pedido" class="link">
+          <a [routerLink]="ORDER_UPDATE" class="link custom-disabled">
             <span class="pi pi-times-circle icon"></span>
             Gestionar pedido
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/historial" class="link">
+          <a [routerLink]="ORDER_HISTORY" class="link custom-disabled">
             <span class="pi pi-bars icon"></span>
             Ver historial de ventas
           </a>
         </div>
         <div class="col-3">
-          <a routerLink="/exportar-reporte-ventas" class="link">
+          <a [routerLink]="ORDER_REPORT_EXPORT" class="link custom-disabled">
             <span class="pi pi-file-excel icon"></span>
             Exportar reporte de ventas
           </a>
@@ -81,7 +81,7 @@
         <app-section-title title="Gestión de usuarios"></app-section-title>
       <div class="grid">
         <div class="col-3">
-          <a routerLink="/crear-administrador" class="link">
+          <a [routerLink]="ADMIN_CREATE" class="link">
             <span class="pi pi-user-plus icon"></span>
             Crear nuevo administrador
           </a>

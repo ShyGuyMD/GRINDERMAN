@@ -17,6 +17,7 @@ import {
   CheckoutComponent,
   ClientCreateComponent,
   LandingComponent,
+  LayoutAdminComponent,
   LoginComponent,
   OrderDetailsComponent,
   OrderSummaryComponent,
@@ -50,7 +51,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: LayoutComponent,
+    component: LayoutAdminComponent,
     canActivate: [AdminGuard],
     children: [
       { path: 'style-template', component: StyleTemplateComponent },

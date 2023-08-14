@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserService } from '@core/services';
+import { AuthenticationService, UserService } from '@core/services';
 
 @Component({
     selector: 'app-user-menu',
@@ -9,9 +9,13 @@ import { UserService } from '@core/services';
 export class UserMenuComponent {
     public userName: string = '';
 
-    constructor(private _userService: UserService) { }
+    constructor(private _userService: UserService, private _authService: AuthenticationService) { }
 
     ngOnInit() {
-        this.userName = this._userService.getUserName();
+        this.userName = this._userService.getActiveUser()?.firstName!;
+    }
+    
+    public logout(): void{
+        console.log("logout");
     }
 }
