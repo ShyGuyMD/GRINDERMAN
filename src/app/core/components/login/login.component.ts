@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserLoginResponse } from '@core/models/response/userLoginResponse';
-import { AuthenticationService, UserService } from '@core/services';
+import { AuthenticationService, NavigationService, UserService } from '@core/services';
+import { HOME } from '@shared/constants';
 
 @Component({
     selector: 'app-login',
@@ -15,8 +16,8 @@ export class LoginComponent {
 
     constructor(
         private _authService: AuthenticationService,
-        private _router: Router,
-        private _userService: UserService
+        private _userService: UserService,
+        private _navigationService: NavigationService,
     ) { }
 
     login(): void {
@@ -31,11 +32,7 @@ export class LoginComponent {
                 console.log('jwt token in storage: ', this._authService.getJwtToken());
                 console.log('logged user:', JSON.stringify(this._userService.getActiveUser()));
 
-                if (this._userService.isAdminUser()) {
-                    this._router.navigate(['/admin/home']);
-                } else {
-                    this._router.navigate(['/home']);
-                }
+                this._navigationService.navigateTo(HOME);
             },
             error: (error) => {
                 console.log('login unsuccessful');

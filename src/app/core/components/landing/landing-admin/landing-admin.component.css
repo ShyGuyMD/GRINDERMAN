@@ -35,3 +35,10 @@
     border-radius: 7px;
   }
   
+  .link.custom-disabled {
+    color: #ccc;           /* Lighter gray color */
+    pointer-events: none;  /* Disable click events */
+    cursor: not-allowed;   /* Change cursor to indicate not clickable */
+    text-decoration: none; /* Remove underline */
+}
+  

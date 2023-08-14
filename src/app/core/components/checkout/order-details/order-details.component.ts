@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationService } from '@core/services';
+import { BLANK_PAGE, CHECKOUT_CART } from '@shared/constants';
 import { CartItem } from '@core/models/cartItem';
 import { OrderDetails } from '@core/models/orderDetails';
 import { CreateOrderResponse } from '@core/models/response/orderResponse';
@@ -16,7 +17,7 @@ export class OrderDetailsComponent {
     public orderDetails! : OrderDetails;
 
     constructor(
-        private _router: Router,
+        private _navigationService: NavigationService,
         private _cartService: CartService,
         private _orderService: OrderService,
         private _userService: UserService
@@ -34,11 +35,11 @@ export class OrderDetailsComponent {
     }
 
     public goToNextStep(): void {
-        this._router.navigate(['']);
+      this._navigationService.navigateTo('');
     }
 
     public goToPreviousStep(): void {
-        this._router.navigate(['/checkout/cart']);
+      this._navigationService.navigateTo(CHECKOUT_CART);
     }
 
     public placeOrder(): void {
@@ -49,12 +50,12 @@ export class OrderDetailsComponent {
                 console.log('Order Create Success!');
                 console.log('Order Info: ', response);
                 // TODO: Redirect to an actual page.
-                this._router.navigate(['/blank'], { queryParams: { success : 'Order Create Success!'} });
+                this._navigationService.navigateTo(BLANK_PAGE, undefined, 'Order Create Success!');
                 this._cartService.clearCart();
             },
             error: (e) => {
                 console.error('Order Create Error: ', e);
-                this._router.navigate(['/blank'], { queryParams: { error: 'Error Creating Order' } });
+                this._navigationService.navigateTo(BLANK_PAGE, 'Error Creating Order');
             }
         })
     }

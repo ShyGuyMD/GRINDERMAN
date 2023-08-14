@@ -10,7 +10,7 @@
             <app-user-menu></app-user-menu>
         </div>
         <ng-template #elseBlock>
-            <button pButton type="button" label="Registrate" icon="pi pi-user-plus" style="float:right"></button>
+            <button pButton type="button" label="Registrate" icon="pi pi-user-plus" style="float:right" (click)="registerCustomer()"></button>
         </ng-template>
     </div>
     <app-cartpreview class="col-1 mt-4"></app-cartpreview>

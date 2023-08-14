@@ -1,9 +1,8 @@
 import { Component, OnInit  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Admin } from '@core/models/user';
-import { UserService } from '@core/services';
-import { UserRole, WoocommerceError } from '@shared/constants';
+import { NavigationService, UserService } from '@core/services';
+import { BLANK_PAGE, UserRole, WoocommerceError } from '@shared/constants';
 import { passwordValidator } from '@shared/customValidators';
 
 @Component({
@@ -31,7 +30,7 @@ export class AdminCreateComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         private _userService: UserService,
-        private _router: Router
+        private _navigationService: NavigationService,
     ) { }
 
     ngOnInit(): void {
@@ -60,7 +59,7 @@ export class AdminCreateComponent implements OnInit {
                 console.log('response: ', v);
                 this.adminForm.reset();
                 const successMessage = 'The admin was succesfully created!';
-                this._router.navigate(['/blank'], { queryParams: { success: successMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, undefined, successMessage);
             },
             error: (e: any) => {
                 const errorMessage = 'Error creating admin.';
@@ -70,7 +69,7 @@ export class AdminCreateComponent implements OnInit {
                     this.isLoading = false;
                     return;
                 }
-                this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, errorMessage);
             }
         });
 

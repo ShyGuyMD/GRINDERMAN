@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { BookService, CartService, SharedService, WooCommerceApiService } from '@core/services';
+import { BookService, CartService, NavigationService, SharedService, WooCommerceApiService } from '@core/services';
+import { BLANK_PAGE } from '@shared/constants';
 
 @Component({
     selector: 'app-book-catalogue',
@@ -10,13 +10,13 @@ import { BookService, CartService, SharedService, WooCommerceApiService } from '
 })
 export class BookCatalogueComponent implements OnInit {
 
-    books: Book[] = []; // Replace with your own book array
+    books: Book[] = []; 
     isLoading: boolean = true;
 
     constructor(private _wooCommerceService: WooCommerceApiService,
         private _bookService: BookService,
         private _sharedService: SharedService,
-        private _router: Router,
+        private _navigationService: NavigationService,
         private _cartService: CartService) { }
 
     ngOnInit() {
@@ -27,7 +27,7 @@ export class BookCatalogueComponent implements OnInit {
             error: (e) => {
                 console.error(e);
                 const errorMessage = 'Error retrieving searched catalogue.';
-                this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, errorMessage)
             },
             complete: () => console.log('Results (after searching): ', this.books) // DEBUG
         });
@@ -49,7 +49,7 @@ export class BookCatalogueComponent implements OnInit {
             error: (e) => {
                 console.error(e);
                 const errorMessage = 'Error retrieving initial catalogue.';
-                this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, errorMessage)
             },
             complete: () => console.log('Results (initial catalogue): ', this.books) // DEBUG
         });

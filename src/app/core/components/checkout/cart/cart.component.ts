@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from '@core/models/cartItem';
-import { CartService, UserService } from '@core/services';
-import { MIN_DELIVERY, STEP_ADMIN_SUMMARY, STEP_DELIVERY } from '@shared/constants';
+import { CartService, NavigationService, UserService } from '@core/services';
+import {
+  MIN_DELIVERY,
+  CHECKOUT_ORDER_SUMMARY,
+  CHECKOUT_DELIVERY,
+} from '@shared/constants';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
@@ -15,7 +19,10 @@ export class CartComponent implements OnInit {
   totalQuantity: number = 0;
   MIN_DELIVERY = MIN_DELIVERY;
 
-  constructor(private _cartService: CartService, private _router: Router, private _userService: UserService) {}
+  constructor(
+    private _cartService: CartService,
+    private _navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
     this._cartService.cartItems$.subscribe((cartItems) => {
@@ -25,7 +32,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-  addItemToCart(cartItem: CartItem ) {
+  addItemToCart(cartItem: CartItem) {
     this._cartService.addToCart(cartItem.book, cartItem.quantity);
   }
 
@@ -38,12 +45,6 @@ export class CartComponent implements OnInit {
   }
 
   public goToNextStep(): void {
-    if(this._userService.isAdminUser()){
-      this._router.navigate([STEP_ADMIN_SUMMARY]);
-    }else{
-      this._router.navigate([STEP_DELIVERY]);
-    }
+    this._navigationService.navigateTo(CHECKOUT_DELIVERY);
   }
-
-  
 }

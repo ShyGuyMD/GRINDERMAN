@@ -1,5 +1,6 @@
 // Angular Core
 import { Component } from '@angular/core';
+import { CATALOGUE, HOME } from '@shared/constants';
 
 // PrimeNG
 import { MenuItem } from 'primeng/api';
@@ -15,10 +16,10 @@ export class MenuComponent {
 
     ngOnInit() {
         this.menuItems = [
-            { label: 'Novedades', icon: 'pi pi-home', routerLink: '/home' },
-            { label: 'Catálogo', icon: 'pi pi-shopping-cart', routerLink: '/catalogo' },
-            { label: 'Sobre Nosotros', icon: 'pi pi-info-circle', routerLink: '/nosotros' },
-            { label: 'Contacto', icon: 'pi pi-envelope', routerLink: '/contacto' }
+            { label: 'Novedades', icon: 'pi pi-home', routerLink: `/${HOME}` },
+            { label: 'Catálogo', icon: 'pi pi-shopping-cart', routerLink: `/${CATALOGUE}` },
+            { label: 'Sobre Nosotros', icon: 'pi pi-info-circle', routerLink: '' },
+            { label: 'Contacto', icon: 'pi pi-envelope', routerLink: '' }
         ];
 
         // Set the first menu item as the active item
