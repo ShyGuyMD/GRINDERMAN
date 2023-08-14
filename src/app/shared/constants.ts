@@ -25,22 +25,35 @@ export enum Severity {
 
 export const MIN_DELIVERY = 700;
 
+//#region URL
+export const HOME = '/home';
+export const BLANK_PAGE = '/blank';
+export const CATALOGUE = '/catalogue';
+export const LOGIN = '/login';
+export const BOOK_CREATE = '/book-create';
+export const BOOK_DETAIL = '/book-detail/:id';
+export const BOOK_EDIT ='/book-edit';
+export const CLIENT_CREATE = '/register';
+export const ADMIN_CREATE = '/admin-create';
+export const CHECKOUT = '/checkout'
+
+//#endregion
+
 //#region Checkout
-export const STEP_CART = '/checkout/cart';
-export const STEP_DELIVERY = '/checkout/delivery-options';
-export const STEP_PAYMENT = '/checkout/payment';
-export const STEP_ADMIN_CART = '/admin/checkout/cart';
-export const STEP_ADMIN_SUMMARY = '/admin/checkout/order-summary';
+export const CHECKOUT_CART = '/checkout/cart';
+export const CHECKOUT_DELIVERY = '/checkout/delivery-options';
+export const CHECKOUT_PAYMENT = '/checkout/payment';
+export const CHECKOUT_ORDER_SUMMARY = '/admin/checkout/order-summary';
 
 export const CHECKOUT_ROUTEMAPPINGS: { [key: string]: number } = {
-  [STEP_CART]: 0,
-  [STEP_DELIVERY]: 1,
-  [STEP_PAYMENT]: 2,
+  [CHECKOUT_CART]: 0,
+  [CHECKOUT_DELIVERY]: 1,
+  [CHECKOUT_PAYMENT]: 2,
 };
 
 export const CHECKOUT_ADMIN_ROUTEMAPPINGS: { [key: string]: number } = {
-  [STEP_ADMIN_CART]: 0,
-  [STEP_ADMIN_SUMMARY]: 1,
+  [`/admin${CHECKOUT_CART}`]: 0,
+  [`/admin${CHECKOUT_ORDER_SUMMARY}`]: 1,
 };
 
 export const CHECKOUT_STEPS = [

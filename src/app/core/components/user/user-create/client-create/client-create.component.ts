@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Client } from '@core/models/user';
-import { UserService } from '@core/services';
-import { UserRole, WoocommerceError } from '@shared/constants';
+import { NavigationService, UserService } from '@core/services';
+import { BLANK_PAGE, UserRole, WoocommerceError } from '@shared/constants';
 import { passwordValidator } from '@shared/customValidators';
 
 @Component({
@@ -31,7 +31,7 @@ export class ClientCreateComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         private _userService: UserService,
-        private _router: Router
+        private _navigationService: NavigationService,
     ) { }
 
     ngOnInit(): void {
@@ -60,7 +60,7 @@ export class ClientCreateComponent implements OnInit {
                 console.log('response: ', v);
                 this.clientForm.reset();
                 const successMessage = 'The client was succesfully created!';
-                this._router.navigate(['/blank'], { queryParams: { success: successMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, undefined, successMessage);
             },
             error: (e: any) => {
                 const errorMessage = 'Error creating client.';
@@ -70,7 +70,7 @@ export class ClientCreateComponent implements OnInit {
                     this.isLoading = false;
                     return;
                 }
-                this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, errorMessage);
             }
         });
 

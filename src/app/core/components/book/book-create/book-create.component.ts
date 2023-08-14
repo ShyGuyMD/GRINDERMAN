@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { AuthenticationService, WooCommerceApiService } from '@core/services';
-import { Attributes } from '@shared/constants';
+import {  NavigationService, WooCommerceApiService } from '@core/services';
+import { Attributes, BLANK_PAGE } from '@shared/constants';
 import { mergeMap } from 'rxjs/operators';
 @Component({
     selector: 'app-book-create',
@@ -33,9 +32,7 @@ export class BookCreateComponent {
 
     constructor(
         private _wooCommerceAPIService: WooCommerceApiService,
-        private _route: ActivatedRoute,
-        private _router: Router,
-        private _authService: AuthenticationService) { }
+        private _navigationService: NavigationService) { }
 
     ngOnInit(): void {
 
@@ -57,9 +54,7 @@ export class BookCreateComponent {
                 console.log('Error in getting Terms: ', e);
             }
         });
-
-        //console.log(this._authService.getCurrentUser())
-    }
+  }
 
     save(redirect: boolean = true) {
         console.log('clicked on save!');
@@ -72,7 +67,7 @@ export class BookCreateComponent {
             error: (e) => {
                 const errorMessage = 'Error retrieving product.';
                 console.log('error: ', e);
-                this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+                this._navigationService.navigateTo(BLANK_PAGE, errorMessage)
             }
         });
     }

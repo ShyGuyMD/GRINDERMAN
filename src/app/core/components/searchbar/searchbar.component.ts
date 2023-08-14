@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { WooCommerceApiService } from '@core/services';
+import { Router } from '@angular/router';
+import { NavigationService, WooCommerceApiService } from '@core/services';
 import { SharedService } from '@core/services/shared';
+import { CATALOGUE } from '@shared/constants';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { Subject } from 'rxjs';
 
@@ -16,7 +18,9 @@ export class SearchbarComponent {
 
     constructor(
         private _sharedService: SharedService,
-        private _wooCommerceAPIService: WooCommerceApiService) { }
+        private _wooCommerceAPIService: WooCommerceApiService,
+        private _router: Router,
+        private _navigationService: NavigationService) { }
 
     ngOnInit() {
         this.searchTerm.pipe(
@@ -35,11 +39,14 @@ export class SearchbarComponent {
     }
 
     performSearch(keyword: string) {
-        this._wooCommerceAPIService.getProductsByKeyword(keyword).subscribe({
-            next: (v) => this._sharedService.setSearchResults(v),
-            error: (e) => console.log('Error in Search API: ', e),
-            complete: () => this.isLoading = false
-        });
+      if (this._router.url !== CATALOGUE) {
+        this._navigationService.navigateTo(CATALOGUE);
+      }
+      this._wooCommerceAPIService.getProductsByKeyword(keyword).subscribe({
+        next: (v) => this._sharedService.setSearchResults(v),
+        error: (e) => console.log('Error in Search API: ', e),
+        complete: () => (this.isLoading = false),
+      });
     }
 
 }

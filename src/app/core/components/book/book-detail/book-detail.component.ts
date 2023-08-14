@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@core/models/book';
-import { BookService, CartService } from '@core/services';
+import { BookService, CartService, NavigationService } from '@core/services';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { BookEditModalComponent } from '../book-edit-modal/book-edit-modal.component';
+import { BLANK_PAGE } from '@shared/constants';
 
 @Component({
   selector: 'app-book-detail',
@@ -19,7 +20,7 @@ export class BookDetailComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _router: Router,
+    private _navigationService: NavigationService,
     private _bookService: BookService,
     private _dialogService: DialogService,
     private _cartService: CartService,
@@ -32,9 +33,7 @@ export class BookDetailComponent implements OnInit {
     if (!idParam || isNaN(this.id)) {
       // Invalid ID or non-number value, redirect to blank component with error message
       const errorMessage = 'Invalid ID or non-number value.';
-      this._router.navigate(['/blank'], {
-        queryParams: { error: errorMessage },
-      });
+      this._navigationService.navigateTo(BLANK_PAGE, errorMessage);
       return;
     }
     this._bookService.getBookData().subscribe((book) => {
@@ -51,9 +50,7 @@ export class BookDetailComponent implements OnInit {
       error: (error) => {
         console.error(error);
         const errorMessage = 'Error retrieving product.';
-        this._router.navigate(['/blank'], {
-          queryParams: { error: errorMessage },
-        });
+        this._navigationService.navigateTo(BLANK_PAGE, errorMessage);
       },
     });
   }

@@ -2,7 +2,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Book } from '@core/models/book';
 import { CartItem } from '@core/models/cartItem';
-import { BookService, SharedService, WooCommerceApiService } from '@core/services';
+import { BookService, NavigationService, SharedService, WooCommerceApiService } from '@core/services';
+import { BLANK_PAGE } from '@shared/constants';
 import { Subject, debounceTime } from 'rxjs';
 
 @Component({
@@ -23,7 +24,7 @@ export class ItemSearchComponent {
       private _sharedService: SharedService,
       private _wooCommerceAPIService: WooCommerceApiService,
       private _bookService: BookService,
-      private _router: Router) { }
+      private _navigationService: NavigationService) { }
 
   ngOnInit() {
       this.searchTerm.pipe(
@@ -43,7 +44,7 @@ export class ItemSearchComponent {
         error: (e) => {
             console.error(e);
             const errorMessage = 'Error retrieving searched catalogue.';
-            this._router.navigate(['/blank'], { queryParams: { error: errorMessage } });
+            this._navigationService.navigateTo(BLANK_PAGE, errorMessage)
         },
         complete: () => console.log('Results (after searching): ', this.bookOptions) // DEBUG
     });

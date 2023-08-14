@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+
+import { UserService } from '@core/services';
 import {
   CHECKOUT_ADMIN_ROUTEMAPPINGS,
   CHECKOUT_ADMIN_STEPS,
   CHECKOUT_ROUTEMAPPINGS,
   CHECKOUT_STEPS,
-} from '@core/models/checkout';
-import { UserService } from '@core/services';
+} from '@shared/constants';
 import { filter } from 'rxjs';
 
 @Component({
@@ -19,10 +20,7 @@ export class CheckoutComponent {
   activeIndex: number = 0;
   stepRouteMappings: { [key: string]: number } = {};
 
-  constructor(
-    private _userService: UserService,
-    private _router: Router,
-  ) {}
+  constructor(private _userService: UserService, private _router: Router) {}
 
   ngOnInit(): void {
     if (this._userService.isAdminUser()) {
@@ -33,13 +31,11 @@ export class CheckoutComponent {
       this.steps = CHECKOUT_STEPS;
     }
 
-      this._router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd))
+    this._router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.updateActiveIndex();
       });
-      
   }
 
   private updateActiveIndex(): void {

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NavigationService } from '@core/services';
+import { CHECKOUT_CART } from '@shared/constants';
 
 @Component({
   selector: 'app-order-details',
@@ -8,14 +10,14 @@ import { Router } from '@angular/router';
 })
 export class OrderDetailsComponent {
 
-  constructor(private _router: Router){}
+  constructor(private _navigationService: NavigationService){}
 
   
   public goToNextStep(): void {
-    this._router.navigate(['']);
+    this._navigationService.navigateTo('');
   }
 
   public goToPreviousStep(): void {
-    this._router.navigate(['/checkout/cart']);
+    this._navigationService.navigateTo(CHECKOUT_CART);
   }
 }
