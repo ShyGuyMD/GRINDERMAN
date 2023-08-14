@@ -5,6 +5,9 @@ import { Book } from '@core/models/book';
 import { ProductService } from '../product';
 import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
 import { AuthenticationService } from '../authentication';
+import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
+import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -12,7 +15,7 @@ import { AuthenticationService } from '../authentication';
 export class WooCommerceApiService {
     private readonly baseUrl = config.baseUrl + config.wc;
     private readonly headers = this._authService.getAuthorizationHeader();
-    
+
     constructor(
         private _apiService: ApiService,
         private _authService: AuthenticationService,
@@ -20,22 +23,21 @@ export class WooCommerceApiService {
     ) { }
 
     getAllProducts() {
-        console.log('Headers:', this.headers);
-        return this._apiService.get(`${this.baseUrl}/products/`, this.headers);
+        const url = `${this.baseUrl}/products/`;
+
+        return this._apiService.get(url, this.headers);
     }
 
     getProductsById(productId: number) {
-        return this._apiService.get(
-            `${this.baseUrl}/products/${productId}`,
-            this.headers
-        );
+        const url = `${this.baseUrl}/products/${productId}`;
+
+        return this._apiService.get(url, this.headers);
     }
 
     getProductsByKeyword(keyword: string) {
-        return this._apiService.get(
-            `${this.baseUrl}/products?search=${keyword}`,
-            this.headers
-        );
+        const url = `${this.baseUrl}/products?search=${keyword}`;
+
+        return this._apiService.get(url, this.headers);
     }
 
     getProductAttributes() {
@@ -55,8 +57,6 @@ export class WooCommerceApiService {
 
         const body = this._productService.mapBookToProduct(book);
 
-        console.log('Request Body: ', body);
-
         return this._apiService.post(url, body, this.headers);
     }
 
@@ -68,18 +68,32 @@ export class WooCommerceApiService {
     }
 
     putProductData(productId: number, body: any) {
-        console.log('This is the ID for the API: ', productId);
-        console.log('This is the Data for the API: ', body);
-        return this._apiService.put(
-            `${this.baseUrl}/products/${productId}`,
-            body,
-            this.headers
-        );
+        const url = `${this.baseUrl}/products/${productId}`;
+
+        return this._apiService.put(url, body, this.headers);
     }
 
     public postCustomer(body: CreateCustomerRequest): any {
         const url = `${this.baseUrl}/customers`;
 
         return this._apiService.post(url, body, this.headers);
+    }
+
+    public postOrder(body: CreateOrderRequest): Observable<CreateOrderResponse> {
+        const url = `${this.baseUrl}/orders`;
+
+        return this._apiService.post(url, body, this.headers);
+    }
+
+    public getOrdersById(orderId: number): Observable<RetrieveOrderResponse> {
+        const url = `${this.baseUrl}/orders/${orderId}`;
+
+        return this._apiService.get(url, this.headers);
+    }
+
+    public getAllOrders(): Observable<RetrieveOrderResponse[]> {
+        const url = `${this.baseUrl}/orders`;
+
+        return this._apiService.get(url, this.headers);
     }
 }

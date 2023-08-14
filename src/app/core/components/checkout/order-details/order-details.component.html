@@ -1,14 +1,10 @@
 <div class="grid">
     <div class="col-8">
-      <app-contact-details></app-contact-details>
-      <app-delivery-options></app-delivery-options>
+        <app-contact-details></app-contact-details>
+        <app-delivery-options></app-delivery-options>
     </div>
     <div class="col-4">
-      <app-order-summary></app-order-summary>
-      <button
-        pButton
-        class="p-button-success w-full mt-5"
-        label="Confirmar"
-      ></button>
+        <app-order-summary></app-order-summary>
+        <button pButton class="p-button-success w-full mt-5" label="Confirmar" (click)="placeOrder()"></button>
     </div>
-  </div>
+</div>
