@@ -78,9 +78,7 @@ export class BookService {
   }
 
   private extractCover(imagesURLs: any[]): any {
-    const cover = imagesURLs.find(
-      (element) => element.name === 'cover'
-    );
+    const cover = imagesURLs.find(element => element.name === 'cover') || imagesURLs[0];
     return (
       cover || { name: 'placeholder', src: 'assets/images/placeholder.png' }
     );
@@ -88,7 +86,7 @@ export class BookService {
 
   private extractGenres(attributes: any): any {
     const options = attributes
-      .find((attr: any) => attr.name === 'Genero')
+      .find((attr: any) => attr.name === Attributes.ATTR_GENRE)
       ?.options.map((genre: any) => {
         return { name: genre, value: genre };
       });
