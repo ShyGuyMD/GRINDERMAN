@@ -1,1 +1,74 @@
 <app-section-title title="Datos de Contacto"></app-section-title>
+<form [formGroup]="contactDetailsForm" class="p-mt-4">
+
+      <div class="p-fluid">
+        <div class="p-field">
+            <label for="customer-name">Nombre:</label>
+            <input
+              type="text"
+              id="customer-name"
+              pInputText
+              formControlName="name"
+              name="name"
+              required
+            />
+            <div *ngIf="contactDetailsForm.get('name')?.invalid && contactDetailsForm.get('name')?.touched" class="p-error">
+              <ng-container *ngIf="contactDetailsForm.get('email')?.hasError('required')">
+                Por favor, completa tu nombre.
+              </ng-container>
+            </div>
+          </div>
+          <div class="p-field">
+            <label for="customer-lastname">Apellido:</label>
+            <input
+              type="text"
+              id="customer-lastname"
+              pInputText
+              formControlName="lastname"
+              name="lastname"
+              required
+            />
+            <div *ngIf="contactDetailsForm.get('lastname')?.invalid && contactDetailsForm.get('lastname')?.touched" class="p-error">
+              <ng-container *ngIf="contactDetailsForm.get('lastname')?.hasError('required')">
+                Por favor, completa tu apellido.
+              </ng-container>
+            </div>
+          </div>
+        <div class="p-field">
+          <label for="customer-email">Email:</label>
+          <input
+            type="email"
+            id="customer-email"
+            pInputText
+            formControlName="email"
+            name="email"
+            required
+          />
+          <div *ngIf="contactDetailsForm.get('email')?.invalid && contactDetailsForm.get('email')?.touched" class="p-error">
+            <ng-container *ngIf="contactDetailsForm.get('email')?.hasError('required')">
+              Por favor, completa tu email.
+            </ng-container>
+            <ng-container *ngIf="contactDetailsForm.get('email')?.hasError('email')">
+              Email inválido.
+            </ng-container>
+          </div>
+        </div>
+        <div class="p-field">
+            <label for="customer-name">Teléfono:</label>
+            <input
+              type="number"
+              id="customer-phone"
+              pInputText
+              formControlName="phone"
+              name="phone"
+              required
+            />
+            <div *ngIf="contactDetailsForm.get('phone')?.invalid && contactDetailsForm.get('phone')?.touched" class="p-error">
+              <ng-container *ngIf="contactDetailsForm.get('phone')?.hasError('required')">
+                Por favor, completa tu teléfono.
+              </ng-container>
+            </div>
+          </div>
+      
+      </div>
+  </form>
