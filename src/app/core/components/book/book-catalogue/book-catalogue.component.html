@@ -7,18 +7,18 @@
             <ng-template pTemplate="content">
                 <div class="book-details">
                     <a [routerLink]="['/book-detail', book.id]">
-                        <div class="book-image">
+                        <div class="book-image-container">
                             <p-image [src]="book.cover.src" alt="book.title" class="carousel-image" width="100%"></p-image>
                         </div>
                     </a>
                     <div class="book-info">
-                        <div class="book-title"><strong>{{ book.title }}</strong></div>
-                        <div>{{ book.author }}</div>
-                        <div>{{ book.price | currency }}</div>
+                        <div class="book-title text-ellipsis"><strong>{{ book.title }}</strong></div>
+                        <div class="text-ellipsis">{{ book.author }}</div>
+                        <div class="text-ellipsis">{{ book.price | currency }}</div>
                     </div>
                     <div class="add-to-cart-button  mt-2">
                         <button pButton icon="pi pi-shopping-cart" (click)="addToCart(book)"
-                            class="w-full p-button-outlined">Agregar al carrito</button>
+                            class="p-button-outlined p-button-rounded"></button>
                     </div>
                 </div>
             </ng-template>
