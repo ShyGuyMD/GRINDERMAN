@@ -47,6 +47,7 @@ export class SearchbarComponent {
         error: (e) => console.log('Error in Search API: ', e),
         complete: () => (this.isLoading = false),
       });
+      this._sharedService.setKeyword(keyword);
     }
 
 }

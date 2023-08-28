@@ -24,6 +24,7 @@ export enum Severity {
 }
 
 export const MIN_DELIVERY = 700;
+export const PAGE_SIZE = 10;
 
 //#region URL
 export const HOME = 'home';
@@ -33,6 +34,8 @@ export const LOGIN = 'login';
 export const BOOK_CREATE = 'book-create';
 export const BOOK_DETAIL = 'book-detail/:id';
 export const BOOK_EDIT ='book-edit';
+export const BOOK_IMPORT = 'book-import';
+export const BOOK_EXPORT = 'book-export';
 export const CLIENT_CREATE = 'register';
 export const ADMIN_CREATE = 'admin-create';
 export const CHECKOUT = 'checkout';
@@ -70,6 +73,24 @@ export const CHECKOUT_ADMIN_STEPS = [
   { label: 'Carrito de Compras' },
   { label: 'Resumen de Compra' },
 ];
+
+export enum Book_Properies {
+  ISBN = 'isbn',
+  TITLE = 'title',
+  AUTHOR = 'author',
+  GENRE = 'genre',
+  PUBLISHER = 'publisher',
+  PRICE = 'price',
+  INVENTORY_STATUS = 'inventoryStatus',
+  ID = 'id',
+  SYNOPSIS = 'synopsis',
+  AVAILABLE_UNITS = 'availableUnits',
+  COVER = 'cover',
+  IMAGES = 'images',
+  IS_NEW = 'isNew',
+  IS_HARDCOVER = 'isHardCover',
+  IS_ACTIVE = 'isActive',
+}
 
 
 //#endregion

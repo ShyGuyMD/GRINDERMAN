@@ -13,7 +13,7 @@ export class MenuAdminComponent {
 
   ngOnInit() {
       this.menuItems = [
-          { label: 'Home', icon: 'pi pi-home', routerLink: `admin/${HOME}` }
+          { label: 'Home', icon: 'pi pi-home', routerLink: `${HOME}` }
       ];
 
       // Set the first menu item as the active item
