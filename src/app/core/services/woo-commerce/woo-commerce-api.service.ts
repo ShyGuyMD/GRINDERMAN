@@ -7,93 +7,114 @@ import { CreateCustomerRequest } from '@core/models/request/createCustomerReques
 import { AuthenticationService } from '../authentication';
 import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
 import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, map, mergeMap, take, takeUntil, takeWhile } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { Product } from '@core/models/product';
 
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class WooCommerceApiService {
-    private readonly baseUrl = config.baseUrl + config.wc;
-    private readonly headers = this._authService.getAuthorizationHeader();
+  private readonly baseUrl = config.baseUrl + config.wc;
+  private readonly headers = this._authService.getAuthorizationHeader();
 
-    constructor(
-        private _apiService: ApiService,
-        private _authService: AuthenticationService,
-        private _productService: ProductService
-    ) { }
+  constructor(
+    private _apiService: ApiService,
+    private _authService: AuthenticationService,
+    private _productService: ProductService
+  ) {}
 
-    getAllProducts() {
-        const url = `${this.baseUrl}/products/`;
 
-        return this._apiService.get(url, this.headers);
+  public getAllProducts(): Observable<Product[]> {
+    const maxPages = 100;
+    const productObservables: Observable<Product[]>[] = [];
+
+    for (let page = 1; page <= maxPages; page++) {
+      productObservables.push(this.getProducts(page));
     }
 
-    getProductsById(productId: number) {
-        const url = `${this.baseUrl}/products/${productId}`;
+    return forkJoin(productObservables).pipe(
+      takeWhile((response) => response.length > 0), // Stop when response is empty
+      map((responses) => responses.reduce((acc, curr) => acc.concat(curr), [])), // Flatten the array of arrays
+      take(1)
+    );
+  }
 
-        return this._apiService.get(url, this.headers);
-    }
+  public getProducts(page: number): Observable<Product[]> {
+    const url = `${this.baseUrl}/products`;
+    const params = new HttpParams().set('page', page.toString());
 
-    getProductsByKeyword(keyword: string) {
-        const url = `${this.baseUrl}/products?search=${keyword}`;
+    return this._apiService.get(url, this.headers, params);
+  }
 
-        return this._apiService.get(url, this.headers);
-    }
+  getProductsById(productId: number) {
+    const url = `${this.baseUrl}/products/${productId}`;
 
-    getProductAttributes() {
-        const url = `${this.baseUrl}/products/attributes`;
+    return this._apiService.get(url, this.headers);
+  }
 
-        return this._apiService.get(url, this.headers);
-    }
+  getProductsByKeyword(keyword: string, page: number = 1) {
+    const url = `${this.baseUrl}/products?search=${keyword}`;
+    const params = new HttpParams().set('page', page.toString());
 
-    getProductAttributeTerms(attrId: number) {
-        const url = `${this.baseUrl}/products/attributes/${attrId}/terms`;
+    return this._apiService.get(url, this.headers, params);
+  }
 
-        return this._apiService.get(url, this.headers);
-    }
+  getProductAttributes() {
+    const url = `${this.baseUrl}/products/attributes`;
 
-    postProduct(book: Book) {
-        const url = `${this.baseUrl}/products`;
+    return this._apiService.get(url, this.headers);
+  }
 
-        const body = this._productService.mapBookToProduct(book);
+  getProductAttributeTerms(attrId: number) {
+    const url = `${this.baseUrl}/products/attributes/${attrId}/terms`;
 
-        return this._apiService.post(url, body, this.headers);
-    }
+    return this._apiService.get(url, this.headers);
+  }
 
-    postProductAttributeTerms(productId: number, termValue: string) {
-        const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
-        const body = { name: termValue };
+  postProduct(book: Book) {
+    const url = `${this.baseUrl}/products`;
 
-        return this._apiService.post(url, body, this.headers);
-    }
+    const body = this._productService.mapBookToProduct(book);
+    console.log('bookproduct', body);
 
-    putProductData(productId: number, body: any) {
-        const url = `${this.baseUrl}/products/${productId}`;
+    return this._apiService.post(url, body, this.headers);
+  }
 
-        return this._apiService.put(url, body, this.headers);
-    }
+  postProductAttributeTerms(productId: number, termValue: string) {
+    const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
+    const body = { name: termValue };
 
-    public postCustomer(body: CreateCustomerRequest): any {
-        const url = `${this.baseUrl}/customers`;
+    return this._apiService.post(url, body, this.headers);
+  }
 
-        return this._apiService.post(url, body, this.headers);
-    }
+  putProductData(productId: number, body: any) {
+    const url = `${this.baseUrl}/products/${productId}`;
 
-    public postOrder(body: CreateOrderRequest): Observable<CreateOrderResponse> {
-        const url = `${this.baseUrl}/orders`;
+    return this._apiService.put(url, body, this.headers);
+  }
 
-        return this._apiService.post(url, body, this.headers);
-    }
+  public postCustomer(body: CreateCustomerRequest): any {
+    const url = `${this.baseUrl}/customers`;
 
-    public getOrdersById(orderId: number): Observable<RetrieveOrderResponse> {
-        const url = `${this.baseUrl}/orders/${orderId}`;
+    return this._apiService.post(url, body, this.headers);
+  }
 
-        return this._apiService.get(url, this.headers);
-    }
+  public postOrder(body: CreateOrderRequest): Observable<CreateOrderResponse> {
+    const url = `${this.baseUrl}/orders`;
 
-    public getAllOrders(): Observable<RetrieveOrderResponse[]> {
-        const url = `${this.baseUrl}/orders`;
+    return this._apiService.post(url, body, this.headers);
+  }
 
-        return this._apiService.get(url, this.headers);
-    }
+  public getOrdersById(orderId: number): Observable<RetrieveOrderResponse> {
+    const url = `${this.baseUrl}/orders/${orderId}`;
+
+    return this._apiService.get(url, this.headers);
+  }
+
+  public getAllOrders(): Observable<RetrieveOrderResponse[]> {
+    const url = `${this.baseUrl}/orders`;
+
+    return this._apiService.get(url, this.headers);
+  }
 }

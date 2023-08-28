@@ -1,5 +1,5 @@
 import { BlankPageComponent } from "./blank-page";
-import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookEditModalComponent } from "./book";
+import { BookCatalogueComponent, BookCreateComponent, BookDetailComponent, BookEditModalComponent, BookExportComponent, BookImportComponent } from "./book";
 import { CartPreviewComponent } from "./cart-preview";
 import { CartAdminComponent, CartComponent, CartItemComponent, CheckoutComponent, ContactDetailsComponent, DeliveryOptionsComponent, ItemSearchComponent, OrderDetailsComponent, OrderSummaryComponent} from "./checkout";
 
@@ -35,6 +35,8 @@ export const components = [
     BookCatalogueComponent,
     BookDetailComponent,
     BookEditModalComponent,
+    BookImportComponent,
+    BookExportComponent,
     CartAdminComponent,
     CartComponent,
     CartItemComponent,

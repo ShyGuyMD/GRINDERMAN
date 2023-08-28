@@ -20,13 +20,13 @@ export class ProductService {
 
             name: book.title,
             description: book.synopsis || '',
-            regular_price: book.price,
+            regular_price: book.price.toString(),
             stock_quantity: book.availableUnits || 0,
             stock_status: this.injectStockStatus(book.inventoryStatus),
 
             images: bookImages.length ? this.injectImages(bookImages) : [],
             meta_data: this.buildMetadata(book),
-            attributes: this.injectGenreOptions(book.genre),
+            attributes: book.genre? this.injectGenreOptions(book.genre) : this.injectGenreOptions([]),
 
             manage_stock: true,
             status: 'publish',
@@ -35,9 +35,9 @@ export class ProductService {
 
     private buildMetadata(book: Book): any {
         return [
-            { 'key' : 'author', 'value' : book.author }
-            ,{ 'key' : 'isbn', 'value' : book.isbn }
-            ,{ 'key' : 'publisher', 'value' : book.publisher }
+            { 'key' : 'author', 'value' : book.author ? book.author : '' }
+            ,{ 'key' : 'isbn', 'value' : book.isbn ? book.isbn : '' }
+            ,{ 'key' : 'publisher', 'value' : book.publisher ? book.publisher : '' }
             ,{ 'key' : 'isActive', 'value' : book.isActive ? 'true' : 'false' }
             ,{ 'key' : 'isHardcover', 'value' : book.isHardcover ? 'true' : 'false' }
             ,{ 'key' : 'isNew', 'value' : book.isNew ? 'true' : 'false' }

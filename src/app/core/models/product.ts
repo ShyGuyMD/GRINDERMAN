@@ -4,7 +4,7 @@ export interface Product {
     // Common Fields
     name: string;               // Title
     description: string;        // Synopsis
-    regular_price: number;              // Price
+    regular_price: string;              // Price
     stock_quantity: number;     // Available units
     stock_status: string;       
 

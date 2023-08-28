@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Book } from '@core/models/book';
 import { Product } from '@core/models/product';
-import { Attributes, InventoryStatus, Severity } from '@shared/constants';
+import { Attributes, Book_Properies, InventoryStatus, Severity } from '@shared/constants';
 import { WooCommerceApiService } from '../woo-commerce';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, take } from 'rxjs/operators';
+import { BehaviorSubject, Observable, forkJoin, interval, of } from 'rxjs';
 import { UtilsService } from '../utils';
+import { Option } from '@core/models/option';
 
 @Injectable({
   providedIn: 'root',
@@ -43,8 +44,107 @@ export class BookService {
     }
   }
 
+  public getAllBooks(): Observable<Book[]> {
+    return this._wooCommerceAPIService.getAllProducts().pipe(
+      map((response: any[]) => {
+        return response.map((product: any) => this.mapProductToBook(product));
+      })
+    );
+  }
+
+  public getBooks(keyword:string = '', page: number): Observable<Book[]> {
+
+    if(keyword !== '' ) return this.getFilteredBooks(keyword, page);
+
+    return this._wooCommerceAPIService.getProducts(page).pipe(
+      map((response: any[]) => {
+        return response.map((product: any) => this.mapProductToBook(product));
+      })
+    );
+  }
+
+  public getFilteredBooks( keyword:string, page: number = 1): Observable<Book[]> {
+    return this._wooCommerceAPIService.getProductsByKeyword(keyword, page).pipe(
+      map((response: any[]) => {
+        return response.map((product: any) => this.mapProductToBook(product));
+      })
+    );
+  }
+
+  public createBook(input: any): Book {
+    const newBook: Book = {
+      author: input.author,
+      availableUnits: input.availableUnits,
+      isActive: input.isActive,
+      isbn: input.isbn,
+      isHardcover: input.isHardcover, 
+      price: input.price,
+      isNew: input.isNew,
+      publisher: input.publisher,
+      title: input.title,
+      cover: input.cover,
+      genre: input.genre,
+      id: input.id,
+      images: input.images,
+      inventoryStatus: input.inventoryStatus,
+      synopsis: input.synopsis
+    }
+    return newBook
+  }
+
+  public postBook(book: Book): void {
+    this._wooCommerceAPIService.postProduct(book).subscribe({
+      next: (v) => {
+          console.log('submitting: ', book);
+          console.log('response: ', v);
+      },
+      error: (e) => {
+          console.log('error: ', e);
+      }})
+  }
+
+  public postBooksInBatches(books: Book[], batchSize: number, delay: number): Observable<any> {
+    const totalBatches = Math.ceil(books.length / batchSize);
+  
+    return interval(delay).pipe(
+      take(totalBatches),
+      mergeMap(batchIndex => {
+        const startIndex = batchIndex * batchSize;
+        const endIndex = Math.min(startIndex + batchSize, books.length);
+        const batch = books.slice(startIndex, endIndex);
+        return this.postBatchOfBooks(batch);
+      })
+    );
+  }
+
+  public postBatchOfBooks(books: Book[]): Observable<any> {
+    const requests$ = books.map(book => this._wooCommerceAPIService.postProduct(book).pipe(catchError(error => of({ success: false, error }))));
+
+    return forkJoin(requests$);
+  }
+
   public getGenreOptions(): any {
     return this.genreOptions;
+  }
+
+  public getBookPropertyOptions(): Option[]{
+    return [
+      { value: 'ID', key: Book_Properies.ID },
+      { value: 'ISBN', key: Book_Properies.ISBN },
+      { value: 'Título', key: Book_Properies.TITLE },
+      { value: 'Autor', key: Book_Properies.AUTHOR },
+      { value: 'Género', key: Book_Properies.GENRE },
+      { value: 'Editorial', key: Book_Properies.PUBLISHER },
+      { value: 'Precio', key: Book_Properies.PRICE },
+      { value: 'Sinopsis', key: Book_Properies.SYNOPSIS },
+      { value: 'Unidades disponibles', key: Book_Properies.AVAILABLE_UNITS },
+      { value: 'Disponibilidad', key: Book_Properies.INVENTORY_STATUS },
+      { value: 'Portada', key: Book_Properies.COVER },
+      { value: 'Imagenes', key: Book_Properies.IMAGES },
+      { value: 'Estado', key: Book_Properies.IS_NEW },
+      { value: 'Tapa', key: Book_Properies.IS_HARDCOVER },
+      { value: 'Activo', key: Book_Properies.IS_ACTIVE },
+    ]
   }
 
   public mapProductToBook(product: Product): Book {
@@ -59,7 +159,7 @@ export class BookService {
       author: this.extractMetadata('author', metadata),
       genre: this.extractGenres(attributes),
       isbn: this.extractMetadata('isbn', metadata),
-      price: product.regular_price,
+      price: Number(product.regular_price),
       publisher: this.extractMetadata('publisher', metadata),
       title: product.name,
 

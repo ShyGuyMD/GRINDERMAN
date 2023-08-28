@@ -8,6 +8,8 @@ import {
   BookCatalogueComponent,
   BookCreateComponent,
   BookDetailComponent,
+  BookExportComponent,
+  BookImportComponent,
 } from '@core/components/book';
 import {
   AdminCreateComponent,
@@ -23,7 +25,7 @@ import {
   OrderSummaryComponent,
 } from '@core/components';
 import { AdminGuard } from './guards/admin.guard';
-import { ADMIN_CREATE, BLANK_PAGE, BOOK_CREATE, BOOK_DETAIL, CART, CATALOGUE, CHECKOUT, CLIENT_CREATE, HOME, LOGIN, ORDER_SUMMARY } from '@shared/constants';
+import { ADMIN_CREATE, BLANK_PAGE, BOOK_CREATE, BOOK_DETAIL, BOOK_EXPORT, BOOK_IMPORT, CART, CATALOGUE, CHECKOUT, CLIENT_CREATE, HOME, LOGIN, ORDER_SUMMARY } from '@shared/constants';
 
 const routes: Routes = [
   { path: '', redirectTo: LOGIN, pathMatch: 'full' },
@@ -57,6 +59,8 @@ const routes: Routes = [
       { path: 'style-template', component: StyleTemplateComponent },
       { path: BOOK_CREATE, component: BookCreateComponent },
       { path: BOOK_DETAIL, component: BookDetailComponent },
+      { path: BOOK_IMPORT, component: BookImportComponent },
+      { path: BOOK_EXPORT, component: BookExportComponent },
       { path: BLANK_PAGE, component: BlankPageComponent },
       { path: CATALOGUE, component: BookCatalogueComponent },
       { path: HOME, component: LandingComponent },
