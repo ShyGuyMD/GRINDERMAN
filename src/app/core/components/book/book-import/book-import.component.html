@@ -1,0 +1,15 @@
+<div class="p-field">
+  <p-fileUpload  mode="basic" id="file" name="file" accept=".xlsx, .xls" chooseLabel="Seleccione una Archivo"
+  (onSelect)="onFileChange($event)"></p-fileUpload>
+</div>
+<!-- book-import.component.html -->
+<div *ngIf="true">
+  <div *ngFor="let property of bookProperties">
+    <div class="p-field">
+      <label for="publisher">{{ property.value }}:</label>
+      <p-dropdown [(ngModel)]="mappedHeaders[property.key]" [options]="excelHeaders" [placeholder]="blankValue"></p-dropdown>
+  </div>
+    </div>
+    <p-button (click)="confirmMapping()">Confirm Mapping</p-button>
+</div>
+  
