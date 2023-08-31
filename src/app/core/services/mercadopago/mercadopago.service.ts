@@ -9,6 +9,7 @@ import { MPPreferencesResponse } from '@core/models/response/mpPreferencesRespon
 })
 export class MercadopagoService {
 
+    // TODO: mover a archivo de environment
     private url = 'https://api.mercadopago.com';
     private access_token = 'TEST-5723048693599353-060916-0559d3086c95aa0c3255cf8ff3eef133-1395552730';
 
