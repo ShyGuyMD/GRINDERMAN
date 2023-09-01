@@ -1,1 +1,11 @@
-<p>map works!</p>
+<div *ngIf="apiLoaded | async">
+    <google-map height="400px"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom">
+<map-marker *ngFor="let markerPosition of markerPositions"
+      [position]="markerPosition"
+      [options]="markerOptions"></map-marker>
+        <map-polygon [paths]="vertices" [options]="polygonOptions"></map-polygon>
+    </google-map>
+</div>

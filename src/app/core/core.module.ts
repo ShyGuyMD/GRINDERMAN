@@ -1,6 +1,7 @@
 // Angular Core
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { GoogleMapsModule } from "@angular/google-maps";
 
 // Application Components
 import { components } from "@core/components";
@@ -12,7 +13,7 @@ import { SharedModule } from "@shared/shared.module";
 
 @NgModule({
     declarations: [...components],
-    imports: [SharedModule, PrimengModule, FormsModule, ReactiveFormsModule],
+    imports: [SharedModule, PrimengModule, FormsModule, ReactiveFormsModule, GoogleMapsModule],
     providers: [...services]
 })
 

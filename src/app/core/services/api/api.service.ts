@@ -17,6 +17,10 @@ export class ApiService {
     }
 
     public put(url: string, body: any, headers: HttpHeaders = new HttpHeaders()): Observable<any> {
-        return this.http.put(url, body, { headers })
+        return this.http.put(url, body, { headers });
+    }
+
+    public jsonp(url: string): Observable<any> {
+        return this.http.jsonp(url, 'callback');
     }
 }

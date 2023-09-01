@@ -8,5 +8,8 @@ export const config = {
     cc: 'cocart/v2',
     jwt: 'jwt-auth/v1',
     wp: 'wp/v2',
-    wc: 'wc/v3'
+    wc: 'wc/v3',
+    //Google
+    gmApiKey: 'AIzaSyDnUWoGzlbF8GofSzrozaoExbhRhxZWkaY',
+    gmUrl: 'https://maps.googleapis.com/maps/api/js?key='
 };

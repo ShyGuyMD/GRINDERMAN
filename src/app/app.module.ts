@@ -13,22 +13,25 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from '@core/core.module';
 import { SharedModule } from '@shared/shared.module';
 import { StyleTemplateComponent } from './style-template/style-template.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { ExceptionService } from '@core/services';
 import { AdminGuard } from './guards/admin.guard';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
     declarations: [
         AppComponent,
-        StyleTemplateComponent
+        StyleTemplateComponent,
     ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        HttpClientJsonpModule,
         SharedModule,
         CoreModule,
-        AppRoutingModule
+        AppRoutingModule,
+        GoogleMapsModule
     ],
     providers: [
         AdminGuard,
