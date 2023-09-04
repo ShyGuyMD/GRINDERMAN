@@ -9,6 +9,7 @@ import {
 } from './book';
 import { CartPreviewComponent } from './cart-preview';
 import {
+  AddressRegistrationComponent,
   CartAdminComponent,
   CartComponent,
   CartItemComponent,
@@ -55,6 +56,7 @@ export * from './user-menu';
 
 export const components = [
   AdminCreateComponent,
+  AddressRegistrationComponent,
   BlankPageComponent,
   BookCreateComponent,
   BookCatalogueComponent,

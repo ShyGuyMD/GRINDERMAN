@@ -1,11 +1,19 @@
 <div *ngIf="apiLoaded | async">
-    <google-map height="400px"
+  <google-map
+    (mapInitialized)="initializeMap($event)"
+    height="400px"
     width="100%"
     [center]="center"
-    [zoom]="zoom">
-<map-marker *ngFor="let markerPosition of markerPositions"
+    [zoom]="zoom"
+  >
+    <map-marker
+      *ngFor="let markerPosition of markerPositions"
       [position]="markerPosition"
-      [options]="markerOptions"></map-marker>
-        <map-polygon [paths]="vertices" [options]="polygonOptions"></map-polygon>
-    </google-map>
+      [options]="markerOptions"
+    ></map-marker>
+    <map-polygon
+      [paths]="vertices"
+      [options]="polygonOptions"
+    ></map-polygon>
+  </google-map>
 </div>

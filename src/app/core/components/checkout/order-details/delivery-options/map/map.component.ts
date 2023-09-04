@@ -1,24 +1,32 @@
 import { Component } from '@angular/core';
 import { MapGeocoder } from '@angular/google-maps';
-import { ApiService } from '@core/services';
-import { Observable, map, catchError, of } from 'rxjs';
+import { ApiService, DeliveryService } from '@core/services';
+import { Observable, of, } from 'rxjs';
 import { config } from 'src/environments/environment';
+import * as wellknown from 'wellknown';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
 })
 export class MapComponent {
+  map!: google.maps.Map;
   apiLoaded: Observable<boolean> = of(false);
-  vertices: google.maps.LatLngLiteral[] = [];
+  vertices: google.maps.LatLngLiteral[] = [
+    {lat: -31.419842283144572, lng : -58.000719813595374},
+    {lat: -13, lng: 0},
+    {lat: 13, lng: -13},
+  ];
   center!: google.maps.LatLngLiteral;
   zoom = 13;
-  markerOptions: google.maps.MarkerOptions = {draggable: false};
+  markerOptions: google.maps.MarkerOptions = { draggable: false };
   markerPositions: google.maps.LatLngLiteral[] = [];
-  bookshopAddress: string = 'Dr. Tristán Narvaja 1645, 11200 Montevideo, Departamento de Montevideo';
-  bookshopLocation!:  google.maps.LatLngLiteral;
-  radiusInMeters: number = 3*1000;
+  bookshopAddress: string =
+    'Dr. Tristán Narvaja 1645, 11200 Montevideo, Departamento de Montevideo';
+  bookshopLocation!: google.maps.LatLngLiteral;
+  deliveryLocation!: google.maps.LatLngLiteral;
+  radiusInMeters: number = 3 * 1000;
   polygonOptions: google.maps.PolygonOptions = {
     fillColor: '#00FF00',
     fillOpacity: 0.35,
@@ -27,32 +35,48 @@ export class MapComponent {
     strokeWeight: 2,
   };
 
-  constructor(private _apiService: ApiService, private _geocoder: MapGeocoder) {
-
-    this._apiService.jsonp(`${config.gmUrl}${config.gmApiKey}`).subscribe( {
+  constructor(
+    private _apiService: ApiService,
+    private _geocoder: MapGeocoder,
+    private _deliveryService: DeliveryService
+  ) {
+    this._apiService.jsonp(`${config.gmUrl}${config.gmApiKey}`).subscribe({
       next: () => {
         this.apiLoaded = of(true);
-        this.inicializeMap(this.bookshopAddress);
+        console.log("dl.kmds")
       },
       error: (e) => {
-          console.log('Error: ', e);
-          return of(false);
-      }
-  } )
-}
+        console.log('Error: ', e);
+        return of(false);
+      },
+    });
 
-  private inicializeMap(address: string): void{
+    this._deliveryService
+    .getDeliveryArea()
+    .subscribe((deliveryArea) => {
+      if (deliveryArea) {
+        console.log("del", deliveryArea)
+        this.setDeliveryArea(deliveryArea);
+      }
+    });
+  }
+
+ public initializeMap(event: any): void {
+
+    console.log("evt", event)
+    this.map = event;
+
+    const address = this.bookshopAddress;
     this._geocoder.geocode({ address }).subscribe(({ results }) => {
       if (results.length > 0) {
-        const location = results[0].geometry.location.toJSON();;
+        const location = results[0].geometry.location.toJSON();
         this.addMarker(location);
         this.bookshopLocation = location;
-        this.calculateAreaOfDelivery();
+        //this.calculateAreaOfDelivery();
       } else {
         console.log('No results found for the address.');
       }
     });
-    
   }
 
   private addMarker(location: google.maps.LatLngLiteral) {
@@ -63,7 +87,7 @@ export class MapComponent {
   public geocodeAddress(address: string): void {
     this._geocoder.geocode({ address }).subscribe(({ results }) => {
       if (results.length > 0) {
-        const location = results[0].geometry.location.toJSON();;
+        const location = results[0].geometry.location.toJSON();
         this.addMarker(location);
       } else {
         console.log('No results found for the address.');
@@ -71,14 +95,15 @@ export class MapComponent {
     });
   }
 
-  private calculateAreaOfDelivery():void{
-    for (let angle = 0; angle < 360; angle += 10) {
-      const heading = google.maps.geometry.spherical.computeHeading(this.bookshopLocation, this.bookshopLocation);
-      const point = google.maps.geometry.spherical.computeOffset(this.bookshopLocation, this.radiusInMeters, heading + angle);
-      this.vertices.push(point.toJSON());
-      console.log("area of delivery", this.vertices)
-    }
-    this.vertices = [...this.vertices];
+  private calculateAreaOfDelivery(): void {
+
   }
-  
+
+  private setDeliveryArea(deliveryArea: google.maps.LatLngLiteral[]): void {
+    if (deliveryArea) {
+       this.vertices = deliveryArea;
+      }
+      this.vertices = [...this.vertices];
+    
+  }
 }

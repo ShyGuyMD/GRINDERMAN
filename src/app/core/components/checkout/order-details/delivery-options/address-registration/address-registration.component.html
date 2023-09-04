@@ -1,0 +1,52 @@
+<form [formGroup]="addressForm">
+  <label for="department">Department:</label>
+  <p-dropdown
+    formControlName="department"
+    [options]="departamentos"
+    placeholder="Select Department"
+    (onChange)="getCities()"
+  ></p-dropdown>
+
+  <label for="city">Localidad:</label>
+  <p-dropdown
+    formControlName="city"
+    [options]="localidades"
+    placeholder="Select City"
+    optionLabel="localidad"
+  ></p-dropdown>
+
+  <label for="street">Dirección:</label>
+  <input
+    type="text"
+    formControlName="street"
+    id="street"
+    pInputText
+    [required]="true"
+    (blur)="searchAddress()"
+  />
+
+  <div
+    *ngIf="
+      addressForm.get('street')?.hasError('required') &&
+      addressForm.get('street')?.touched
+    "
+  >
+    La dirección es obligatoria.
+  </div>
+  <div
+    *ngIf="
+      addressForm.get('localidad')?.hasError('required') &&
+      addressForm.get('localidad')?.touched
+    "
+  >
+    La localidad es obligatoria.
+  </div>
+  <div
+    *ngIf="
+      addressForm.get('department')?.hasError('required') &&
+      addressForm.get('department')?.touched
+    "
+  >
+    El departamento es obligatorio.
+  </div>
+</form>
