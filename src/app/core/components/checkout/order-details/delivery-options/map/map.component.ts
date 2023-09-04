@@ -15,7 +15,7 @@ export class MapComponent {
   vertices: google.maps.LatLngLiteral[] = [];
   center!: google.maps.LatLngLiteral;
   zoom = 13;
-  bookshopMarkerOptions: google.maps.MarkerOptions = { draggable: false };
+  bookshopMarkerOptions: google.maps.MarkerOptions = { draggable: false, icon:'assets/images/bookshopMarker.png' };
   bookshopLocations: google.maps.LatLngLiteral[] = [];
   bookshopAddresses: string[] =
 ['Dr. Tristán Narvaja 1645, 11200 Montevideo, Departamento de Montevideo'];
