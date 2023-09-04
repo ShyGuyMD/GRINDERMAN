@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { City } from '@core/models/city';
 import { Departamento } from '@core/models/departamento';
@@ -14,6 +14,7 @@ export class AddressRegistrationComponent {
   departamentosDict: { [key: string]: City[] } = {};
   departamentos: string[] = [];
   localidades: City[] = [];
+  @Output() formValidityChange = new EventEmitter<boolean>();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -23,6 +24,9 @@ export class AddressRegistrationComponent {
   ngOnInit(): void {
     this.initForm();
     this.getCityData();
+    this.addressForm.valueChanges.subscribe(() => {
+      this.emitFormValidity();
+    });
   }
 
   private initForm(): void {
@@ -36,11 +40,21 @@ export class AddressRegistrationComponent {
   public searchAddress(): void {
     if (this.addressForm.valid) {
       const formData = this.addressForm.value;
-      this._deliveryService.setMapAddress(
+      this._deliveryService.setDeliveryMapAddress(
         `${formData.street}, ${formData.city.localidad}, ${formData.department}, Uruguay`
       );
-      this._deliveryService.setDeliveryArea(formData.city.area);
     }
+  }
+
+  private emitFormValidity(): void {
+    const isValid =this.addressForm.valid
+    if(isValid){
+        const formData = this.addressForm.value;
+        this._deliveryService.setDeliveryMapAddress(
+          `${formData.street}, ${formData.city.localidad}, ${formData.department}, Uruguay`
+        );
+    }
+    this.formValidityChange.emit(isValid);
   }
 
   public getCities(): void {
@@ -52,16 +66,13 @@ export class AddressRegistrationComponent {
 
   private getCityData(): void {
     this._deliveryService
-      .loadCities()
+      .getDepartamentos()
       .subscribe((departamentos: Departamento[]) => {
         console.log(departamentos);
         departamentos.forEach((departamento) => {
           this.departamentos.push(departamento.name);
-          this.departamentosDict[departamento.name] = departamento.cities.sort(
-            (a, b) => a.localidad.localeCompare(b.localidad)
-          );
+          this.departamentosDict[departamento.name] = departamento.cities.sort((a, b) => a.localidad.localeCompare(b.localidad));
         });
-        this.departamentos.sort();
       });
   }
 }

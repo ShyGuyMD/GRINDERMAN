@@ -7,10 +7,13 @@
     [zoom]="zoom"
   >
     <map-marker
-      *ngFor="let markerPosition of markerPositions"
-      [position]="markerPosition"
-      [options]="markerOptions"
+      [position]="deliveryLocation"
     ></map-marker>
+    <map-marker
+    *ngFor="let bookshopLocation of bookshopLocations"
+    [position]="bookshopLocation"
+    [options]="bookshopMarkerOptions"
+  ></map-marker>
     <map-polygon
       [paths]="vertices"
       [options]="polygonOptions"

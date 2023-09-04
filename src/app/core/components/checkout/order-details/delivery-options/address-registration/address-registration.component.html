@@ -1,52 +1,62 @@
 <form [formGroup]="addressForm">
-  <label for="department">Department:</label>
-  <p-dropdown
-    formControlName="department"
-    [options]="departamentos"
-    placeholder="Select Department"
-    (onChange)="getCities()"
-  ></p-dropdown>
+  <div class="p-fluid">
+    <div class="p-field">
+      <label for="department">Departmento:</label>
+      <p-dropdown
+        formControlName="department"
+        [options]="departamentos"
+        placeholder="Seleccione un departmento"
+        (onChange)="getCities()"
+      ></p-dropdown>
+      <div
+        *ngIf="
+          addressForm.get('department')?.hasError('required') &&
+          addressForm.get('department')?.touched
+        "
+        class="p-error"
+      >
+        El departamento es obligatorio.
+      </div>
+    </div>
 
-  <label for="city">Localidad:</label>
-  <p-dropdown
-    formControlName="city"
-    [options]="localidades"
-    placeholder="Select City"
-    optionLabel="localidad"
-  ></p-dropdown>
+    <div class="p-field">
+      <label for="city">Localidad:</label>
+      <p-dropdown
+        formControlName="city"
+        [options]="localidades"
+        placeholder="Seleccione una localidad"
+        optionLabel="localidad"
+      ></p-dropdown>
+      <div
+        *ngIf="
+          addressForm.get('localidad')?.hasError('required') &&
+          addressForm.get('localidad')?.touched
+        "
+        class="p-error"
+      >
+        La localidad es obligatoria.
+      </div>
+    </div>
 
-  <label for="street">Dirección:</label>
-  <input
-    type="text"
-    formControlName="street"
-    id="street"
-    pInputText
-    [required]="true"
-    (blur)="searchAddress()"
-  />
-
-  <div
-    *ngIf="
-      addressForm.get('street')?.hasError('required') &&
-      addressForm.get('street')?.touched
-    "
-  >
-    La dirección es obligatoria.
-  </div>
-  <div
-    *ngIf="
-      addressForm.get('localidad')?.hasError('required') &&
-      addressForm.get('localidad')?.touched
-    "
-  >
-    La localidad es obligatoria.
-  </div>
-  <div
-    *ngIf="
-      addressForm.get('department')?.hasError('required') &&
-      addressForm.get('department')?.touched
-    "
-  >
-    El departamento es obligatorio.
+    <div class="p-field">
+      <label for="street">Dirección:</label>
+      <input
+        type="text"
+        formControlName="street"
+        id="street"
+        pInputText
+        [required]="true"
+        (blur)="searchAddress()"
+      />
+      <div
+        *ngIf="
+          addressForm.get('street')?.hasError('required') &&
+          addressForm.get('street')?.touched
+        "
+        class="p-error"
+      >
+        La dirección es obligatoria.
+      </div>
+    </div>
   </div>
 </form>
