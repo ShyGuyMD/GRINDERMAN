@@ -11,12 +11,14 @@ import { SharedService } from './shared';
 import { UserService } from './user';
 import { UtilsService } from './utils';
 import { WooCommerceApiService } from './woo-commerce';
+import { DeliveryService } from './delivery/delivery.service';
 
 export * from './api';
 export * from './authentication';
 export * from './book';
 export * from './cart';
 export * from './co-cart-api';
+export * from './delivery';
 export * from './exception';
 export * from './order';
 export * from './navigation';
@@ -32,6 +34,7 @@ export const services = [
     BookService,
     CartService,
     CoCartApiService,
+    DeliveryService,
     ExceptionService,
     NavigationService,
     OrderService,

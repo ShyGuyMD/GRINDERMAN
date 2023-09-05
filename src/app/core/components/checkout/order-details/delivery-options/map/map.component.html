@@ -1,0 +1,22 @@
+<div *ngIf="apiLoaded | async" class="mt-2">
+  <google-map
+    (mapInitialized)="initializeMap($event)"
+    height="400px"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+  >
+    <map-marker
+      [position]="deliveryLocation"
+    ></map-marker>
+    <map-marker
+    *ngFor="let bookshopLocation of bookshopLocations"
+    [position]="bookshopLocation"
+    [options]="bookshopMarkerOptions"
+  ></map-marker>
+    <map-polygon
+      [paths]="vertices"
+      [options]="polygonOptions"
+    ></map-polygon>
+  </google-map>
+</div>
