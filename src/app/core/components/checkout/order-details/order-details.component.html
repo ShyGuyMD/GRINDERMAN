@@ -1,7 +1,7 @@
 <div class="grid">
     <div class="col-8">
         <app-contact-details [contactDetails]="contactDetails" (formValidityChange)="onFormValidityChange($event)"></app-contact-details>
-        <app-delivery-options></app-delivery-options>
+        <app-delivery-options (deliveryOptionChange)="onDeliveryOptionChange($event)"></app-delivery-options>
     </div>
     <div class="col-4">
         <app-order-summary></app-order-summary>
