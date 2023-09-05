@@ -15,7 +15,7 @@ export class MapComponent {
   vertices: google.maps.LatLngLiteral[] = [];
   center!: google.maps.LatLngLiteral;
   zoom = 13;
-  bookshopMarkerOptions: google.maps.MarkerOptions = { draggable: false, icon:'assets/images/bookshopMarker.png' };
+  bookshopMarkerOptions: google.maps.MarkerOptions = {};
   bookshopLocations: google.maps.LatLngLiteral[] = [];
   bookshopAddresses: string[] =
 ['Dr. Tristán Narvaja 1645, 11200 Montevideo, Departamento de Montevideo'];
@@ -58,8 +58,7 @@ export class MapComponent {
       if (deliveryAddress) {
         this.findMarker(deliveryAddress).subscribe(location => {
           if(location){
-            this.deliveryLocation = location;
-            this.center = location;
+            this.addDeliveryMarker(location);
           }
         });
       }
@@ -80,6 +79,8 @@ export class MapComponent {
 
     this.center = this.bookshopLocations[0];
   });
+
+  this.bookshopMarkerOptions =  {draggable: false, icon:{url:'assets/images/bookshopMarker.png', scaledSize: new google.maps.Size(50, 50)}}
   }
 
   private findMarker(address: string): Observable<google.maps.LatLngLiteral | null> {
@@ -92,6 +93,12 @@ export class MapComponent {
     this.bookshopLocations.push(location);
   }
 
+  private addDeliveryMarker(location: google.maps.LatLngLiteral) {
+    this.deliveryLocation = location;
+    this.center = location;
+    this._deliveryService.setIsValidDeliveryAddress(this.isLocationInsidePolygon(location));
+  }
+
   private setDeliveryArea(deliveryArea: google.maps.LatLngLiteral[]): void {
     if (deliveryArea) {
        this.vertices = deliveryArea;
@@ -99,4 +106,12 @@ export class MapComponent {
       this.vertices = [...this.vertices];
     
   }
+
+  private isLocationInsidePolygon(location: google.maps.LatLngLiteral): boolean {
+    const point = new google.maps.LatLng(location.lat, location.lng);
+    const polygon = new google.maps.Polygon({ paths: this.vertices });
+
+    return google.maps.geometry.poly.containsLocation(point, polygon);
+  }
 }
+

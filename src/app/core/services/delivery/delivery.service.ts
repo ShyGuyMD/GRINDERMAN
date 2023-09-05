@@ -6,6 +6,8 @@ import { Departamento } from '@core/models/departamento';
 import * as wellknown from 'wellknown';
 import proj4 from 'proj4';
 import { DeliveryZoneImport } from '@core/models/deliveryZoneImport';
+import { CartService } from '../cart';
+import { MIN_DELIVERY } from '@shared/constants';
 
 @Injectable({
   providedIn: 'root',
@@ -13,15 +15,22 @@ import { DeliveryZoneImport } from '@core/models/deliveryZoneImport';
 export class DeliveryService {
   private deliveryMapAddress$: BehaviorSubject<string> =
     new BehaviorSubject<string>('');
+  private isValidDeliveryAddress$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
   private deliveryArea$: BehaviorSubject<google.maps.LatLngLiteral[]> =
     new BehaviorSubject<google.maps.LatLngLiteral[]>([]);
   private departamentos$: BehaviorSubject<Departamento[]> = new BehaviorSubject<
     Departamento[]
   >([]);
 
-  constructor(private _apiService: ApiService) {
+  constructor(
+    private _apiService: ApiService,
+    private _cartService: CartService
+  ) {
     this.loadCities().subscribe((departamentos: Departamento[]) => {
-      this.setDepartamentos(departamentos.sort());
+      this.setDepartamentos(
+        departamentos.sort((a, b) => a.name.localeCompare(b.name))
+      );
     });
     this.loadDeliveryService().subscribe(
       (area: google.maps.LatLngLiteral[]) => {
@@ -43,7 +52,7 @@ export class DeliveryService {
   }
 
   public setDeliveryMapAddress(address: string): void {
-    console.log("set", address)
+    console.log('set', address);
     this.deliveryMapAddress$.next(address);
   }
 
@@ -54,6 +63,14 @@ export class DeliveryService {
   public setDeliveryArea(area: google.maps.LatLngLiteral[]): void {
     console.log('set', area);
     this.deliveryArea$.next(area);
+  }
+
+  public getIsValidDeliveryAddress(): Observable<boolean> {
+    return this.isValidDeliveryAddress$.asObservable();
+  }
+
+  public setIsValidDeliveryAddress(isValid: boolean): void {
+    this.isValidDeliveryAddress$.next(isValid);
   }
 
   private loadCities(): Observable<Departamento[]> {
@@ -93,14 +110,12 @@ export class DeliveryService {
     );
   }
 
-  // Conversion function from EPSG 32721 to EPSG 4326
   private convertCoordinates(
     coordinates: number[][]
   ): google.maps.LatLngLiteral[] {
     return coordinates.map((coord) => this.convertToLatLng(coord));
   }
 
-  // Transform a single coordinate from EPSG 32721 to EPSG 4326
   private convertToLatLng(coordinate: number[]): google.maps.LatLngLiteral {
     proj4.defs(
       'EPSG:32721',
@@ -141,5 +156,9 @@ export class DeliveryService {
         return Array.from(zoneMap.values()).flat();
       })
     );
+  }
+
+  public isValidDeliveryPurchase(): boolean {
+    return this._cartService.getTotalAmount() >= MIN_DELIVERY;
   }
 }

@@ -1,3 +1,29 @@
 <app-section-title title="Envío"></app-section-title>
 <app-address-registration></app-address-registration>
+<div class="flex flex-column gap-3 mt-2 mb-4">
+  <div class="p-field-radiobutton">
+    <label>Envío:</label>
+    <div class="flex align-items-center">
+      <p-radioButton
+        name="delOption"
+        value="pickup"
+        [(ngModel)]="selectedOption"
+        inputId="deliveryOption1"
+        (onBlur)="onOptionChange()"
+      ></p-radioButton>
+      <label for="deliveryOption1" class="ml-2">Retiro en el local</label>
+    </div>
+    <div class="flex align-items-center">
+      <p-radioButton
+        name="delOption"
+        value="delivery"
+        [(ngModel)]="selectedOption"
+        inputId="deliveryOption2"
+        (onBlur)="onOptionChange()"
+        [disabled]="!isElegibleForDelivery()"
+      ></p-radioButton>
+      <label for="deliveryOption2" class="ml-2">Envio a Domicilio</label>
+    </div>
+  </div>
+</div>
 <app-map></app-map>

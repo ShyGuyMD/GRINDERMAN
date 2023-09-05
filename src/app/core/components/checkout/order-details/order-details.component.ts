@@ -44,6 +44,10 @@ export class OrderDetailsComponent {
     this.isContactDetailsFormValid = validity;
   }
 
+  public onDeliveryOptionChange(deliveryOption: string): void {
+    console.log("selected: ", deliveryOption)
+  }
+
   public goToNextStep(): void {
     this._navigationService.navigateTo('');
   }
