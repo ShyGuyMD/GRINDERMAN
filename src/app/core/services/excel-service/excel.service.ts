@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
-import { WooCommerceApiService } from '../woo-commerce';
 import { BookService } from '../book';
 import { Book } from '@core/models/book';
 import { Option } from '@core/models/option';
@@ -12,7 +11,6 @@ import { Book_Properies } from '@shared/constants';
 })
 export class ExcelService {
   constructor(
-    private _wooCommerceApiService: WooCommerceApiService,
     private _bookService: BookService
   ) {}
 
@@ -59,7 +57,7 @@ export class ExcelService {
           if(property.key === Book_Properies.IS_ACTIVE){
             formattedBook[property.value] = book[property.key as keyof Book] ? 'Activo' : 'Inactivo'
           }else if (property.key === Book_Properies.IS_HARDCOVER){
-            formattedBook[property.value] = book[property.key as keyof Book] ? 'Tapa dura' : 'Tapa Blanda'
+            formattedBook[property.value] = book[property.key as keyof Book] ? 'Tapa Dura' : 'Tapa Blanda'
           }else if (property.key === Book_Properies.IS_NEW){
             formattedBook[property.value] = book[property.key as keyof Book] ? 'Nuevo' : 'Usado'
           }else{

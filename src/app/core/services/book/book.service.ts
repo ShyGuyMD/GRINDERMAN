@@ -118,9 +118,18 @@ export class BookService {
   }
 
   public postBatchOfBooks(books: Book[]): Observable<any> {
-    const requests$ = books.map(book => this._wooCommerceAPIService.postProduct(book).pipe(catchError(error => of({ success: false, error }))));
-
-    return forkJoin(requests$);
+    const create: Book [] = [];
+    const edit: Book [] = [];
+    books.forEach(book => {
+      if (book.id) {
+        edit.push(book);
+       } else {
+        create.push(book)
+       }
+    });
+    return this._wooCommerceAPIService.batchUpdateProducts(create, edit).pipe(
+      catchError((error) => of({ success: false, error }))
+    );
   }
 
   public getGenreOptions(): any {
