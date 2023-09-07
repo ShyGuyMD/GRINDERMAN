@@ -1,38 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { AuthenticationService } from '@core/services';
+import {
+  AuthenticationService,
+  NavigationService,
+  UserService,
+} from '@core/services';
 import { authenticationServiceMock } from '@core/mocks/authentication.service.mock';
-import { Router } from '@angular/router';
-import { routerMock } from '@core/mocks/router.mock';
+import { userServiceMock } from '@core/mocks/user.service.mock';
+import { navigationServiceMock } from '@core/mocks/navigation.service.mock';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let _authService: AuthenticationService;
-  let _router: Router;
+  let _userService: UserService;
+  let _navigationService: NavigationService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [LoginComponent],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceMock },
-        { provide: Router, useValue: routerMock },
+        { provide: NavigationService, useValue: navigationServiceMock },
+        { provide: UserService, useValue: userServiceMock },
       ],
-    })
-    .compileComponents();
-
-
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     _authService = TestBed.inject(AuthenticationService);
-    _router = TestBed.inject(Router);
+    _navigationService = TestBed.inject(NavigationService);
+    _userService = TestBed.inject(UserService);
     fixture.detectChanges();
   });
-
 
   it('should create', () => {
     expect(component).toBeTruthy();

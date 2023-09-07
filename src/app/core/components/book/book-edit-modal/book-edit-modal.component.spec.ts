@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { bookServiceMock, mockBook1 } from "@core/mocks/book.service.mock";
+import { bookServiceMock, mockBook1, mockGenres } from "@core/mocks/book.service.mock";
 import { dynamicDialogRefMock } from "@core/mocks/dynamicdialogref.mock";
 import { productServiceMock } from "@core/mocks/product.service.mock";
 import { wooCommerceApiServiceMock } from "@core/mocks/woocommerceapi.service.mock";
@@ -7,6 +7,9 @@ import { BookService, ProductService, UtilsService, WooCommerceApiService } from
 import { DynamicDialogRef, DynamicDialogConfig, DialogService } from "primeng/dynamicdialog";
 import { BookEditModalComponent } from "./book-edit-modal.component";
 import { FormsModule, NgForm } from "@angular/forms";
+import { userServiceMock } from "@core/mocks/user.service.mock";
+import { utilServiceMock } from "@core/mocks/utilService.mock";
+import { dialogServiceMock } from "@core/mocks/dialog.service.mock";
 
 
 describe('BookEditModalComponent', () => {
@@ -18,6 +21,7 @@ describe('BookEditModalComponent', () => {
   let _wooCommerceAPIService: WooCommerceApiService;
   let _dynamicDialogRef: DynamicDialogRef;
   let _dynamicDialogConfig: DynamicDialogConfig;
+  let _utilService: UtilsService;
 
   const configMock: Partial<DynamicDialogConfig> = {
     data: {
@@ -37,8 +41,8 @@ describe('BookEditModalComponent', () => {
           { provide: WooCommerceApiService, useValue: wooCommerceApiServiceMock },
           { provide: DynamicDialogRef, useValue: dynamicDialogRefMock },
           { provide: DynamicDialogConfig, useValue: configMock },
-          { provide: UtilsService},
-          DialogService,]
+          { provide: UtilsService, useValue: utilServiceMock},
+          { DialogService, useValue: dialogServiceMock}]
       }).compileComponents();
     })
   );
@@ -51,11 +55,13 @@ describe('BookEditModalComponent', () => {
     _wooCommerceAPIService = TestBed.inject(WooCommerceApiService);
     _dynamicDialogConfig = TestBed.inject(DynamicDialogConfig);
     _dynamicDialogRef = TestBed.inject(DynamicDialogRef);
+    _utilService= TestBed.inject(UtilsService);
 
     fixture.detectChanges();
   });
 
   it('should create', () => {
+    (<jest.Mock>_utilService.cloneObject).mockReturnValue(mockBook1);
     expect(component).toBeTruthy();
   });
 });
