@@ -6,10 +6,13 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { SearchbarComponent } from './searchbar.component';
-import { SharedService, WooCommerceApiService } from '@core/services';
+import { NavigationService, SharedService, WooCommerceApiService } from '@core/services';
 import { sharedServiceMock } from '@core/mocks/sharedservice.mock';
 import { wooCommerceApiServiceMock } from '@core/mocks/woocommerceapi.service.mock';
 import { debounceTime } from 'rxjs';
+import { navigationServiceMock } from '@core/mocks/navigation.service.mock';
+import { routerMock } from '@core/mocks/router.mock';
+import { Route, Router } from '@angular/router';
 
 describe('SearchbarComponent', () => {
   let component: SearchbarComponent;
@@ -17,6 +20,8 @@ describe('SearchbarComponent', () => {
 
   let _sharedService: SharedService;
   let _wooCommerceApiService: WooCommerceApiService;
+  let _router: Router;
+  let _navigationService: NavigationService;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -24,6 +29,8 @@ describe('SearchbarComponent', () => {
       providers: [
         { provide: SharedService, useValue: sharedServiceMock },
         { provide: WooCommerceApiService, useValue: wooCommerceApiServiceMock },
+        { provide: Router, useValue: routerMock },
+        { provide: NavigationService, useValue: navigationServiceMock },
       ],
     }).compileComponents();
   }));
@@ -33,6 +40,8 @@ describe('SearchbarComponent', () => {
     component = fixture.componentInstance;
     _sharedService = TestBed.inject(SharedService);
     _wooCommerceApiService = TestBed.inject(WooCommerceApiService);
+    _navigationService = TestBed.inject(NavigationService);
+    _router = TestBed.inject(Router);
     fixture.detectChanges();
   });
 

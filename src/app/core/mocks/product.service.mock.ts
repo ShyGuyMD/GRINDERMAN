@@ -8,7 +8,7 @@ export const productServiceMock: Partial<ProductService> = {
   export const mockProduct: Product = {
     name: 'Ciudad de Hueso',
     description: 'Una emocionante historia de fantasía llena de aventuras y misterios.',
-    regular_price: 12.99,
+    regular_price: '12.99',
     stock_quantity: 10,
     stock_status: 'En Stock',
     images: {

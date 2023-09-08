@@ -12,7 +12,6 @@ import { Book_Properies } from '@shared/constants';
 })
 export class ExcelService {
   constructor(
-    private _wooCommerceApiService: WooCommerceApiService,
     private _bookService: BookService
   ) {}
 

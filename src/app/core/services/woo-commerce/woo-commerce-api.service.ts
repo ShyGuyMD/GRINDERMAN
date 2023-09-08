@@ -15,7 +15,7 @@ import { Product } from '@core/models/product';
   providedIn: 'root',
 })
 export class WooCommerceApiService {
-  private readonly baseUrl = config.baseUrl + config.wc;
+  private baseUrl = config.baseUrl + config.wc;
   private readonly headers = this._authService.getAuthorizationHeader();
 
   constructor(
