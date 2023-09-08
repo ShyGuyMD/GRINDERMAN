@@ -1,21 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AdminGuard } from './admin.guard';
-import { AuthenticationService } from '@core/services';
-import { authenticationServiceMock } from '@core/mocks/authentication.service.mock';
+import { UserService } from '@core/services';
+import { routerMock } from '@core/mocks/router.mock';
+import { Router } from '@angular/router';
+import { userServiceMock } from '@core/mocks/user.service.mock';
 
 describe('AdminGuard', () => {
   let guard: AdminGuard;
-  let _authService: AuthenticationService;
+  let _userService: UserService;
+  let _router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceMock }
+        { provide: Router, useValue: routerMock },
+        { provide: UserService, useValue: userServiceMock }
       ],
     });
     guard = TestBed.inject(AdminGuard);
-    _authService = TestBed.inject(AuthenticationService);
+    _userService = TestBed.inject(UserService);
+    _router = TestBed.inject(Router);
   });
 
   it('should be created', () => {

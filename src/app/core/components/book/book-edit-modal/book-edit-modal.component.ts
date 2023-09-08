@@ -34,8 +34,8 @@ export class BookEditModalComponent {
   ngOnInit() {
     this.genreOptions = this._bookService.genreOptions;
     this.id = this._config.data.bookId;
-    this.book = this._utilService.cloneObject(this._config.data.bookData);
-    this.book.genre = this.book.genre.map((bookGenre: any) => {
+        this.book = this._utilService.cloneObject(this._config.data.bookData);
+        this.book.genre = this.book.genre.map((bookGenre: any) => {
       const matchedGenre = this.genreOptions.find(
         (genreOption: any) => genreOption.name === bookGenre.name
       );

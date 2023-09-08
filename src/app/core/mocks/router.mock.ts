@@ -1,3 +1,6 @@
+import { Subject } from "rxjs";
+
 export const routerMock = {
-    navigate: jest.fn()
+    navigate: jest.fn(),
+    events: new Subject(),
   };
