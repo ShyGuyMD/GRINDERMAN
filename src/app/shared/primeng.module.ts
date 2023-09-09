@@ -35,8 +35,10 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TagModule } from 'primeng/tag';
+import { AccordionModule } from 'primeng/accordion';
 
 const modules = [
+    AccordionModule,
     BreadcrumbModule,
     ButtonModule,
     CardModule,
