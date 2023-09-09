@@ -1,11 +1,17 @@
 import { Book } from "@core/models/book";
 import { Genre } from "@core/models/genre";
+import { BookPropertyOption } from "@core/models/option";
 import { BookService } from "@core/services";
 import { of } from "rxjs";
 
 export const mockGenres: Genre[] = [
   { id: 1, name: 'Fantasy', slug: 'fantasy' },
   { id: 2, name: 'Adventure', slug: 'adventure' },
+]
+
+export const mockBookProperyOptions: BookPropertyOption[] = [
+  { key: 'TITLE', value: 'Titulo',required: true},
+  { key: 'AUTHOR', value: 'Autor',required: false},
 ]
 
 export const bookServiceMock: Partial<BookService> = {
@@ -18,7 +24,7 @@ export const bookServiceMock: Partial<BookService> = {
   getAllBooks: jest.fn().mockReturnValue(of([])),
   getBookById: jest.fn(),
   getBookData: jest.fn(),
-  getBookPropertyOptions: jest.fn(),
+  getBookPropertyOptions: jest.fn().mockReturnValue(mockBookProperyOptions),
   getBooks: jest.fn().mockReturnValue(of([])),
   getFilteredBooks: jest.fn(),
   getGenreOptions: jest.fn(),

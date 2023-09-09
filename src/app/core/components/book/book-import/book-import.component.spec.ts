@@ -6,6 +6,9 @@ import { excelServiceMock } from '@core/mocks/excel.service.mock';
 import { BookService } from '@core/services';
 import { ExcelService } from '@core/services/excel-service/excel.service';
 import { BookCatalogueComponent } from '../book-catalogue/book-catalogue.component';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 describe('BookImportComponent', () => {
   let component: BookImportComponent;
@@ -17,9 +20,13 @@ describe('BookImportComponent', () => {
   beforeEach(waitForAsync( () => {
     TestBed.configureTestingModule({
       declarations: [ BookCatalogueComponent ],
+      imports:  [FormsModule, ReactiveFormsModule, DropdownModule],
       providers: [
         { provide: BookService, useValue: bookServiceMock },
         { provide: ExcelService, useValue: excelServiceMock },
+        MessageService,
+        ConfirmationService,
+        FormBuilder
       ]
     })
     .compileComponents();
