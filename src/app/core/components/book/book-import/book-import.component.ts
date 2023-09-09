@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from '@core/models/book';
-import { Option } from '@core/models/option';
+import { BookPropertyOption, Option } from '@core/models/option';
 import { BookService } from '@core/services';
 import { ExcelService } from '@core/services/excel-service/excel.service';
 import { BOOK_IMPORT_INSTRUCTIONS, BOOK_IMPORT_INSTRUCTIONS_ORDER } from '@shared/texts';
@@ -19,8 +20,9 @@ import { FileUpload } from 'primeng/fileupload';
 export class BookImportComponent {
   public instructions = BOOK_IMPORT_INSTRUCTIONS;
   public instructionsOrder = BOOK_IMPORT_INSTRUCTIONS_ORDER;
+  public importForm!: FormGroup;
   excelHeaders: string[] = []; // Store Excel headers
-  bookProperties: Option[] = []; // Your book properties
+  bookProperties: BookPropertyOption[] = []; // Your book properties
   mappedHeaders: Record<string, string> = {}; // Stores the column mapping
   private excelData: any[] = []; // Stores Excel data
   public loadedExcel: boolean = false;
@@ -31,12 +33,32 @@ export class BookImportComponent {
     private _importService: ExcelService,
     private _bookService: BookService,
     private _confirmationService: ConfirmationService,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    private _formBuilder: FormBuilder,
   ) {}
 
   ngOnInit(): void {
-    this.bookProperties = this._bookService.getBookPropertyOptions();
+    this.bookProperties = this._bookService.getBookPropertyOptions()
+    this.initForm(this.bookProperties);
   }
+
+  private initForm(bookProperties: BookPropertyOption[]): void {
+    const formControls: Record<string, any> = {};
+
+    bookProperties.forEach((property) => {
+      formControls[property.key] = [null, property.required ? Validators.required : null];
+    });
+
+    this.importForm = this._formBuilder.group(formControls);
+
+    Object.keys(formControls).forEach((key) => {
+      this.importForm.get(key)?.valueChanges.subscribe((value) => {
+        // Update the mappedHeaders object with the selected value
+        this.mappedHeaders[key] = value;
+      });
+    });
+  }
+
   public onFileChange(event: any): void {
     console.log('onFileChange', event.currentFiles);
     const file = event.currentFiles[0];
@@ -49,6 +71,12 @@ export class BookImportComponent {
           this.excelHeaders = Object.keys(data[0]);
           this.excelHeaders.unshift('');
         }
+        this.excelHeaders.forEach((header) => {
+          const propertyOption = this.bookProperties.find(p => p.value === header)
+          const mappedHeaderKey = propertyOption ? propertyOption.key : ''
+          this.importForm.get(mappedHeaderKey)?.setValue(header);
+
+        });
       });
     }
   }
@@ -64,6 +92,7 @@ export class BookImportComponent {
           summary: 'Confirmación',
           detail: 'Tus cambios están siendo procesados, por favor aguarda.',
         });
+        this.confirmMapping();
       },
       reject: () => {
         this._messageService.add({

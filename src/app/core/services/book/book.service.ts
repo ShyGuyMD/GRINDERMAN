@@ -6,7 +6,7 @@ import { WooCommerceApiService } from '../woo-commerce';
 import { catchError, map, mergeMap, take } from 'rxjs/operators';
 import { BehaviorSubject, Observable, forkJoin, interval, of } from 'rxjs';
 import { UtilsService } from '../utils';
-import { Option } from '@core/models/option';
+import { BookPropertyOption, Option } from '@core/models/option';
 
 @Injectable({
   providedIn: 'root',
@@ -127,23 +127,23 @@ export class BookService {
     return this.genreOptions;
   }
 
-  public getBookPropertyOptions(): Option[]{
+  public getBookPropertyOptions(): BookPropertyOption[]{
     return [
-      { value: 'ID', key: Book_Properies.ID },
-      { value: 'ISBN', key: Book_Properies.ISBN },
-      { value: 'Título', key: Book_Properies.TITLE },
-      { value: 'Autor', key: Book_Properies.AUTHOR },
-      { value: 'Género', key: Book_Properies.GENRE },
-      { value: 'Editorial', key: Book_Properies.PUBLISHER },
-      { value: 'Precio', key: Book_Properies.PRICE },
-      { value: 'Sinopsis', key: Book_Properies.SYNOPSIS },
-      { value: 'Unidades disponibles', key: Book_Properies.AVAILABLE_UNITS },
-      { value: 'Disponibilidad', key: Book_Properies.INVENTORY_STATUS },
-      { value: 'Portada', key: Book_Properies.COVER },
-      { value: 'Imagenes', key: Book_Properies.IMAGES },
-      { value: 'Estado', key: Book_Properies.IS_NEW },
-      { value: 'Tapa', key: Book_Properies.IS_HARDCOVER },
-      { value: 'Activo', key: Book_Properies.IS_ACTIVE },
+      { value: 'ID', key: Book_Properies.ID, required: false },
+      { value: 'ISBN', key: Book_Properies.ISBN, required: false },
+      { value: 'Título', key: Book_Properies.TITLE, required: true },
+      { value: 'Autor', key: Book_Properies.AUTHOR, required: false },
+      { value: 'Género', key: Book_Properies.GENRE, required: false },
+      { value: 'Editorial', key: Book_Properies.PUBLISHER, required: false },
+      { value: 'Precio', key: Book_Properies.PRICE, required: false },
+      { value: 'Sinopsis', key: Book_Properies.SYNOPSIS, required: false },
+      { value: 'Unidades disponibles', key: Book_Properies.AVAILABLE_UNITS, required: false },
+      { value: 'Disponibilidad', key: Book_Properies.INVENTORY_STATUS, required: false },
+      { value: 'Portada', key: Book_Properies.COVER, required: false },
+      { value: 'Imagenes', key: Book_Properies.IMAGES, required: false },
+      { value: 'Estado', key: Book_Properies.IS_NEW, required: false },
+      { value: 'Tapa', key: Book_Properies.IS_HARDCOVER, required: false },
+      { value: 'Activo', key: Book_Properies.IS_ACTIVE, required: false },
     ]
   }
 
