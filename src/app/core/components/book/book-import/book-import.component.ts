@@ -27,6 +27,7 @@ export class BookImportComponent {
   public bookProperties: BookPropertyOption[] = [];
   public blankValue: string = 'Selecciona un encabezado';
   public importForm!: FormGroup;
+  public isLoading: boolean = false;
 
   public loadedExcel: boolean = false;
   private excelData: any[] = [];
@@ -72,6 +73,7 @@ export class BookImportComponent {
   public onFileChange(event: any): void {
     const file = event.currentFiles[0];
     if (file) {
+      this.isLoading = true;
       this._importService.readExcelFile(file).subscribe((data: any[]) => {
         this.excelData = data;
         this.loadedExcel = true;
@@ -86,6 +88,7 @@ export class BookImportComponent {
           const mappedHeaderKey = propertyOption ? propertyOption.key : '';
           this.importForm.get(mappedHeaderKey)?.setValue(header);
         });
+        this.isLoading =false;
       });
     }
   }
@@ -127,6 +130,7 @@ export class BookImportComponent {
     this.fileUpload.clear();
     this.errorMessages = [];
     this.clearMapping();
+    this.isLoading = false;
   }
 
   clearMapping(): void {
@@ -162,6 +166,7 @@ export class BookImportComponent {
   private postBatchOfBooks(books: Book[]): void {
     const batchSize = 90; // Number of books to post in each batch
     const delay = 500; // Delay in milliseconds
+    this.isLoading = true;
 
     this._bookService.postBooksInBatches(books, batchSize, delay).subscribe({
       next: (responses: PostBatckResponse) => {
@@ -188,6 +193,7 @@ export class BookImportComponent {
           summary: 'Error',
           detail: `Error en la importación de archivo. ${error}`,
         });
+        this.isLoading = false;
       },
       complete: () => {
         this.showResultPopup();
