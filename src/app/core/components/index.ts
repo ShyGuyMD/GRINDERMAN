@@ -39,11 +39,13 @@ import {
   ClientCreateComponent,
   UserCreateComponent,
 } from './user';
+import { InstructionsComponent } from './instructions';
 
 export * from './blank-page';
 export * from './cart-preview';
 export * from './checkout';
 export * from './header';
+export * from './instructions';
 export * from './layout';
 export * from './login';
 export * from './menu';
@@ -74,6 +76,7 @@ export const components = [
   DeliveryOptionsComponent,
   HeaderComponent,
   HeaderAdminComponent,
+  InstructionsComponent,
   ItemSearchComponent,
   LandingAdminComponent,
   LandingComponent,

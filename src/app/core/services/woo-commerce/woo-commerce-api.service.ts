@@ -6,10 +6,22 @@ import { ProductService } from '../product';
 import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
 import { AuthenticationService } from '../authentication';
 import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
-import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
-import { Observable, forkJoin, map, mergeMap, take, takeUntil, takeWhile } from 'rxjs';
+import {
+  CreateOrderResponse,
+  RetrieveOrderResponse,
+} from '@core/models/response/orderResponse';
+import {
+  Observable,
+  forkJoin,
+  map,
+  mergeMap,
+  take,
+  takeUntil,
+  takeWhile,
+} from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Product } from '@core/models/product';
+import { ApiBodyRequest } from '@core/models/request/apiBodyRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +35,6 @@ export class WooCommerceApiService {
     private _authService: AuthenticationService,
     private _productService: ProductService
   ) {}
-
 
   public getAllProducts(): Observable<Product[]> {
     const maxPages = 100;
@@ -92,6 +103,20 @@ export class WooCommerceApiService {
     const url = `${this.baseUrl}/products/${productId}`;
 
     return this._apiService.put(url, body, this.headers);
+  }
+
+  public batchUpdateProducts(create: Book[], update:Book[], del: number[] = []){
+    const createProducts = create.map(book => this._productService.mapBookToProduct(book));
+    const updateProducts = update.map(book => this._productService.mapBookToProduct(book));
+
+    const url = `${this.baseUrl}/products/batch`;
+
+    const request: ApiBodyRequest = {
+      create: createProducts,
+      update: updateProducts,
+      delete: del
+    }
+    return this._apiService.post(url, request, this.headers);
   }
 
   public postCustomer(body: CreateCustomerRequest): any {

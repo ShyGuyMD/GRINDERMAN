@@ -1,15 +1,53 @@
-<div class="p-field">
-  <p-fileUpload  mode="basic" id="file" name="file" accept=".xlsx, .xls" chooseLabel="Seleccione una Archivo"
-  (onSelect)="onFileChange($event)"></p-fileUpload>
+<app-section-title title="Importar Catálogo"></app-section-title>
+<app-instructions
+  [instructions]="instructions"
+  [ordered]="instructionsOrder"
+></app-instructions>
+<div class="p-field mt-4">
+  <p-fileUpload
+    #fileUpload
+    mode="basic"
+    id="file"
+    name="file"
+    accept=".xlsx, .xls"
+    chooseLabel="Seleccione un Archivo"
+    styleClass="w-full"
+    (onSelect)="onFileChange($event)"
+  ></p-fileUpload>
 </div>
-<!-- book-import.component.html -->
-<div *ngIf="true">
-  <div *ngFor="let property of bookProperties">
-    <div class="p-field">
-      <label for="publisher">{{ property.value }}:</label>
-      <p-dropdown [(ngModel)]="mappedHeaders[property.key]" [options]="excelHeaders" [placeholder]="blankValue"></p-dropdown>
-  </div>
+<div *ngIf="loadedExcel">
+  <p-divider></p-divider>
+  <form [formGroup]="importForm">
+  <div class="grid">
+    <div *ngFor="let property of bookProperties" class="col-4">
+      <div class="p-field">
+        <label for="publisher">{{ property.value }}:</label>
+        <p-dropdown
+          [formControlName]="property.key"
+          [options]="excelHeaders"
+          [placeholder]="blankValue"
+        ></p-dropdown>
+      </div>
     </div>
-    <p-button (click)="confirmMapping()">Confirm Mapping</p-button>
+    <div class="w-full card flex justify-content-end gap-2 mt-3 p-2">
+      <p-confirmDialog #cd [style]="{ width: '50vw' }">
+      <ng-template pTemplate="footer">
+          <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+          <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+      </ng-template>
+      </p-confirmDialog>
+      <p-button
+        (click)="confirmPopup()"
+        icon="pi pi-check"
+        label="Confirmar"
+      ></p-button>
+      <p-button
+        (click)="cancel()"
+        icon="pi pi-times"
+        label="Cancelar"
+        class="p-button-danger"
+      ></p-button>
+    </div>
+  </div>
+</form>
 </div>
-  

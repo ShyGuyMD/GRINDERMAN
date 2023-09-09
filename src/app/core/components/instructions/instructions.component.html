@@ -1,0 +1,16 @@
+<p-accordion>
+  <ng-container *ngFor="let item of instructions | keyvalue; let i = index">
+    <p-accordionTab class="instruction-item" header="{{ item.key }}">
+      <ng-container *ngIf="ordered[item.key]; else unorderedList">
+        <ol class="instruction-list">
+          <li *ngFor="let point of item.value">{{ point }}</li>
+        </ol>
+      </ng-container>
+      <ng-template #unorderedList>
+        <ul class="instruction-list">
+          <li class="arrow" *ngFor="let point of item.value">{{ point }}</li>
+        </ul>
+      </ng-template>
+    </p-accordionTab>
+  </ng-container>
+</p-accordion>
