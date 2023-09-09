@@ -1,0 +1,15 @@
+
+<div *ngIf="errorMessages.length > 0; else successDisplay">
+    <h4 *ngIf="errorTitle">{{errorTitle}}</h4>
+    <div class="error-container">
+        <i class="pi pi-exclamation-triangle"></i>
+        <p>{{ errorDescription }}</p>
+      </div>
+    <ul>
+      <li *ngFor="let errorMessage of errorMessages" class="p-error arrow">{{ errorMessage }}</li>
+    </ul>
+</div>
+<ng-template #successDisplay>
+    <h4 *ngIf="errorTitle">{{successTitle}}</h4>
+    <p>{{successDescription}}</p>
+</ng-template>

@@ -6,6 +6,7 @@ import {
   BookEditModalComponent,
   BookExportComponent,
   BookImportComponent,
+  ResultDisplayComponent,
 } from './book';
 import { CartPreviewComponent } from './cart-preview';
 import {
@@ -89,6 +90,7 @@ export const components = [
   MenuAdminComponent,
   OrderDetailsComponent,
   OrderSummaryComponent,
+  ResultDisplayComponent,
   SearchbarComponent,
   SectionTitleComponent,
   UserCreateComponent,
