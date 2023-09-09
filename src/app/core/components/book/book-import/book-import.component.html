@@ -30,7 +30,12 @@
       </div>
     </div>
     <div class="w-full card flex justify-content-end gap-2 mt-3 p-2">
-      <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+      <p-confirmDialog #cd [style]="{ width: '50vw' }">
+      <ng-template pTemplate="footer">
+          <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+          <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+      </ng-template>
+      </p-confirmDialog>
       <p-button
         (click)="confirmPopup()"
         icon="pi pi-check"
