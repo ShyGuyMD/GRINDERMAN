@@ -20,7 +20,9 @@ export enum WoocommerceError {
 export enum Severity {
     DANGER = 'danger',
     WARNING = 'warn',
-    SUCCESS = 'success'
+    SUCCESS = 'success',
+    INFO = 'info',
+    ERROR = 'error'
 }
 
 export const MIN_DELIVERY = 700;

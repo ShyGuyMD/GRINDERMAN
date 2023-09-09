@@ -7,6 +7,7 @@ import { catchError, map, mergeMap, take } from 'rxjs/operators';
 import { BehaviorSubject, Observable, forkJoin, interval, of } from 'rxjs';
 import { UtilsService } from '../utils';
 import { BookPropertyOption, Option } from '@core/models/option';
+import { PostBatckResponse } from '@core/models/response/postBatchRespomse';
 
 @Injectable({
   providedIn: 'root',
@@ -103,7 +104,7 @@ export class BookService {
       }})
   }
 
-  public postBooksInBatches(books: Book[], batchSize: number, delay: number): Observable<any> {
+  public postBooksInBatches(books: Book[], batchSize: number, delay: number): Observable<PostBatckResponse> {
     const totalBatches = Math.ceil(books.length / batchSize);
   
     return interval(delay).pipe(
@@ -144,9 +145,9 @@ export class BookService {
       { value: 'Autor', key: Book_Properies.AUTHOR, required: false },
       { value: 'Género', key: Book_Properies.GENRE, required: false },
       { value: 'Editorial', key: Book_Properies.PUBLISHER, required: false },
-      { value: 'Precio', key: Book_Properies.PRICE, required: false },
+      { value: 'Precio', key: Book_Properies.PRICE, required: true },
       { value: 'Sinopsis', key: Book_Properies.SYNOPSIS, required: false },
-      { value: 'Unidades disponibles', key: Book_Properies.AVAILABLE_UNITS, required: false },
+      { value: 'Unidades disponibles', key: Book_Properies.AVAILABLE_UNITS, required: true },
       { value: 'Disponibilidad', key: Book_Properies.INVENTORY_STATUS, required: false },
       { value: 'Portada', key: Book_Properies.COVER, required: false },
       { value: 'Imagenes', key: Book_Properies.IMAGES, required: false },
