@@ -4,17 +4,20 @@ import { activatedRouteMock } from "@core/mocks/activatedroute.mock";
 import { bookServiceMock } from "@core/mocks/book.service.mock";
 import { dialogServiceMock } from "@core/mocks/dialog.service.mock";
 import { routerMock } from "@core/mocks/router.mock";
-import { BookService } from "@core/services";
+import { BookService, CartService, NavigationService } from "@core/services";
 import { DialogService } from "primeng/dynamicdialog";
 import { BookDetailComponent } from "./book-detail.component";
+import { navigationServiceMock } from "@core/mocks/navigation.service.mock";
+import { cartServiceMock } from "@core/mocks/cart.service.mock";
 
 describe('BookDetailComponent', () => {
   let component: BookDetailComponent;
   let fixture: ComponentFixture<BookDetailComponent>;
-  let _activatedRoute: any;
-  let _router: any;
+  let _activatedRoute: ActivatedRoute;
+  let _navigationService: NavigationService;
   let _bookService: BookService;
   let _dialogService: DialogService;
+  let _cartService: CartService;
 
   beforeEach(
     waitForAsync(() => {
@@ -22,9 +25,10 @@ describe('BookDetailComponent', () => {
         declarations: [BookDetailComponent],
         providers: [
           { provide: ActivatedRoute, useValue: activatedRouteMock },
-          { provide: Router, useValue: routerMock },
+          { provide: NavigationService, useValue: navigationServiceMock },
           { provide: BookService, useValue: bookServiceMock },
-          { provide: DialogService, useValue: dialogServiceMock }
+          { provide: DialogService, useValue: dialogServiceMock },
+          { provide: CartService, useValue: cartServiceMock }
         ]
       }).compileComponents();
     })
@@ -37,7 +41,9 @@ describe('BookDetailComponent', () => {
     _bookService = TestBed.inject(BookService);
     _dialogService = TestBed.inject(DialogService);
     _activatedRoute = TestBed.inject(ActivatedRoute);
-    _router = TestBed.inject(Router);
+    _navigationService = TestBed.inject(NavigationService);
+    _cartService = TestBed.inject(CartService);
+
   });
 
   it('should create the component', () => {

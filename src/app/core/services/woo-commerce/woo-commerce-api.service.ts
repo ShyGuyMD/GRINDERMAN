@@ -27,7 +27,7 @@ import { ApiBodyRequest } from '@core/models/request/apiBodyRequest';
   providedIn: 'root',
 })
 export class WooCommerceApiService {
-  private readonly baseUrl = config.baseUrl + config.wc;
+  private baseUrl = config.baseUrl + config.wc;
   private readonly headers = this._authService.getAuthorizationHeader();
 
   constructor(

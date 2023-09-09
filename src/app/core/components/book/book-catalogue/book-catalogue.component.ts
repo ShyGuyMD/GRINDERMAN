@@ -18,7 +18,6 @@ export class BookCatalogueComponent implements OnInit {
   keyword: string = '';
 
   constructor(
-    private _wooCommerceService: WooCommerceApiService,
     private _bookService: BookService,
     private _sharedService: SharedService,
     private _navigationService: NavigationService,
