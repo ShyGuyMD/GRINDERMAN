@@ -15,7 +15,8 @@ export const mockBookProperyOptions: BookPropertyOption[] = [
 ]
 
 export const bookServiceMock: Partial<BookService> = {
-  genreOptions: mockGenres,
+  setGenreOptions: jest.fn(),
+  updateGenres: jest.fn(),
   setBookData: jest.fn(),
   getInventorySeverity: jest.fn(),
   mapProductToBook: jest.fn(),
@@ -27,7 +28,7 @@ export const bookServiceMock: Partial<BookService> = {
   getBookPropertyOptions: jest.fn().mockReturnValue(mockBookProperyOptions),
   getBooks: jest.fn().mockReturnValue(of([])),
   getFilteredBooks: jest.fn(),
-  getGenreOptions: jest.fn(),
+  getGenreOptions: jest.fn().mockReturnValue(of([])),
   postBatchOfBooks: jest.fn(),
   postBook: jest.fn(),
   postBooksInBatches: jest.fn(),

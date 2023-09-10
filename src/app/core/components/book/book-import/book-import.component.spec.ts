@@ -9,6 +9,8 @@ import { BookCatalogueComponent } from '../book-catalogue/book-catalogue.compone
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { dialogServiceMock } from '@core/mocks/dialog.service.mock';
+import { DynamicDialogConfig, DialogService } from 'primeng/dynamicdialog';
 
 describe('BookImportComponent', () => {
   let component: BookImportComponent;
@@ -24,6 +26,7 @@ describe('BookImportComponent', () => {
       providers: [
         { provide: BookService, useValue: bookServiceMock },
         { provide: ExcelService, useValue: excelServiceMock },
+        { provide: DialogService, useValue: dialogServiceMock },
         MessageService,
         ConfirmationService,
         FormBuilder
