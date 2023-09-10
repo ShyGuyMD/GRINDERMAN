@@ -5,7 +5,7 @@ export enum InventoryStatus {
 }
 
 export enum Attributes {
-    ATTR_GENRE = 'Género'
+    ATTR_GENRE = 'Genero'
 }
 
 export enum UserRole {

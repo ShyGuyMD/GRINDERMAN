@@ -13,4 +13,9 @@ export class UtilsService {
   public cloneObject(obj: any): any {
     return JSON.parse(JSON.stringify(obj));
   }
+
+  public removeDiacriticalMarks(input: string): string {
+    const normalizedString = input.normalize('NFD');
+    return normalizedString.replace(/[\u0300-\u036f]/g, '');
+  }
 }

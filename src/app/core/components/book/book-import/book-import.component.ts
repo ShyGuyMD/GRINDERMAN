@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from '@core/models/book';
-import { BookPropertyOption, Option } from '@core/models/option';
+import { BookPropertyOption } from '@core/models/option';
 import { PostBatckResponse } from '@core/models/response/postBatchRespomse';
 import { BookService } from '@core/services';
 import { ExcelService } from '@core/services/excel-service/excel.service';
-import { Severity } from '@shared/constants';
+import { Book_Properies, Severity } from '@shared/constants';
 import {
   BOOK_IMPORT_INSTRUCTIONS,
   BOOK_IMPORT_INSTRUCTIONS_ORDER,
@@ -34,7 +34,7 @@ export class BookImportComponent {
   public excelHeaders: string[] = [];
   private mappedHeaders: Record<string, string> = {};
   private errorMessages: string[] = [];
-  
+
   @ViewChild('fileUpload') fileUpload!: FileUpload;
 
   constructor(
@@ -88,7 +88,7 @@ export class BookImportComponent {
           const mappedHeaderKey = propertyOption ? propertyOption.key : '';
           this.importForm.get(mappedHeaderKey)?.setValue(header);
         });
-        this.isLoading =false;
+        this.isLoading = false;
       });
     }
   }
@@ -122,7 +122,8 @@ export class BookImportComponent {
   confirmMapping(): void {
     this.mapHeaders(this.mappedHeaders);
     const books = this.mapRows();
-    this.postBatchOfBooks(books);
+    const genres = this.extractGenresFromExcel();
+    this.postBatchOfBooks(genres, books);
   }
 
   cancel(): void {
@@ -163,42 +164,67 @@ export class BookImportComponent {
     return books;
   }
 
-  private postBatchOfBooks(books: Book[]): void {
+  private extractGenresFromExcel(): string[] {
+    console.log(this.mappedHeaders, this.mappedHeaders[Book_Properies.GENRE]);
+    const genreHeader = this.mappedHeaders[Book_Properies.GENRE];
+    if (!genreHeader) {
+      return [];
+    }
+    const genreValues: string[] = [];
+
+    this.excelData.forEach((row) => {
+      if (row[genreHeader]) {
+        const genresInRow = row[genreHeader].split(','); // Split by commas
+        genresInRow.forEach((genre: string) => {
+          const trimmedGenre = genre.trim(); // Remove leading/trailing spaces
+          if (trimmedGenre && !genreValues.includes(trimmedGenre)) {
+            genreValues.push(trimmedGenre); // Add to array if not already present
+          }
+        });
+      }
+    });
+
+    return genreValues;
+  }
+
+  private postBatchOfBooks(genres: string[], books: Book[]): void {
     const batchSize = 90; // Number of books to post in each batch
     const delay = 500; // Delay in milliseconds
     this.isLoading = true;
 
-    this._bookService.postBooksInBatches(books, batchSize, delay).subscribe({
-      next: (responses: PostBatckResponse) => {
-        if (responses.update) {
-          responses.update.forEach((item) => {
-            if ('error' in item) {
-              const errorMessage = `Error en la actualiación del item ID ${item.id}: ${item.error.message}`;
-              this.errorMessages.push(errorMessage);
-            }
+    this._bookService.updateGenres(genres).subscribe(() => {
+      this._bookService.postBooksInBatches(books, batchSize, delay).subscribe({
+        next: (responses: PostBatckResponse) => {
+          if (responses.update) {
+            responses.update.forEach((item) => {
+              if ('error' in item) {
+                const errorMessage = `Error en la actualiación del item ID ${item.id}: ${item.error.message}`;
+                this.errorMessages.push(errorMessage);
+              }
+            });
+          }
+          if (responses.create) {
+            responses.create.forEach((item) => {
+              if ('error' in item) {
+                const errorMessage = `Error Error de creación: ${item.error.message}`;
+                this.errorMessages.push(errorMessage);
+              }
+            });
+          }
+        },
+        error: (error) => {
+          this._messageService.add({
+            severity: Severity.ERROR,
+            summary: 'Error',
+            detail: `Error en la importación de archivo. ${error}`,
           });
-        }
-        if (responses.create) {
-          responses.create.forEach((item) => {
-            if ('error' in item) {
-              const errorMessage = `Error Error de creación: ${item.error.message}`;
-              this.errorMessages.push(errorMessage);
-            }
-          });
-        }
-      },
-      error: (error) => {
-        this._messageService.add({
-          severity: Severity.ERROR,
-          summary: 'Error',
-          detail: `Error en la importación de archivo. ${error}`,
-        });
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.showResultPopup();
-        this.cancel();
-      },
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.showResultPopup();
+          this.cancel();
+        },
+      });
     });
   }
 
