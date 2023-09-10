@@ -28,30 +28,25 @@ export class BookEditModalComponent {
     private _wooCommerceAPIService: WooCommerceApiService,
     private _utilService: UtilsService,
     private _ref: DynamicDialogRef,
-    private _config: DynamicDialogConfig,
+    private _config: DynamicDialogConfig
   ) {}
 
   ngOnInit() {
-    this.genreOptions = this._bookService.genreOptions;
     this.id = this._config.data.bookId;
     this.book = this._utilService.cloneObject(this._config.data.bookData);
-    this.book.genre = this.book.genre.map((bookGenre: any) => {
-      const matchedGenre = this.genreOptions.find(
-        (genreOption: any) => genreOption.name === bookGenre.name
-      );
-      if (matchedGenre) {
-        return {
-          id: matchedGenre.id,
-          name: matchedGenre.name,
-          slug: matchedGenre.slug,
-        };
+    this._bookService.getGenreOptions().subscribe((response) => {
+      if(response.length>0){
+        this.genreOptions = response;
+        this.book.genre = this.book.genre.map((bookGenre: any) =>
+          this.genreOptions.find((o) => o.name === bookGenre.name)
+        );
+        this.isLoading = false;
       }
-      return undefined;
     });
+
     console.log('genres', this.genreOptions);
     console.log('config:', this._config.data);
     console.log('this.book:', this.book);
-    this.isLoading = false;
   }
 
   save() {

@@ -31,7 +31,7 @@ export class OrderDetailsComponent {
   ) {}
 
   ngOnInit() {
-    this._cartService.cartItems$.subscribe((cartItems) => {
+    this._cartService.getCartItems().subscribe((cartItems) => {
       this.cartItems = cartItems;
     });
 

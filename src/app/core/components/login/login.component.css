@@ -3,6 +3,10 @@
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 25rem;
+    position: absolute;
+    top: 35%;
+    left: 35%;
   }
   
   .form-group {

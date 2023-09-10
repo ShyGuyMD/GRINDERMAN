@@ -6,6 +6,7 @@ import {
   BookEditModalComponent,
   BookExportComponent,
   BookImportComponent,
+  ResultDisplayComponent,
 } from './book';
 import { CartPreviewComponent } from './cart-preview';
 import {
@@ -39,11 +40,14 @@ import {
   ClientCreateComponent,
   UserCreateComponent,
 } from './user';
+import { InstructionsComponent } from './instructions';
+import { OverlaySpinnerComponent } from './overlay-spinner';
 
 export * from './blank-page';
 export * from './cart-preview';
 export * from './checkout';
 export * from './header';
+export * from './instructions';
 export * from './layout';
 export * from './login';
 export * from './menu';
@@ -53,6 +57,7 @@ export * from './landing';
 export * from './section-title';
 export * from './user';
 export * from './user-menu';
+export * from './overlay-spinner';
 
 export const components = [
   AdminCreateComponent,
@@ -74,6 +79,7 @@ export const components = [
   DeliveryOptionsComponent,
   HeaderComponent,
   HeaderAdminComponent,
+  InstructionsComponent,
   ItemSearchComponent,
   LandingAdminComponent,
   LandingComponent,
@@ -86,6 +92,8 @@ export const components = [
   MenuAdminComponent,
   OrderDetailsComponent,
   OrderSummaryComponent,
+  OverlaySpinnerComponent,
+  ResultDisplayComponent,
   SearchbarComponent,
   SectionTitleComponent,
   UserCreateComponent,

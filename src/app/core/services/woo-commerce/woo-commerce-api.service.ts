@@ -6,16 +6,28 @@ import { ProductService } from '../product';
 import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
 import { AuthenticationService } from '../authentication';
 import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
-import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
-import { Observable, forkJoin, map, mergeMap, take, takeUntil, takeWhile } from 'rxjs';
+import {
+  CreateOrderResponse,
+  RetrieveOrderResponse,
+} from '@core/models/response/orderResponse';
+import {
+  Observable,
+  forkJoin,
+  map,
+  mergeMap,
+  take,
+  takeUntil,
+  takeWhile,
+} from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Product } from '@core/models/product';
+import { ApiBodyRequest } from '@core/models/request/apiBodyRequest';
 
 @Injectable({
   providedIn: 'root',
 })
 export class WooCommerceApiService {
-  private readonly baseUrl = config.baseUrl + config.wc;
+  private baseUrl = config.baseUrl + config.wc;
   private readonly headers = this._authService.getAuthorizationHeader();
 
   constructor(
@@ -23,7 +35,6 @@ export class WooCommerceApiService {
     private _authService: AuthenticationService,
     private _productService: ProductService
   ) {}
-
 
   public getAllProducts(): Observable<Product[]> {
     const maxPages = 100;
@@ -66,12 +77,26 @@ export class WooCommerceApiService {
     return this._apiService.get(url, this.headers);
   }
 
-  getProductAttributeTerms(attrId: number) {
+  getProductAttributeTerms(attrId: number, page: number) {
     const url = `${this.baseUrl}/products/attributes/${attrId}/terms`;
-
-    return this._apiService.get(url, this.headers);
+    const params = new HttpParams().set('page', page.toString());
+    return this._apiService.get(url, this.headers, params);
   }
 
+  public getAllProductAttributeTerms(attrId: number): Observable<Product[]> {
+    const maxPages = 10;
+    const attrObservables: Observable<any[]>[] = [];
+
+    for (let page = 1; page <= maxPages; page++) {
+        attrObservables.push(this.getProductAttributeTerms(attrId, page));
+    }
+
+    return forkJoin(attrObservables).pipe(
+        takeWhile((responses) => responses.length > 0), // Stop when response is empty
+        map((responses) => responses.reduce((acc, curr) => acc.concat(curr), [])), // Flatten the array of arrays
+        take(1)
+    );
+ }
   postProduct(book: Book) {
     const url = `${this.baseUrl}/products`;
 
@@ -92,6 +117,20 @@ export class WooCommerceApiService {
     const url = `${this.baseUrl}/products/${productId}`;
 
     return this._apiService.put(url, body, this.headers);
+  }
+
+  public batchUpdateProducts(create: Book[], update:Book[], del: number[] = []){
+    const createProducts = create.map(book => this._productService.mapBookToProduct(book));
+    const updateProducts = update.map(book => this._productService.mapBookToProduct(book));
+
+    const url = `${this.baseUrl}/products/batch`;
+
+    const request: ApiBodyRequest = {
+      create: createProducts,
+      update: updateProducts,
+      delete: del
+    }
+    return this._apiService.post(url, request, this.headers);
   }
 
   public postCustomer(body: CreateCustomerRequest): any {

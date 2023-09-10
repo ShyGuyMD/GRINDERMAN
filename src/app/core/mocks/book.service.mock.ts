@@ -1,18 +1,39 @@
 import { Book } from "@core/models/book";
 import { Genre } from "@core/models/genre";
+import { BookPropertyOption } from "@core/models/option";
 import { BookService } from "@core/services";
-
-export const bookServiceMock: Partial<BookService> = {
-  genreOptions: [],
-  setBookData: jest.fn(),
-  getInventorySeverity: jest.fn(),
-  mapProductToBook: jest.fn(),
-};
+import { of } from "rxjs";
 
 export const mockGenres: Genre[] = [
   { id: 1, name: 'Fantasy', slug: 'fantasy' },
   { id: 2, name: 'Adventure', slug: 'adventure' },
 ]
+
+export const mockBookProperyOptions: BookPropertyOption[] = [
+  { key: 'TITLE', value: 'Titulo',required: true},
+  { key: 'AUTHOR', value: 'Autor',required: false},
+]
+
+export const bookServiceMock: Partial<BookService> = {
+  setGenreOptions: jest.fn(),
+  updateGenres: jest.fn(),
+  setBookData: jest.fn(),
+  getInventorySeverity: jest.fn(),
+  mapProductToBook: jest.fn(),
+  createBook: jest.fn(),
+  deactivateBook: jest.fn(),
+  getAllBooks: jest.fn().mockReturnValue(of([])),
+  getBookById: jest.fn(),
+  getBookData: jest.fn(),
+  getBookPropertyOptions: jest.fn().mockReturnValue(mockBookProperyOptions),
+  getBooks: jest.fn().mockReturnValue(of([])),
+  getFilteredBooks: jest.fn(),
+  getGenreOptions: jest.fn().mockReturnValue(of([])),
+  postBatchOfBooks: jest.fn(),
+  postBook: jest.fn(),
+  postBooksInBatches: jest.fn(),
+
+};
 
 export const mockBook1: Book = {
     isbn: '9788408172619',

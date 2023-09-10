@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LayoutComponent } from './layout.component';
-import { AuthenticationService } from '@core/services';
+import { AuthenticationService, UserService } from '@core/services';
 import { authenticationServiceMock } from '@core/mocks/authentication.service.mock';
+import { userServiceMock } from '@core/mocks/user.service.mock';
 
 describe('LayoutComponent', () => {
     let component: LayoutComponent;
     let fixture: ComponentFixture<LayoutComponent>;
-    let _authService: AuthenticationService;
+    let _userService: UserService;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            providers: [{ provide: AuthenticationService, useValue: authenticationServiceMock }],
+            providers: [{ provide: UserService, useValue: userServiceMock }],
             declarations: [LayoutComponent]
         })
             .compileComponents();
@@ -20,7 +21,7 @@ describe('LayoutComponent', () => {
     beforeEach(async () => {
         fixture = TestBed.createComponent(LayoutComponent);
         component = fixture.componentInstance;
-        _authService = TestBed.inject(AuthenticationService);
+        _userService = TestBed.inject(UserService);
         fixture.detectChanges();
     });
 
