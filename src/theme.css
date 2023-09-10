@@ -5498,8 +5498,8 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-dialog .p-dialog-header {
     border-bottom: 0 none;
-    background: #fff;
-    color: rgba(0, 0, 0, 0.87);
+    background: #0a0a0a;
+    color: #ffffff;
     padding: 1.5rem;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
@@ -5508,12 +5508,17 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-dialog .p-dialog-header .p-dialog-title {
     font-weight: 500;
     font-size: 1.25rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    width: 100%;
+
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon {
     width: 2.5rem;
     height: 2.5rem;
-    color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
     border: 0 none;
     background: transparent;
     border-radius: 50%;
@@ -5522,7 +5527,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
-    color: rgba(0, 0, 0, 0.6);
+    color: #c1c1c1;
     border-color: transparent;
     background: rgba(0, 0, 0, 0.04);
 }
@@ -5540,7 +5545,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 .p-dialog .p-dialog-content {
     background: #fff;
     color: rgba(0, 0, 0, 0.87);
-    padding: 0 1.5rem 1.5rem 1.5rem;
+    padding: 1.5rem;
 }
 
 .p-dialog .p-dialog-content:last-of-type {
@@ -9919,3 +9924,62 @@ h4 {
     font-weight: normal;
     letter-spacing: 3px;
 }
+
+/* UNORDERED */
+ul {
+    line-height: 2em;
+    margin: 5px 0 10px;
+    padding: 0;
+    list-style-position: outside;
+  }
+  
+  li {
+    list-style: none;
+    position: relative;
+    padding: 0 0 0 20px;
+  }
+  ul li:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  
+  ul li.arrow::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 11px;
+    height: 5px;
+    width: 5px;
+    border: 1px solid #090909;
+    border-width: 2px 2px 0 0;
+    transform: rotate(45deg);
+  }
+  
+  /* ORDERED */
+  
+  ol {
+    line-height: 2;
+    margin: 5px 0 50px;
+    list-style-position: outside;
+  }
+  
+  ol li {
+    list-style-type: none;
+    counter-increment: item;
+    margin-bottom: 20px;
+  }
+  
+  ol li:before {
+    content: counter(item);
+    width: 10px;
+    height: 10px;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 8px;
+    border-radius: 3px;
+    line-height: 0.8;
+    position: absolute;
+    margin: 2px 0 0 -40px;
+  
+  }
+  

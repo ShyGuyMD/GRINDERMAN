@@ -77,12 +77,26 @@ export class WooCommerceApiService {
     return this._apiService.get(url, this.headers);
   }
 
-  getProductAttributeTerms(attrId: number) {
+  getProductAttributeTerms(attrId: number, page: number) {
     const url = `${this.baseUrl}/products/attributes/${attrId}/terms`;
-
-    return this._apiService.get(url, this.headers);
+    const params = new HttpParams().set('page', page.toString());
+    return this._apiService.get(url, this.headers, params);
   }
 
+  public getAllProductAttributeTerms(attrId: number): Observable<Product[]> {
+    const maxPages = 10;
+    const attrObservables: Observable<any[]>[] = [];
+
+    for (let page = 1; page <= maxPages; page++) {
+        attrObservables.push(this.getProductAttributeTerms(attrId, page));
+    }
+
+    return forkJoin(attrObservables).pipe(
+        takeWhile((responses) => responses.length > 0), // Stop when response is empty
+        map((responses) => responses.reduce((acc, curr) => acc.concat(curr), [])), // Flatten the array of arrays
+        take(1)
+    );
+ }
   postProduct(book: Book) {
     const url = `${this.baseUrl}/products`;
 

@@ -5,7 +5,7 @@ export enum InventoryStatus {
 }
 
 export enum Attributes {
-    ATTR_GENRE = 'Género'
+    ATTR_GENRE = 'Genero'
 }
 
 export enum UserRole {
@@ -20,7 +20,9 @@ export enum WoocommerceError {
 export enum Severity {
     DANGER = 'danger',
     WARNING = 'warn',
-    SUCCESS = 'success'
+    SUCCESS = 'success',
+    INFO = 'info',
+    ERROR = 'error'
 }
 
 export const MIN_DELIVERY = 700;

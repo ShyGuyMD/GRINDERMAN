@@ -1,3 +1,4 @@
+<app-overlay-spinner [showOverlaySpinner] = "isLoading"></app-overlay-spinner>
 <app-section-title title="Importar Catálogo"></app-section-title>
 <app-instructions
   [instructions]="instructions"
@@ -27,6 +28,14 @@
           [options]="excelHeaders"
           [placeholder]="blankValue"
         ></p-dropdown>
+        <div
+        *ngIf="
+          importForm.get(property.key)?.hasError('required') &&
+          importForm.get(property.key)?.touched
+        "
+        class="p-error"
+      >El campo "{{property.value}}" es obligatorio.
+      </div>
       </div>
     </div>
     <div class="w-full card flex justify-content-end gap-2 mt-3 p-2">
@@ -37,6 +46,7 @@
       </ng-template>
       </p-confirmDialog>
       <p-button
+        [disabled]="!importForm.valid"
         (click)="confirmPopup()"
         icon="pi pi-check"
         label="Confirmar"
