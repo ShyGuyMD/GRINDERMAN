@@ -41,6 +41,7 @@ export class BookCreateComponent {
   ngOnInit(): void {
     this._bookService.getGenreOptions().subscribe((response) => {
       this.genreOptions = response;
+      this.isLoading = false;
     });
   }
 
