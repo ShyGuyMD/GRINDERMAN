@@ -6,7 +6,7 @@ export const cartServiceMock: Partial<CartService> = {
     clearCart: jest.fn(),
     decrementQuantity: jest.fn(),
     getCart: jest.fn(),
-    cartItems$: of([]),
+    getCartItems: jest.fn().mockReturnValue(of([])),
     getTotalAmount: jest.fn(),
     getTotalQuantity: jest.fn(),
     incrementQuantity: jest.fn(),

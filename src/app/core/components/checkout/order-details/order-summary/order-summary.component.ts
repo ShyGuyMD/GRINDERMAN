@@ -14,7 +14,7 @@ export class OrderSummaryComponent {
     constructor(private _cartService: CartService) { }
 
     ngOnInit(): void {
-        this._cartService.cartItems$.subscribe((cartItems) => {
+        this._cartService.getCartItems().subscribe((cartItems) => {
             this.cartItems = cartItems;
         });
 
