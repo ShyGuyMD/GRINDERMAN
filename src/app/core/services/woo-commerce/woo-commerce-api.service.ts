@@ -123,7 +123,6 @@ export class WooCommerceApiService {
             update: updateProducts,
             delete: del
         }
-
         return this._apiService.post(url, request, this.headers);
     }
 
