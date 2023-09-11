@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { UserService } from '@core/services';
+import { Injectable, Injector } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, throwError} from 'rxjs';
 //---
 import { HttpHeaders } from '@angular/common/http';
 import { UserLoginResponse } from '@core/models/response/userLoginResponse';
 import { CoCartApiService } from '../co-cart-api';
 import { LocalStorageService } from '../local-storage';
-import { UserService } from '../user';
 
 @Injectable({
     providedIn: 'root',
@@ -16,12 +16,36 @@ export class AuthenticationService {
 
     constructor(
         private _coCartApiService: CoCartApiService,
-        private _localStorageService: LocalStorageService
+        private _localStorageService: LocalStorageService,
+        private _injector: Injector
     ) { }
 
     public login(username: string, password: string): Observable<UserLoginResponse> {
-        return this._coCartApiService.login(username, password);
+        return this._coCartApiService.login(username, password).pipe(
+            map((response: UserLoginResponse) => {
+              this.handleLoginResponse(response);
+              return response; 
+            }),
+            catchError(() => {
+                const error = new Error('El login falló.'); 
+                return throwError(() => error);
+            })
+          );
     }
+
+    public handleLoginResponse(response: UserLoginResponse) {
+        this.setJwtToken(response.extras.jwt_token);
+        const userService = this._injector.get(UserService)
+        userService.mapUserData(response);
+    }
+
+    logout(): void {
+        this.clearJwtToken();
+        const userService = this._injector.get(UserService)
+        userService.setActiveUser()
+        console.log("LOGOUT")
+      }
+    
 
     public isAuthenticated(): boolean {
         const token = this.getJwtToken();
@@ -30,6 +54,10 @@ export class AuthenticationService {
 
     public getJwtToken(): string | null {
         return this._localStorageService.getItem('jwt_token').replaceAll('"', '');
+    }
+
+    clearJwtToken() {
+        this._localStorageService.setItem('jwt_token', '');
     }
 
     public setJwtToken(token: string): void {

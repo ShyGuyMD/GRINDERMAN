@@ -1,4 +1,4 @@
-<ul class="top-bar">
-    <li>Hola {{ userName }}</li>
-    <li><a (click)="logout()">Cerrar sesión</a></li>
-</ul>
+<div class="flex align-content-center justify-content-end flex-wrap gap-3 w-100 user-menu">
+    <div class="flex align-items-center justify-content-center" >Hola {{ userName }}</div><p> | </p>
+    <div class="flex align-items-center justify-content-center" ><a (click)="logout()">Cerrar sesión</a></div>
+</div>

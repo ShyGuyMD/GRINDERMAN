@@ -3,21 +3,21 @@ import { CreateCustomerRequest } from '@core/models/request/createCustomerReques
 import { Admin, Client, User } from '@core/models/user';
 import { UserRole } from '@shared/constants';
 import { WooCommerceApiService } from '../woo-commerce';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserLoginResponse } from '@core/models/response/userLoginResponse';
 
 @Injectable({
     providedIn: 'root',
 })
 export class UserService {
-    private activeUser: User | undefined;
+    private activeUser$: BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
 
     constructor(
         private _wooCommerceApiService: WooCommerceApiService
     ) { }
 
     public mapUserData(loginResponse: UserLoginResponse): void {
-        this.activeUser = {
+        const user = {
             userId: parseInt(loginResponse.user_id),
             username: loginResponse.display_name,
             firstName: loginResponse.first_name,
@@ -25,34 +25,37 @@ export class UserService {
             email: loginResponse.email,
             role: loginResponse.role.toLowerCase()
         };
+        this.setActiveUser(user);
+    }
+
+    public getActiveUser(): Observable<User| undefined> {
+        return this.activeUser$.asObservable();
+    }
+
+    public getActiveUserData(): User| undefined {
+        return this.activeUser$.getValue();
+    }
+
+
+    public setActiveUser(user: User| undefined = undefined): void {
+        this.activeUser$.next(user);
     }
 
     public isAdminUser(): boolean {
         return (
             Boolean(this.getActiveUser())
-            && this.activeUser?.role === UserRole.ADMIN
+            && this.activeUser$.getValue()?.role === UserRole.ADMIN
         );
     }
 
     public isUserLoggedIn(): boolean {
-        return Boolean(this.activeUser);
-    }
-
-    public getActiveUser(): User | undefined {
-        return this.activeUser;
-    }
-
-    public setUserData(user: User): void {
-        this.activeUser = user;
-    }
-
-    public getUserData(): any {
-        return this.activeUser;
+        return Boolean(this.activeUser$.getValue());
     }
 
     public getUserName(): string {
-        if (this.activeUser) {
-            return this.activeUser?.email;
+        const user = this.activeUser$.getValue();
+        if (user) {
+            return user.email;
         }
         return '';
     }
