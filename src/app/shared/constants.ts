@@ -116,4 +116,11 @@ export const DEPARTAMENTOS = [
   "Treinta y Tres"
 ]
 
+export enum CouponType {
+  CREDIT = 'Credit',
+  PERCENT = 'Percent',
+}
+
+export const ComisionMercadoLibre = 15;
+
 //#endregion

@@ -8,12 +8,12 @@
   <div class="grid">
     <div class="col-8">
       <div class="grid">
-      <div class="col-5">Item</div>
-      <div class="col-2 flex justify-content-center flex-wrap">Cantidad</div>
-      <div class="col-2 flex justify-content-center flex-wrap">Precio</div>
-      <div class="col-2 flex justify-content-center flex-wrap">Subtotal</div>
-    </div>
-    <p-divider></p-divider>
+        <div class="col-5">Item</div>
+        <div class="col-2 flex justify-content-center flex-wrap">Cantidad</div>
+        <div class="col-2 flex justify-content-center flex-wrap">Precio</div>
+        <div class="col-2 flex justify-content-center flex-wrap">Subtotal</div>
+      </div>
+      <p-divider></p-divider>
       <div *ngFor="let cartItem of cartItems" class="p-mb-3 col-12">
         <app-cart-item
           [item]="cartItem"
@@ -21,22 +21,54 @@
         ></app-cart-item>
       </div>
       <p-divider></p-divider>
-      <p class="w-full">Hay {{ totalQuantity }} items en el carrito de compra.</p>
+      <p class="w-full">
+        Hay {{ totalQuantity }} items en el carrito de compra.
+      </p>
+      <p-accordion>
+        <p-accordionTab header="Descuento" [disabled]="mercadoLibre">
+          <app-coupon-create></app-coupon-create>
+        </p-accordionTab>
+      </p-accordion>
     </div>
     <div class="col-offset-1 col-3">
       <h4>Resumen</h4>
       <div class="grid">
+        <div *ngIf="coupon" class="col-6">Descuento:</div>
+        <div
+          *ngIf="coupon && coupon.type === 'Credit'"
+          class="col-6 text-right"
+          style="color: green;"
+        >
+          {{ coupon.value*-1 | currency }}
+        </div>
+        <div
+          *ngIf="coupon && coupon.type === 'Percent'"
+          class="col-6 text-right"
+          style="color: green;"
+        >
+          {{ coupon.value }} %
+        </div>
         <div class="col-6">Total:</div>
         <div class="col-6 text-right">
           {{ total | currency }}
         </div>
       </div>
-        <button
-          pButton
-          class="p-button-success w-full mt-5"
-          label="Continuar con la compra"
-          (click)="goToNextStep()"
-        ></button>
+      <p-divider></p-divider>
+      <div class="flex align-items-center gap-2">
+        <p-checkbox
+          [(ngModel)]="mercadoLibre"
+          [binary]="true"
+          inputId="binary"
+          (ngModelChange)="onCheckboxChange($event)"
+        ></p-checkbox>
+        <label for="mercadoLibre">Mercado Libre</label>
+      </div>
+      <button
+        pButton
+        class="p-button-success w-full mt-5"
+        label="Continuar con la compra"
+        (click)="goToNextStep()"
+      ></button>
     </div>
   </div>
 </div>
