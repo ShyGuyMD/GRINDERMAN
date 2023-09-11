@@ -1,0 +1,57 @@
+<form [formGroup]="couponForm" class="w-full" *ngIf="isAllowed">
+<div class="grid">
+  <div
+    class="col-3 p-field-radiobutton flex align-items-center justify-content-start flex-wrap gap-3"
+  >
+    <div class="flex align-items-center">
+      <p-radioButton
+        [value]="credit"
+        formControlName="type"
+        inputId="couponTypeOption1"
+      ></p-radioButton>
+      <label for="couponTypeOption1" class="ml-2">Crédito</label>
+    </div>
+    <div cclass="flex align-items-center">
+      <p-radioButton
+        [value]="percent"
+        formControlName="type"
+        inputId="couponTypeOption2"
+      ></p-radioButton>
+      <label for="couponTypeOption2" class="ml-2">Porcentaje</label>
+    </div>
+  </div>
+  <div class="col-9 flex align-items-center justify-content-end">
+    
+    <div class="p-fluid">
+      <div class="p-field">
+        <div class="p-inputgroup">
+          <span *ngIf="coupon.type === credit" class="p-inputgroup-addon"
+            >$</span
+          >
+          <input
+            type="number"
+            formControlName="value"
+            id="value"
+            pInputText
+            placeholder="Valor"
+            [required]="true"
+          />
+          <span *ngIf="coupon.type === percent" class="p-inputgroup-addon"
+            >%</span
+          >
+        </div>
+        <div
+          *ngIf="
+            couponForm.get('value')?.hasError('required') &&
+            couponForm.get('value')?.touched
+          "
+          class="p-error"
+        >
+          El valor es obligatoria.
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>
+ </form>

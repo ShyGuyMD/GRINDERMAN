@@ -19,7 +19,7 @@ export class CartPreviewComponent {
   ngOnInit(): void {
     this._cartService.getCartItems().subscribe(() => {
       this.quantity = this._cartService.getTotalQuantity();
-      this.totalAmount = this._cartService.getTotalAmount();
+      this.totalAmount = this._cartService.getTotalAmountWithCoupons();
     });
   }
 
