@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserLoginResponse } from '@core/models/response/userLoginResponse';
-import { AuthenticationService, NavigationService, UserService } from '@core/services';
-import { HOME, Severity } from '@shared/constants';
-import { MessageService } from 'primeng/api';
+import { AuthenticationService, NavigationService } from '@core/services';
+import { CLIENT_CREATE, HOME} from '@shared/constants';
 
 @Component({
     selector: 'app-login',
@@ -30,6 +27,9 @@ export class LoginComponent {
                 this.loginError = true;
             }
         });
+    }
+    register():void{
+        this._navigationService.navigateTo(CLIENT_CREATE);
     }
 
 }
