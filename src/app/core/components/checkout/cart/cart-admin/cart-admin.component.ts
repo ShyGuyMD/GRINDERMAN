@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { CartItem } from '@core/models/cartItem';
+import { Coupon } from '@core/models/coupon';
 import { CartService, NavigationService, UserService } from '@core/services';
 import {
   MIN_DELIVERY,
   CHECKOUT_ORDER_SUMMARY,
+  CouponType,
 } from '@shared/constants';
 
 @Component({
@@ -15,7 +17,9 @@ export class CartAdminComponent {
   cartItems: CartItem[] = [];
   total: number = 0;
   totalQuantity: number = 0;
+  coupon: Coupon | null = null;
   MIN_DELIVERY = MIN_DELIVERY;
+  public mercadoLibre : boolean = false;
 
   constructor(
     private _cartService: CartService,
@@ -25,8 +29,16 @@ export class CartAdminComponent {
   ngOnInit(): void {
     this._cartService.getCartItems().subscribe((cartItems) => {
       this.cartItems = cartItems;
-      this.total = this._cartService.getTotalAmount();
       this.totalQuantity = this._cartService.getTotalQuantity();
+      this.total = this._cartService.getTotalAmount();
+      this._cartService.getCoupon().subscribe((response)=>{
+        this.coupon = response;
+        this.total = this._cartService.getTotalAmountWithCoupons();
+      })
+      this._cartService.getMercadoLibre().subscribe((mercadoLibre) =>
+      {
+        this.mercadoLibre = mercadoLibre;
+      })
     });
   }
 
@@ -45,4 +57,9 @@ export class CartAdminComponent {
   public goToNextStep(): void {
     this._navigationService.navigateTo(CHECKOUT_ORDER_SUMMARY);
   }
+
+  onCheckboxChange(newValue: boolean) {
+    this._cartService.setMercadoLibre(newValue);
+  }
+
 }

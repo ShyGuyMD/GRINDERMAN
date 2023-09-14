@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Client } from '@core/models/user';
 import { NavigationService, UserService } from '@core/services';
-import { BLANK_PAGE, UserRole, WoocommerceError } from '@shared/constants';
+import { BLANK_PAGE, LOGIN, Severity, UserRole, WoocommerceError } from '@shared/constants';
 import { passwordValidator } from '@shared/customValidators';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-client-create',
@@ -32,6 +33,7 @@ export class ClientCreateComponent implements OnInit {
         private _formBuilder: FormBuilder,
         private _userService: UserService,
         private _navigationService: NavigationService,
+        private _messageService: MessageService
     ) { }
 
     ngOnInit(): void {
@@ -40,6 +42,8 @@ export class ClientCreateComponent implements OnInit {
 
     private initForm(): void {
         this.clientForm = this._formBuilder.group({
+            firstname: ['', [Validators.required]],
+            lastname: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, passwordValidator()]],
             confirmPassword: ['', Validators.required],
@@ -53,24 +57,29 @@ export class ClientCreateComponent implements OnInit {
         }
         this.assignInputToUser();
         this.isLoading = true;
+        this.clientForm.disable();
         this._userService.registerClient(this.client).subscribe({
             next: (v: any) => {
+                this._messageService.add(
+                    {severity: Severity.SUCCESS,
+                    summary: `Felicidades ${this.client.firstName}`,
+                    detail: '¡Tu registro ha sido exitoso!'}
+                )
                 this.isLoading = false;
-                console.log('submitting: ', this.client);
-                console.log('response: ', v);
                 this.clientForm.reset();
-                const successMessage = 'The client was succesfully created!';
-                this._navigationService.navigateTo(BLANK_PAGE, undefined, successMessage);
+                this._navigationService.navigateTo(LOGIN);
             },
             error: (e: any) => {
-                const errorMessage = 'Error creating client.';
-                console.log('error: ', e.error.code);
+                this.clientForm.enable();
                 if (e.error.code === WoocommerceError.EMAIL_EXISTS) {
                     this.registrationError = true;
                     this.isLoading = false;
                     return;
                 }
-                this._navigationService.navigateTo(BLANK_PAGE, errorMessage);
+                this._messageService.add(
+                    {severity: Severity.ERROR,
+                    summary: '¡Upsss!',
+                    detail: 'Tu registro no ha sido completado.'})
             }
         });
 

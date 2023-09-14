@@ -1,5 +1,7 @@
+import { authenticationServiceMock } from './../../mocks/authentication.service.mock';
 import { Component } from '@angular/core';
-import { UserService } from '@core/services';
+import { AuthenticationService, NavigationService, UserService } from '@core/services';
+import { LOGIN } from '@shared/constants';
 
 @Component({
     selector: 'app-user-menu',
@@ -8,14 +10,24 @@ import { UserService } from '@core/services';
 })
 export class UserMenuComponent {
     public userName: string = '';
+    
 
-    constructor(private _userService: UserService) { }
+    constructor(private _userService: UserService, 
+        private _authService: AuthenticationService, 
+        private _navigationService : NavigationService) { }
 
     ngOnInit() {
-        this.userName = this._userService.getActiveUser()?.firstName!;
+        this._userService.getActiveUser().subscribe((activeUser)=>{
+            if(activeUser){
+                this.userName = activeUser.email
+            }else{
+                this.userName = '';
+            }
+        });
     }
     
     public logout(): void{
-        console.log("logout");
+        this._authService.logout();
+        this._navigationService.navigateTo(LOGIN);
     }
 }
