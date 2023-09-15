@@ -16,12 +16,12 @@ export class ApiService {
     return this.http.get(url, { headers, params });
   }
 
-  public post(
+  public post<T = any>(
     url: string,
     body: any,
     headers: HttpHeaders = new HttpHeaders()
-  ): Observable<any> {
-    return this.http.post(url, body, { headers });
+  ): Observable<T> {
+    return this.http.post<T>(url, body, { headers });
   }
 
   public put(
