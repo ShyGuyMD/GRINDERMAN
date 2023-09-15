@@ -11,6 +11,7 @@ export class LoginComponent {
     username: string = '';
     password: string = '';
     loginError: boolean = false;
+    isLoading: boolean = false;
 
     constructor(
         private _authService: AuthenticationService,
@@ -18,12 +19,14 @@ export class LoginComponent {
     ) { }
 
     login(): void {
-
+        this.isLoading= true;
         this._authService.login(this.username, this.password).subscribe({
             next: () => {
+                this.isLoading=false;
                 this._navigationService.navigateTo(HOME);
             },
             error: () => {
+                this.isLoading=false;
                 this.loginError = true;
             }
         });

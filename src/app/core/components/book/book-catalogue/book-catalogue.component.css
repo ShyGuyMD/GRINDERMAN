@@ -13,6 +13,7 @@
     height: 100%;
     object-fit: cover; 
     display: block;
+    cursor: pointer;
   } 
   .book-info {
     height: 70px; /* Set the desired fixed height */

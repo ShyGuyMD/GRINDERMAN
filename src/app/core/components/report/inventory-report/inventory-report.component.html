@@ -1,0 +1,25 @@
+<app-overlay-spinner [showOverlaySpinner] = "isLoading"></app-overlay-spinner>
+<app-section-title title="Gestión de Inventario"></app-section-title>
+<app-instructions
+  [instructions]="instructions"
+  [ordered]="instructionsOrder"
+></app-instructions>
+<div class="report-table mt-5">
+  <ag-grid-angular
+  style="width: 100%; height: 100%"
+  class="ag-theme-alpine"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [rowData]="rowData$ | async"
+  [rowSelection]="'multiple'"
+  [animateRows]="true"
+  (gridReady)="onGridReady($event)"
+  (cellClicked)="onCellClicked($event)"
+  [gridOptions]="gridOptions"
+  ></ag-grid-angular>
+</div>
+<div class="mt-2 gap-2 flex justify-content-end w-full flex-wrap">
+  <button class="flex align-items-center justify-content-center" pButton (click)="clearFilters()">Limpiar Filtros</button>
+  <button class="flex align-items-center justify-content-center" pButton (click)="exportFiltered()">Exportar Selección</button>
+  <button class="flex align-items-center justify-content-center" pButton (click)="exportAll()">Exportar Todo</button>
+</div>

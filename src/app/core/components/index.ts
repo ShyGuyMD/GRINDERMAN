@@ -43,6 +43,7 @@ import {
 } from './user';
 import { InstructionsComponent } from './instructions';
 import { OverlaySpinnerComponent } from './overlay-spinner';
+import { InventoryReportComponent } from './report';
 
 export * from './blank-page';
 export * from './cart-preview';
@@ -59,6 +60,7 @@ export * from './section-title';
 export * from './user';
 export * from './user-menu';
 export * from './overlay-spinner';
+export * from './report';
 
 export const components = [
   AdminCreateComponent,
@@ -82,6 +84,7 @@ export const components = [
   HeaderComponent,
   HeaderAdminComponent,
   InstructionsComponent,
+  InventoryReportComponent,
   ItemSearchComponent,
   LandingAdminComponent,
   LandingComponent,

@@ -9983,3 +9983,12 @@ ul {
   
   }
   
+  .ag-header-cell-filtered {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+  
+  .ag-header-cell-filtered span {
+    color: #fff !important;
+  }
+  

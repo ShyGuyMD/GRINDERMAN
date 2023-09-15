@@ -4,6 +4,8 @@
 @import '~primeng/resources/primeng.css';
 @import '~primeflex/primeflex.css';
 @import '~primeicons/primeicons.css';
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 body {
     font-family: Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial,
