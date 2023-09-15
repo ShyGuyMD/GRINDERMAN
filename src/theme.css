@@ -9992,3 +9992,10 @@ ul {
     color: #fff !important;
   }
   
+  .report-table{
+    min-height: 10vh;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+}

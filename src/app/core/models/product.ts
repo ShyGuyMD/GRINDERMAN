@@ -16,3 +16,19 @@ export interface Product {
     manage_stock: boolean;      // has to be "true" by default
     status: string;             // has to be "publish" by default
 }
+export function isProduct(obj: any): obj is Product {
+    return (
+      typeof obj === 'object' &&
+      'name' in obj &&
+      'description' in obj &&
+      'regular_price' in obj &&
+      'stock_quantity' in obj &&
+      'stock_status' in obj &&
+      'images' in obj &&
+      'meta_data' in obj &&
+      'attributes' in obj &&
+      'manage_stock' in obj &&
+      'status' in obj
+    );
+  }
+  

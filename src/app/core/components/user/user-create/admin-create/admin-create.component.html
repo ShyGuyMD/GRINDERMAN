@@ -59,7 +59,7 @@
           (blur)="validatePasswordMatch()"
         />
         <div *ngIf="adminForm.get('confirmPassword')?.value !== adminForm.get('password')?.value && adminForm.get('confirmPassword')?.touched" class="p-error">
-          Passwords do not match.
+          Las contraseñas ingresadas no coinciden.
         </div>
       </div>
     </div>

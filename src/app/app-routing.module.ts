@@ -8,7 +8,6 @@ import {
   BookCatalogueComponent,
   BookCreateComponent,
   BookDetailComponent,
-  BookExportComponent,
   BookImportComponent,
 } from '@core/components/book';
 import {
