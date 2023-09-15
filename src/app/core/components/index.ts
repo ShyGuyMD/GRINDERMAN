@@ -4,7 +4,6 @@ import {
   BookCreateComponent,
   BookDetailComponent,
   BookEditModalComponent,
-  BookExportComponent,
   BookImportComponent,
   ResultDisplayComponent,
 } from './book';
@@ -43,6 +42,8 @@ import {
 } from './user';
 import { InstructionsComponent } from './instructions';
 import { OverlaySpinnerComponent } from './overlay-spinner';
+import { InventoryReportComponent } from './report';
+import { PriceUpdateComponent } from './price-update';
 
 export * from './blank-page';
 export * from './cart-preview';
@@ -59,6 +60,8 @@ export * from './section-title';
 export * from './user';
 export * from './user-menu';
 export * from './overlay-spinner';
+export * from './report';
+export * from './price-update';
 
 export const components = [
   AdminCreateComponent,
@@ -69,7 +72,6 @@ export const components = [
   BookDetailComponent,
   BookEditModalComponent,
   BookImportComponent,
-  BookExportComponent,
   CartAdminComponent,
   CartComponent,
   CartItemComponent,
@@ -82,6 +84,7 @@ export const components = [
   HeaderComponent,
   HeaderAdminComponent,
   InstructionsComponent,
+  InventoryReportComponent,
   ItemSearchComponent,
   LandingAdminComponent,
   LandingComponent,
@@ -95,6 +98,7 @@ export const components = [
   OrderDetailsComponent,
   OrderSummaryComponent,
   OverlaySpinnerComponent,
+  PriceUpdateComponent,
   ResultDisplayComponent,
   SearchbarComponent,
   SectionTitleComponent,

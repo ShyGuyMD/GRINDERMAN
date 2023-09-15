@@ -8,7 +8,6 @@ import {
   BookCatalogueComponent,
   BookCreateComponent,
   BookDetailComponent,
-  BookExportComponent,
   BookImportComponent,
 } from '@core/components/book';
 import {
@@ -18,6 +17,7 @@ import {
   CartComponent,
   CheckoutComponent,
   ClientCreateComponent,
+  InventoryReportComponent,
   LandingComponent,
   LayoutAdminComponent,
   LoginComponent,
@@ -60,7 +60,7 @@ const routes: Routes = [
       { path: BOOK_CREATE, component: BookCreateComponent },
       { path: BOOK_DETAIL, component: BookDetailComponent },
       { path: BOOK_IMPORT, component: BookImportComponent },
-      { path: BOOK_EXPORT, component: BookExportComponent },
+      { path: BOOK_EXPORT, component: InventoryReportComponent },
       { path: BLANK_PAGE, component: BlankPageComponent },
       { path: CATALOGUE, component: BookCatalogueComponent },
       { path: HOME, component: LandingComponent },

@@ -13,7 +13,7 @@
     <div *ngIf="loginError" class="error-message">El email o la contraseña son inválidos.</div>
   </div>
   <div class="flex mt-4">
-    <button pButton (click)="login()">Iniciar Sesión</button>  
+    <button pButton (click)="login()" pButton icon="pi pi-check" [loading]="isLoading" loadingIcon="pi pi-spin pi-spinner">Iniciar Sesión</button>  
   </div>
   <button pButton class="p-button-text mt-2" (click)="register()">Quiero Registrarme</button>
 </div>

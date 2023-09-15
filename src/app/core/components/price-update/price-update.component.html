@@ -1,0 +1,57 @@
+<app-overlay-spinner [showOverlaySpinner] = "isLoading"></app-overlay-spinner>
+<app-instructions
+  [instructions]="instructions"
+  [ordered]="instructionsOrder"
+></app-instructions>
+<div class="mt-2 gap-2 flex justify-content-end w-full flex-wrap">
+    <form [formGroup]="priceUpdateForm">
+        <div class="flex align-items-center justify-content-end">
+          <div class="p-fluid">
+            <div class="p-field">
+              <div class="p-inputgroup">
+                <input
+                  type="number"
+                  formControlName="value"
+                  id="value"
+                  pInputText
+                  placeholder="Valor del Ajuste"
+                  [required]="true"
+                />
+                <span class="p-inputgroup-addon">%</span>
+              </div>
+              <div
+                *ngIf="
+                  priceUpdateForm.get('value')?.hasError('required') &&
+                  priceUpdateForm.get('value')?.touched
+                "
+                class="p-error"
+              >
+                Por favor, ingrese un valor para realizar el ajuste de precio.
+              </div>
+            </div>
+          </div>
+        </div>
+  </form>
+    <button class="flex align-items-center justify-content-center mt-2" pButton (click)="confirmPopup()">Aplicar</button>
+</div>
+
+<div class="report-table mt-5">
+  <ag-grid-angular
+  style="width: 100%; height: 48vh"
+  class="ag-theme-alpine"
+  [columnDefs]="columnDefs"
+  [defaultColDef]="defaultColDef"
+  [rowData]="rowData$ | async"
+  [rowSelection]="'multiple'"
+  [animateRows]="true"
+  (gridReady)="onGridReady($event)"
+  [gridOptions]="gridOptions"
+  ></ag-grid-angular>
+</div>
+
+<p-confirmDialog #cd [style]="{ width: '50vw' }">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="pi pi-check" label="Si" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>
