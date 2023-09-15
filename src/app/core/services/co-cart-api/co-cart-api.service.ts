@@ -19,9 +19,9 @@ export class CoCartApiService {
     public login(username: string, password: string): Observable<UserLoginResponse> {
 
         const credentials = `${username}:${password}`;
-        const headers = new HttpHeaders({
-            Authorization: `Basic ${btoa(credentials)}`
-        });
+        const headers = new HttpHeaders()
+                            .set('Authorization', `Basic ${btoa(credentials)}`)
+                            .set('Content-Type', 'application/json');
 
         const url = `${this.apiUrl}/login`;
         return this._apiService.post(url, '', headers);

@@ -1,33 +1,42 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { InventoryReportComponent } from './inventory-report.component';
-import { BookService } from '@core/services';
+import { PriceUpdateComponent } from './price-update.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { bookServiceMock } from '@core/mocks/book.service.mock';
-import { ExcelService } from '@core/services/excel-service/excel.service';
-import { excelServiceMock } from '@core/mocks/excel.service.mock';
-import { DialogService } from 'primeng/dynamicdialog';
 import { dialogServiceMock } from '@core/mocks/dialog.service.mock';
-import { InventoryService } from '@core/services/inventory';
-import { MessageService } from 'primeng/api';
+import { excelServiceMock } from '@core/mocks/excel.service.mock';
 import { inventoryServiceMock } from '@core/mocks/inventory.service.mock';
+import { BookService } from '@core/services';
+import { ExcelService } from '@core/services/excel-service/excel.service';
+import { InventoryService } from '@core/services/inventory';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
-describe('InventoryReportComponent', () => {
-  let component: InventoryReportComponent;
-  let fixture: ComponentFixture<InventoryReportComponent>;
-
+describe('PriceUpdateComponent', () => {
+  let component: PriceUpdateComponent;
+  let fixture: ComponentFixture<PriceUpdateComponent>;
   let _inventoryService: InventoryService;
   let _bookService: BookService;
   let _excelService: ExcelService;
   let _dialogService: DialogService
 
+  const configMock: Partial<DynamicDialogConfig> = {
+    data: {
+    },
+  };
+
   beforeEach(waitForAsync( () => {
     TestBed.configureTestingModule({
-      declarations: [ InventoryReportComponent ],
+      declarations: [ PriceUpdateComponent ],
+      imports: [FormsModule, ReactiveFormsModule],
       providers: [
         { provide: InventoryService, useValue: inventoryServiceMock },
         { provide: BookService, useValue: bookServiceMock },
         { provide: ExcelService, useValue: excelServiceMock},
         { provide: DialogService, useValue: dialogServiceMock},
+        { provide: DynamicDialogConfig, useValue: configMock},
+        ConfirmationService,
+        DynamicDialogRef,
         MessageService
       ]
     })
@@ -36,7 +45,7 @@ describe('InventoryReportComponent', () => {
 
   beforeEach(async () => {
   
-    fixture = TestBed.createComponent(InventoryReportComponent);
+    fixture = TestBed.createComponent(PriceUpdateComponent);
     component = fixture.componentInstance;
 
     _inventoryService = TestBed.inject(InventoryService);
@@ -51,5 +60,3 @@ describe('InventoryReportComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-
