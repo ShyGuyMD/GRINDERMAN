@@ -7,7 +7,9 @@ import {
   UtilsService,
   WooCommerceApiService,
 } from '@core/services';
+import { WordpressService } from '@core/services/wp-service/wp-service.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-book-edit-modal',
@@ -22,13 +24,16 @@ export class BookEditModalComponent {
   isLoading: boolean = true;
   genreOptions: any[] = [];
 
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
+
   constructor(
     private _bookService: BookService,
     private _productService: ProductService,
     private _wooCommerceAPIService: WooCommerceApiService,
     private _utilService: UtilsService,
     private _ref: DynamicDialogRef,
-    private _config: DynamicDialogConfig
+    private _config: DynamicDialogConfig,
+    private _wpService: WordpressService
   ) {}
 
   ngOnInit() {
@@ -66,4 +71,19 @@ export class BookEditModalComponent {
       complete: () => this._ref.close(),
     });
   }
+
+  onFileChange(event: any){
+    const file = event.currentFiles[0];
+    this._wpService.uploadImageToWordpress(file).subscribe(
+      {next: (response) => {
+        console.log('Image uploaded successfully:', response);
+        this.book.images.push({ src : response.source_url });
+      },
+      error: (e) => {
+          console.error(e);
+        }
+      })
+
+}
+
 }
