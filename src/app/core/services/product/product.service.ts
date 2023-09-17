@@ -24,7 +24,7 @@ export class ProductService {
       stock_quantity: book.availableUnits || 0,
       stock_status: this.injectStockStatus(book.inventoryStatus),
 
-      images: bookImages.length ? this.injectImages(bookImages) : [],
+      images: bookImages.length ? bookImages : [],
       meta_data: this.buildMetadata(book),
       attributes: book.genre
         ? this.injectGenreOptions(book.genre)

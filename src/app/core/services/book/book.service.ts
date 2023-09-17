@@ -106,16 +106,8 @@ export class BookService {
     return newBook;
   }
 
-  public postBook(book: Book): void {
-    this._wooCommerceAPIService.postProduct(book).subscribe({
-      next: (v) => {
-        console.log('submitting: ', book);
-        console.log('response: ', v);
-      },
-      error: (e) => {
-        console.log('error: ', e);
-      },
-    });
+  public postBook(book: Book): Observable<any> {
+    return this._wooCommerceAPIService.postProduct(book);
   }
 
   public postBooksInBatches(

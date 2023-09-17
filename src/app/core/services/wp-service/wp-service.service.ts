@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api';
 import { config } from 'src/environments/environment';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { WordPressImageResponse } from '@core/models/response/wordPressImageResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,15 @@ export class WordpressService {
   constructor(private _apiService: ApiService) { }
 
 
-  public uploadImageToWordpress(file: File): Observable<any>{
-    const formData = new FormData();
-    formData.append('file', file);
-    const url : string = `${this.baseUrl}/media`;
-    return this._apiService.post(url, formData, this.headers);
+  public uploadImagesToWordpress(files: File[]): Observable<WordPressImageResponse[]> {
+    const url: string = `${this.baseUrl}/media`;
+  
+    const uploadObservables: Observable<WordPressImageResponse>[] = files.map(file => {
+      const formData = new FormData();
+      formData.append('file', file);
+      return this._apiService.post(url, formData, this.headers);
+    });
+  
+    return forkJoin(uploadObservables);
   }
 }

@@ -1,8 +1,8 @@
 export const config = {
 	production: false,
     // ya no importan, pero dejarlas por las dudas
-    apiKey: 'ck_32671dda4ad57451d2eb69ea9a7f1e4813964a50',
-    apiSecret: 'cs_c3adc0c3b8abe9a8c1b9d530e3015d1100cbda3f',
+    apiKey: 'ck_2c7eeb90ecb03bc277430ad558ad162cacf0ff7d',
+    apiSecret: 'cs_6ef79ad5a29f5c9f8d52b9780616c2179bbc4549',
     // -----
     baseUrl: 'https://localhost/admin/wordpress/wp-json/',
     cc: 'cocart/v2',

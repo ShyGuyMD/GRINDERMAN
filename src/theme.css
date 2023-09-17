@@ -9999,3 +9999,8 @@ ul {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
 }
+
+.updated-images-preview li:first-child {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}

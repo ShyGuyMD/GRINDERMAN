@@ -74,15 +74,6 @@ export class BookEditModalComponent {
 
   onFileChange(event: any){
     const file = event.currentFiles[0];
-    this._wpService.uploadImageToWordpress(file).subscribe(
-      {next: (response) => {
-        console.log('Image uploaded successfully:', response);
-        this.book.images.push({ src : response.source_url });
-      },
-      error: (e) => {
-          console.error(e);
-        }
-      })
 
 }
 
