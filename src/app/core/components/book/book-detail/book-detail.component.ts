@@ -42,6 +42,10 @@ export class BookDetailComponent implements OnInit {
         this.isLoading = false;}
     });
 
+    this.initBook(); 
+  }
+
+  initBook(){
     this._bookService.getBookById(this.id).subscribe({
       next: (book) => {
         this._bookService.setBookData(book);
@@ -64,7 +68,7 @@ export class BookDetailComponent implements OnInit {
   }
 
   deactivate() {
-    this._bookService.deactivateBook(this.id).subscribe((response) => {
+    this._bookService.toggleBookisActive(this.book).subscribe((response) => {
       if (response) {
         console.log(`Book ID: ${this.id} deactivated`);
         this.book.isActive = false;
@@ -79,16 +83,19 @@ export class BookDetailComponent implements OnInit {
     this.ref = this._dialogService.open(BookEditModalComponent, {
       header: this.book.title,
       dismissableMask: true,
-      contentStyle: {
-        'max-height': '700px',
-        overflow: 'auto',
-      },
+      width: '80%',
+      contentStyle: { 'max-height': '80vh', overflow: 'auto' },
       baseZIndex: 10000,
       data: {
         bookId: this.id,
         bookData: this.book,
       },
       modal: true,
+    });
+    this.ref.onClose.subscribe((result: boolean) => {
+      if(result){
+        this.initBook();
+      }
     });
   }
 

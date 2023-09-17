@@ -110,6 +110,10 @@ export class BookService {
     return this._wooCommerceAPIService.postProduct(book);
   }
 
+  public putBook(book: Book): Observable<any> {
+    return this._wooCommerceAPIService.putProductData(book);
+  }
+
   public postBooksInBatches(
     books: Book[],
     batchSize: number,
@@ -243,7 +247,7 @@ export class BookService {
   }
 
   private extractGenres(attributes: any): any {
-    const options = attributes
+        const options = attributes
       .find((attr: any) => attr.name === Attributes.ATTR_GENRE)
       ?.options.map((genre: any) => {
         return { name: genre, value: genre };
@@ -252,7 +256,7 @@ export class BookService {
   }
 
   private extractImageURLs(images: any): any[] {
-    return images.map((image: any) => ({ name: image.name, src: image.src }));
+    return images.map((image: any) => ({ name: image.name, src: image.src, id: image.id }));
   }
 
   private extractMetadata(meta_field: string, metadata: any): string {
@@ -301,14 +305,9 @@ export class BookService {
       });
   }
 
-  deactivateBook(id: number): Observable<any> {
-    const data = { meta_data: [{ key: 'isActive', value: false }] };
+  toggleBookisActive(book: Book): Observable<any> {
+    const partBook : Partial<Book> = { id: book.id, isActive: !book.isActive} 
 
-    return this._wooCommerceAPIService.putProductData(id, data).pipe(
-      catchError((error) => {
-        console.error('Error in deactivation', error);
-        return of(null); // Return an empty observable on error
-      })
-    );
+    return this._wooCommerceAPIService.putProductData(partBook)
   }
 }

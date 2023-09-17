@@ -165,6 +165,8 @@ export class BookCreateComponent {
     this.book.title = this.bookForm.value.title;
     this.book.isbn = this.bookForm.value.isbn;
     this.book.author = this.bookForm.value.author;
+    this.book.publisher = this.bookForm.value.publisher;
+    this.book.synopsis = this.bookForm.value.synopsis;
     this.book.price = this.bookForm.value.price;
     this.book.availableUnits = this.bookForm.value.availableUnits;
     this.book.genre = this.bookForm.value.genre;
