@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { BookService } from '../book';
-import { Book } from '@core/models/book';
 import { Option } from '@core/models/option';
 import { Book_Properies } from '@shared/constants';
+import { OrderResponse } from '@core/models/response/orderResponse';
+import { Book } from '@core/models/book';
+import { OrderReportLine } from '@core/models/orderReportLine';
 
 @Injectable({
   providedIn: 'root',
@@ -98,4 +100,35 @@ export class ExcelService {
 
     return formattedBooks;
   }
+
+  public exportOrdersToExcel(orders: OrderReportLine[]): boolean {
+    try {
+        const formattedOrders = this.formatOrdersToExcel(orders);
+        const worksheet = XLSX.utils.json_to_sheet(formattedOrders);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Libros');
+        XLSX.writeFile(workbook, 'libros.xlsx');
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
+private formatOrdersToExcel(orders: OrderReportLine[]): any[] {
+  const properties: Option[] = this._bookService.getBookPropertyOptions();
+  const formattedBooks: any[] = [];
+
+  orders.forEach((order) => {
+    const formattedBook: any = {};
+
+    properties.forEach((property) => {
+          formattedBook[property.value] = order[property.key as keyof OrderReportLine];
+    });
+
+    formattedBooks.push(formattedBook);
+  });
+
+  return formattedBooks;
+}
+
 }

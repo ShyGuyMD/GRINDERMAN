@@ -7,7 +7,7 @@ import { ExcelService } from '@core/services/excel-service/excel.service';
 import { excelServiceMock } from '@core/mocks/excel.service.mock';
 import { DialogService } from 'primeng/dynamicdialog';
 import { dialogServiceMock } from '@core/mocks/dialog.service.mock';
-import { InventoryService } from '@core/services/inventory';
+import { TableService } from '@core/services/inventory';
 import { MessageService } from 'primeng/api';
 import { inventoryServiceMock } from '@core/mocks/inventory.service.mock';
 
@@ -15,7 +15,7 @@ describe('InventoryReportComponent', () => {
   let component: InventoryReportComponent;
   let fixture: ComponentFixture<InventoryReportComponent>;
 
-  let _inventoryService: InventoryService;
+  let _inventoryService: TableService;
   let _bookService: BookService;
   let _excelService: ExcelService;
   let _dialogService: DialogService
@@ -24,7 +24,7 @@ describe('InventoryReportComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ InventoryReportComponent ],
       providers: [
-        { provide: InventoryService, useValue: inventoryServiceMock },
+        { provide: TableService, useValue: inventoryServiceMock },
         { provide: BookService, useValue: bookServiceMock },
         { provide: ExcelService, useValue: excelServiceMock},
         { provide: DialogService, useValue: dialogServiceMock},
@@ -39,7 +39,7 @@ describe('InventoryReportComponent', () => {
     fixture = TestBed.createComponent(InventoryReportComponent);
     component = fixture.componentInstance;
 
-    _inventoryService = TestBed.inject(InventoryService);
+    _inventoryService = TestBed.inject(TableService);
     _bookService = TestBed.inject(BookService);
     _dialogService = TestBed.inject(DialogService);
     _excelService = TestBed.inject(ExcelService);

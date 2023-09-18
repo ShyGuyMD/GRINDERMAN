@@ -7,7 +7,7 @@ import { Book_Properies } from '@shared/constants';
 @Injectable({
   providedIn: 'root'
 })
-export class InventoryService {
+export class TableService {
 
   constructor() { }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ADMIN_CREATE, BOOK_CREATE, BOOK_EXPORT, BOOK_IMPORT, CATALOGUE, CHECKOUT } from '@shared/constants';
+import { ADMIN_CREATE, BOOK_CREATE, BOOK_EXPORT, BOOK_IMPORT, CATALOGUE, CHECKOUT, ORDER_REPORT } from '@shared/constants';
 
 @Component({
   selector: 'app-landing-admin',
@@ -17,7 +17,7 @@ export class LandingAdminComponent {
   public CHECKOUT: string = `/admin/${CHECKOUT}`;
   public ORDER_UPDATE: string = '';
   public ORDER_HISTORY: string = '';
-  public ORDER_REPORT_EXPORT: string = '';
+  public ORDER_REPORT_EXPORT: string = `/admin/${ORDER_REPORT}`;
   public ADMIN_CREATE: string = `/admin/${ADMIN_CREATE}`;
 
 
