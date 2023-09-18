@@ -25,3 +25,29 @@ export const BOOK_IMPORT_INSTRUCTIONS = {
     'Cómo Funciona la Carga': false,
     'Preparación del Archivo de Catálogo': true
   };
+
+  export const BOOK_EXPORT_INSTRUCTIONS = {
+    'Instrucciones de Uso General': [
+        'Filtrar Datos: Utiliza las opciones de filtro en la parte superior de las columnas para filtrar los datos según tus criterios. Puedes filtrar por texto, números o fechas.',
+        'Ordenar Datos: Haz clic en el encabezado de una columna para ordenar los datos de forma ascendente o descendente. Puedes realizar ordenamientos múltiples manteniendo presionada la tecla "Shift" mientras haces clic en las columnas adicionales.',
+        'Reiniciar Filtros y Ordenamientos: Puedes reiniciar todos los filtros y ordenamientos haciendo clic en un botón de "Limpiar Filtros".',
+        'Exportar Datos: Puedes exportar los datos a un archivo Excel utilizando las opciones de exportación proporcionadas.'
+    ]
+};
+
+export const BOOK_EXPORT_INSTRUCTIONS_ORDER = {
+    'Instrucciones de Uso General': false
+};
+export const PRICE_UPDATE_INSTRUCTIONS = {
+  'Aplicar Ajuste de Precio': [
+      'Filtra tus Libros: Utiliza los filtros disponibles para seleccionar los libros a los que deseas aplicar un ajuste de precio porcentual.',
+      'Ingresa el Porcentaje: En el campo de entrada de porcentaje, escribe el valor del ajuste de precio que deseas aplicar.',
+      'Actualización Automática: Los precios de los libros afectados por el ajuste se actualizarán automáticamente en la tabla, mostrando los nuevos precios con el ajuste aplicado.',
+      'Guarda los Cambios: Si estás satisfecho con los cambios, puedes guardar el ajuste de precio haciendo clic en un botón de "Guardar Cambios".'
+  ]
+};
+
+export const PRICE_UPDATE_INSTRUCTIONS_ORDER = {
+  'Aplicar Ajuste de Precio': true,
+};
+

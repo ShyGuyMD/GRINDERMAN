@@ -17,7 +17,6 @@ import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 import { ExceptionService } from '@core/services';
 import { AdminGuard } from './guards/admin.guard';
 import { GoogleMapsModule } from '@angular/google-maps';
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -31,7 +30,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
         SharedModule,
         CoreModule,
         AppRoutingModule,
-        GoogleMapsModule
+        GoogleMapsModule,
     ],
     providers: [
         AdminGuard,

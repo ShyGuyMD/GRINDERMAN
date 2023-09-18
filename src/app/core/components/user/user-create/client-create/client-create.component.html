@@ -1,70 +1,100 @@
-<app-section-title title="Alta de Cliente"></app-section-title>
-<form [formGroup]="clientForm" (ngSubmit)="save()" class="p-mt-4">
-  <div *ngIf="isLoading; else showForm">
-    <p-progressSpinner></p-progressSpinner>
-  </div>
-  <ng-template #showForm>
-    <div class="p-fluid">
-      <div class="p-field">
-        <label for="client-email">Email:</label>
-        <input
-          type="email"
-          id="client-email"
-          pInputText
-          formControlName="email"
-          name="email"
-          required
-          (blur)="validateEmail()"
-        />
-        <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="p-error">
-          <ng-container *ngIf="clientForm.get('email')?.hasError('required')">
-            Email is required.
-          </ng-container>
-          <ng-container *ngIf="clientForm.get('email')?.hasError('email')">
-            Invalid email format.
-          </ng-container>
+<app-section-title title="Registrate como Cliente"></app-section-title>
+<div class="user-create">
+  <p>Completa este pequeño formulario con tus datos para registrarte en nuestro sistema.</p>
+  <form [formGroup]="clientForm" (ngSubmit)="save()" class="p-mt-4">
+      <div class="p-fluid">
+        <div class="p-field">
+          <label for="client-firstname">Nombre:</label>
+          <input
+            type="text"
+            id="client-firstname"
+            pInputText
+            formControlName="firstname"
+            name="firstname"
+            required
+          />
+          <div *ngIf="clientForm.get('firstname')?.invalid && clientForm.get('firstname')?.touched" class="p-error">
+            <ng-container *ngIf="clientForm.get('firstname')?.hasError('required')">
+              Tu nombre es obligatorio.
+            </ng-container>
+          </div>
         </div>
-        <div *ngIf="registrationError" class="p-error">
-          Existing email.
+        <div class="p-field">
+          <label for="client-lastname">Apellido:</label>
+          <input
+            type="text"
+            id="client-lastname"
+            pInputText
+            formControlName="lastname"
+            name="lastname"
+            required
+          />
+          <div *ngIf="clientForm.get('lastname')?.invalid && clientForm.get('lastname')?.touched" class="p-error">
+            <ng-container *ngIf="clientForm.get('lastname')?.hasError('required')">
+              Tu apellido es obligatorio.
+            </ng-container>
+          </div>
+        </div>
+        <div class="p-field">
+          <label for="client-email">Email:</label>
+          <input
+            type="email"
+            id="client-email"
+            pInputText
+            formControlName="email"
+            name="email"
+            required
+            (blur)="validateEmail()"
+          />
+          <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="p-error">
+            <ng-container *ngIf="clientForm.get('email')?.hasError('required')">
+              El email es obligatorio.
+            </ng-container>
+            <ng-container *ngIf="clientForm.get('email')?.hasError('email')">
+              Formato de email inválido.
+            </ng-container>
+          </div>
+          <div *ngIf="registrationError" class="p-error">
+            El email ya se encuentra registrado en nuestro sistema.
+          </div>
+        </div>
+        <div class="p-field">
+          <label for="client-password">Contraseña:</label>
+          <input
+            type="password"
+            id="client-password"
+            pPassword
+            formControlName="password"
+            required
+            (blur)="validatePassword()"
+          />
+          <div *ngIf="clientForm.get('password')?.invalid && clientForm.get('password')?.touched" class="p-error">
+            <ng-container *ngIf="clientForm.get('password')?.hasError('required')">
+              La constraseña es obligatoria
+            </ng-container>
+            <ng-container *ngIf="clientForm.get('password')?.hasError('passwordInvalid')">
+              La constraseña debe tener al menos 12 caracteres, al menos una minuscula, una mayúscula, un numnero y un caracter especial (@#$%^&+=).
+            </ng-container>
+          </div>
+        </div>
+        <!-- Double password field and error message for password mismatch -->
+        <div class="p-field">
+          <label for="client-confirm-password">Confirmación de Contraseña:</label>
+          <input
+            type="password"
+            id="client-confirm-password"
+            pPassword
+            formControlName="confirmPassword"
+            required
+            (blur)="validatePasswordMatch()"
+          />
+          <div *ngIf="clientForm.get('confirmPassword')?.value !== clientForm.get('password')?.value && clientForm.get('confirmPassword')?.touched" class="p-error">
+            Las contraseñas ingresadas no coinciden.
+          </div>
         </div>
       </div>
-      <div class="p-field">
-        <label for="client-password">Password:</label>
-        <input
-          type="password"
-          id="client-password"
-          pPassword
-          formControlName="password"
-          required
-          (blur)="validatePassword()"
-        />
-        <div *ngIf="clientForm.get('password')?.invalid && clientForm.get('password')?.touched" class="p-error">
-          <ng-container *ngIf="clientForm.get('password')?.hasError('required')">
-            Password is required.
-          </ng-container>
-          <ng-container *ngIf="clientForm.get('password')?.hasError('passwordInvalid')">
-            Password must be at least 12 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character (@#$%^&+=).
-          </ng-container>
-        </div>
+      <div class="flex justify-content-center flex-wrap mt-4">
+        <button type="submit" class="p-button flex align-items-center justify-content-center gap-2" pButton icon="pi pi-check" [loading]="isLoading" loadingIcon="pi pi-spin pi-spinner">Registrarme</button>
       </div>
-      <!-- Double password field and error message for password mismatch -->
-      <div class="p-field">
-        <label for="client-confirm-password">Confirm Password:</label>
-        <input
-          type="password"
-          id="client-confirm-password"
-          pPassword
-          formControlName="confirmPassword"
-          required
-          (blur)="validatePasswordMatch()"
-        />
-        <div *ngIf="clientForm.get('confirmPassword')?.value !== clientForm.get('password')?.value && clientForm.get('confirmPassword')?.touched" class="p-error">
-          Passwords do not match.
-        </div>
-      </div>
-    </div>
-    <div class="p-formgroup-inline mt-4">
-      <button type="submit" class="p-button">Registrar</button>
-    </div>
-  </ng-template>
-</form>
+  </form>
+</div>

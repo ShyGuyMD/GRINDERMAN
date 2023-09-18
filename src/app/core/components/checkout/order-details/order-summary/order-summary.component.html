@@ -4,6 +4,14 @@
         <div class="col-8"> {{ item.book.title }} x {{ item.quantity }}</div>
         <div class="col-4 text-right">{{ getLineTotal(item) | currency }}</div>
     </div>
+    <div class="grid" *ngIf="discount !== 0">
+        <div class="col-8">Descuento Aplicado</div>
+        <div class="col-4  text-right" style="color: green;"> {{ discount*-1 | currency }}</div>
+    </div>
+    <div class="grid" *ngIf="comission !== 0">
+        <div class="col-8">Comisión de Mercado Libre</div>
+        <div class="col-4  text-right" style="color: darkred;">{{ comission*-1 | currency }}</div>
+    </div>
     <p-divider></p-divider>
     <div class="total-section p-d-flex p-jc-between grid">
         <div class="col-8">Total:</div>

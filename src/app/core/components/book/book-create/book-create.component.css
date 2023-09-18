@@ -1,0 +1,11 @@
+.book-create{
+    width: 85%;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: auto;
+}
+
+.p-field{
+    width: 49%;
+}

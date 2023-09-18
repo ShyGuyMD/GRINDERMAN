@@ -1,56 +1,238 @@
-<div *ngIf="isLoading">
-    <p-progressSpinner></p-progressSpinner>
-</div>
-<div *ngIf="!isLoading && book">
-<form (ngSubmit)="save()" #editForm="ngForm" class="p-mt-4">
-    <div class="p-fluid">
-        <div class="p-field">
-            <label for="isbn">ISBN:</label>
-            <input type="text" id="title" pInputText [(ngModel)]="book.isbn" name="isbn" required
-                class="p-inputtext p-d-block">
+<app-overlay-spinner [showOverlaySpinner]="isLoading"></app-overlay-spinner>
+<div class="book-edit">
+  <form [formGroup]="bookForm" (ngSubmit)="save()">
+    <div
+      class="p-fluid flex flex-wrap justify-content-center align-content-center gap-2"
+    >
+      <div class="p-field">
+        <label for="title">Título *:</label>
+        <input
+          type="text"
+          id="title"
+          pInputText
+          formControlName="title"
+          name="title"
+          required
+          class="p-inputtext p-d-block"
+        />
+        <div
+          *ngIf="
+            bookForm.get('title')?.invalid && bookForm.get('title')?.touched
+          "
+          class="p-error"
+        >
+          <ng-container *ngIf="bookForm.get('title')?.hasError('required')">
+            El título del libro es obligatorio.
+          </ng-container>
         </div>
-        <div class="p-field">
-            <label for="author">Autor:</label>
-            <input type="text" id="author" pInputText [(ngModel)]="book.author" name="author" required
-                class="p-inputtext p-d-block">
+      </div>
+      <div class="p-field">
+        <label for="author">Autor *:</label>
+        <input
+          type="text"
+          id="author"
+          pInputText
+          formControlName="author"
+          name="author"
+          required
+          class="p-inputtext p-d-block"
+        />
+        <div
+          *ngIf="
+            bookForm.get('author')?.invalid && bookForm.get('author')?.touched
+          "
+          class="p-error"
+        >
+          <ng-container *ngIf="bookForm.get('author')?.hasError('required')">
+            El autor del libro es obligatorio.
+          </ng-container>
         </div>
-        <div class="p-field">
-            <label for="genre">Género:</label>
-            <p-multiSelect id="genre" [options]="genreOptions" [(ngModel)]="book.genre"
-             name="genre"
-                placeholder="Selccione los géneros" optionLabel="name"></p-multiSelect>
+      </div>
+      <div class="p-field">
+        <label for="author">ISBN:</label>
+        <input
+          type="text"
+          id="isbn"
+          pInputText
+          formControlName="isbn"
+          name="isbn"
+          class="p-inputtext p-d-block"
+        />
+      </div>
+      <div class="p-field">
+        <label for="genre">Género:</label>
+        <p-multiSelect
+          id="genre"
+          [options]="genreOptions"
+          formControlName="genre"
+          name="genre"
+          placeholder="Selccione los géneros"
+          optionLabel="name"
+          loadingIcon="pi pi-spin pi-spinner"
+          emptyMessage="Ningún género seleccionado"
+        ></p-multiSelect>
+      </div>
+      <div class="p-field">
+        <label for="publisher">Editorial:</label>
+        <input
+          type="text"
+          id="publisher"
+          pInputText
+          formControlName="publisher"
+          name="publisher"
+          class="p-inputtext p-d-block"
+        />
+      </div>
+      <div class="p-field">
+        <label for="price">PVP *:</label>
+        <div class="p-inputgroup">
+          <span class="p-inputgroup-addon"><i class="pi pi-dollar"></i></span>
+          <input
+            type="number"
+            id="price"
+            pInputNumber
+            formControlName="price"
+            name="price"
+            required
+            pInputText
+            min="0"
+          />
         </div>
-        <div class="p-field">
-            <label for="publisher">Editorial:</label>
-            <input type="text" id="publisher" pInputText [(ngModel)]="book.publisher" name="publisher" required
-                class="p-inputtext p-d-block">
+        <div
+          *ngIf="
+            bookForm.get('price')?.invalid && bookForm.get('price')?.touched
+          "
+          class="p-error"
+        >
+          <ng-container *ngIf="bookForm.get('price')?.hasError('required')">
+            El precio del libro es obligatorio.
+          </ng-container>
         </div>
-        <div class="p-field">
-            <label for="synopsis">Sinopsis:</label>
-            <textarea id="synopsis" pInputTextarea [(ngModel)]="book.synopsis" name="synopsis"
-                class="p-inputtextarea p-d-block"></textarea>
+      </div>
+      <div class="p-field">
+        <label for="availableUnits">Unidades disponibles:</label>
+        <input
+          type="number"
+          id="availableUnits"
+          pInputText
+          formControlName="availableUnits"
+          name="availableUnits"
+          class="p-inputtext p-d-block"
+          min="0"
+        />
+      </div>
+      <div class="p-field flex align-items-center justify-content-center gap-3 mt-5">
+        <p-checkbox
+          id="isNew"
+          formControlName="isNew"
+          [binary]="true"
+          name="isNew"
+          label="Es nuevo"
+        ></p-checkbox>
+        <p-checkbox
+          id="isHardcover"
+          formControlName="isHardcover"
+          [binary]="true"
+          name="isHardcover"
+          label="Es tapadura"
+        ></p-checkbox>
+        <p-checkbox
+          id="isActive"
+          formControlName="isActive"
+          [binary]="true"
+          name="isActive"
+          label="Está disponible"
+        ></p-checkbox>
+      </div>
+      <div class="p-field w-full">
+        <label for="synopsis">Sinopsis:</label>
+        <textarea
+          id="synopsis"
+          pInputTextarea
+          formControlName="synopsis"
+          name="synopsis"
+          class="p-inputtextarea p-d-block"
+        ></textarea>
+      </div>
+      <div class="p-field w-full">
+        <label for="images">Imagenes:</label>
+        <input
+          style="display: none"
+          type="file"
+          name="images"
+          (change)="onFileSelect($event)"
+          #fileInput
+          multiple="multiple"
+          accept="image/*"
+        />
+        <button
+          type="button"
+          (click)="fileInput.click()"
+          pButton
+          icon="pi pi-paperclip"
+          class="gap-2 justify-content-center"
+        >
+          Seleccion de Imagenes
+        </button>
+        <div *ngIf="uploadedFiles.length">
+          <ul class="updated-images-preview">
+            <li *ngFor="let file of uploadedFiles">
+              <div class="flex justify-content-between flex-wrap">
+                <img
+                  class="flex align-items-center justify-content-start"
+                  [src]="file.objectURL"
+                  alt="{{ file.name }}"
+                  width="50"
+                />
+                <span class="flex align-items-center justify-content-center"
+                  >{{ file.name }} - {{ file.size }} bytes</span
+                >
+                <div
+                  class="flex flex-wrap justify-content-center align-content-center gap-2"
+                >
+                  <button
+                    pButton
+                    class="flex align-items-center justify-content-center h-3rem w-7rem gap-2"
+                    icon="pi pi-star-fill"
+                    *ngIf="file.isCover"
+                    disabled
+                  >
+                    Portada
+                  </button>
+                  <button
+                    pButton
+                    class="flex align-items-center p-button-icon-only h-3rem w-3rem"
+                    icon="pi pi-star"
+                    (click)="setAsCover(file)"
+                    *ngIf="!file.isCover"
+                  ></button>
+                  <button
+                    pButton
+                    class="flex align-items-center p-button-icon-only w-3rem h-3rem"
+                    (click)="removeFile(file)"
+                    icon="pi pi-times"
+                  ></button>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <div class="p-field">
-            <label for="price">PVP:</label>
-            <input type="text" id="price" pInputNumber [(ngModel)]="book.price" name="price" required
-                class="p-inputtext p-d-block" mode="currency" currency="USD">
-        </div>
-        <div class="p-field">
-            <label for="availableUnits">Unidades disponibles:</label>
-            <input type="number" id="availableUnits" pInputText [(ngModel)]="book.availableUnits"
-                name="availableUnits" class="p-inputtext p-d-block">
-        </div>
-        <div class="p-field">
-            <p-checkbox id="isNew" [(ngModel)]="book.isNew" [binary]="true" name="isNew"
-                label="Es nuevo"></p-checkbox>
-        </div>
-        <div class="p-field">
-            <p-checkbox id="isHardcover" [(ngModel)]="book.isHardcover" [binary]="true" name="isHardcover"
-                label="Es tapadura"></p-checkbox>
-        </div>
+      </div>
+
     </div>
-    <div class="p-formgroup-inline mt-4">
-        <button type="submit" class="p-button">Guardar</button>
+    <div
+      class="flex flex-wrap justify-content-center align-content-center mt-2 gap-2"
+    >
+      <button
+        type="submit"
+        pButton
+        [loading]="isSaving"
+        loadingIcon="pi pi-spin pi-spinner"
+        icon="pi pi-save"
+        class="flex align-items-center justify-content-end gap-2"
+      >
+        Guardar
+      </button>
     </div>
-</form>
+  </form>
 </div>

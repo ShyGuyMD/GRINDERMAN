@@ -24,7 +24,7 @@ export class ProductService {
       stock_quantity: book.availableUnits || 0,
       stock_status: this.injectStockStatus(book.inventoryStatus),
 
-      images: bookImages.length ? this.injectImages(bookImages) : [],
+      images: bookImages.length ? bookImages : [],
       meta_data: this.buildMetadata(book),
       attributes: book.genre
         ? this.injectGenreOptions(book.genre)
@@ -33,6 +33,81 @@ export class ProductService {
       manage_stock: true,
       status: 'publish',
     };
+  }
+
+  public mapPartialBookToProduct(book: Partial<Book>): Partial<Product> {
+    const product: Partial<Product> = {};
+
+    if (book.id !== undefined) {
+        product.id = book.id;
+    }
+
+    if (book.title !== undefined) {
+        product.name = book.title;
+    }
+
+    if (book.synopsis !== undefined) {
+        product.description = book.synopsis;
+    } else {
+        product.description = '';
+    }
+
+    if (book.price !== undefined) {
+        product.regular_price = book.price.toString();
+    }
+
+    if (book.availableUnits !== undefined) {
+        product.stock_quantity = book.availableUnits;
+    } else {
+        product.stock_quantity = 0;
+    }
+
+    if (book.inventoryStatus !== undefined) {
+        product.stock_status = this.injectStockStatus(book.inventoryStatus);
+    }
+
+    if (book.images !== undefined) {
+        product.images = book.images.length > 0 ? book.images : [];
+    }
+
+    if (book.genre !== undefined) {
+        product.attributes = this.injectGenreOptions(book.genre);
+    } else {
+        product.attributes = this.injectGenreOptions([]);
+    }
+
+    const metadata = this.buildPartialMetadata(book);
+
+    if(metadata.length > 0){
+      product.meta_data = metadata;
+    }
+
+    return product;
+}
+
+  private buildPartialMetadata(book: Partial<Book>): any[]{
+    const metadata: any[] = []
+
+    if(book.author){
+      metadata.push({ key: 'author', value: book.author ? book.author : '' });
+    }
+    if(book.isbn){
+      metadata.push({ key: 'isbn', value: book.isbn ? book.isbn : '' });
+    }
+    if(book.publisher){
+      metadata.push({ key: 'publisher', value: book.publisher ? book.publisher : '' });
+    }
+    if(book.isActive){
+      metadata.push({ key: 'isActive', value: book.isActive ? 'true' : 'false' });
+    }
+    if(book.isHardcover){
+      metadata.push( { key: 'isHardcover', value: book.isHardcover ? 'true' : 'false' });
+    }
+    if(book.isNew){
+      metadata.push( { key: 'isNew', value: book.isNew ? 'true' : 'false' });
+    }
+
+    return metadata;
   }
 
   private buildMetadata(book: Book): any {
@@ -51,7 +126,7 @@ export class ProductService {
       return [
         {
           name: 'Genero',
-          options: genreOptions.map((element: Genre) => element.name),
+          options: genreOptions.length > 0 ? genreOptions.map((element: Genre) => element.name) : [],
         },
       ];
     } else if (typeof genreOptions === 'string') {

@@ -5,22 +5,27 @@ import { LocalStorageService } from '../local-storage';
 import { CoCartApiService } from '../co-cart-api';
 import { coCartApiServiceMock } from '@core/mocks/coCartApi.service.mock';
 import { localStorageServiceMock } from '@core/mocks/localStorage.service.mock';
+import { userServiceMock } from '@core/mocks/user.service.mock';
+import { UserService } from '../user';
 
 describe('AuthenticationService', () => {
     let service: AuthenticationService;
     let _coCartApiService: CoCartApiService;
     let _localStorageService: LocalStorageService;
+    let _userService: UserService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
               { provide: CoCartApiService, useValue: coCartApiServiceMock },
               { provide: LocalStorageService, useValue: localStorageServiceMock },
+              { provide: UserService, useValue: userServiceMock },
             ],
           });
         service = TestBed.inject(AuthenticationService);
         _coCartApiService = TestBed.inject(CoCartApiService);
         _localStorageService = TestBed.inject(LocalStorageService);
+        _userService = TestBed.inject(UserService);
     });
 
     it('should be created', () => {

@@ -21,12 +21,13 @@ export class ContactDetailsComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
-      const user = this._userService.getActiveUser();
+    this._userService.getActiveUser().subscribe((user)=>{
       this.initForm(user);
-      this.contactDetailsForm.valueChanges.subscribe(() => {
-        this.emitFormValidity();
-        this.assignInput();
-      });
+        this.contactDetailsForm.valueChanges.subscribe(() => {
+          this.emitFormValidity();
+          this.assignInput();
+        });
+    })
   }
 
   private initForm(user?: User): void {

@@ -3,6 +3,7 @@ import { ApiService } from '../api';
 import { HttpHeaders } from '@angular/common/http';
 import { MPPreferencesRequest } from '@core/models/request/mpPreferencesRequest';
 import { MPPreferencesResponse } from '@core/models/response/mpPreferencesResponse';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -15,13 +16,13 @@ export class MercadopagoService {
 
     constructor(private _apiService: ApiService) { }
 
-    public checkout(paymentPreference: MPPreferencesRequest): MPPreferencesResponse {
+    public checkout(paymentPreference: MPPreferencesRequest): Observable<MPPreferencesResponse> {
         const url = `${this.url}/checkout/preferences`;
 
         const headers = new HttpHeaders({
             Authorization : `Bearer ${this.access_token}`
         });
 
-        return this._apiService.post(url, paymentPreference, headers);
+        return this._apiService.post<MPPreferencesResponse>(url, paymentPreference, headers);
     }
 }

@@ -47,13 +47,19 @@ export class ExcelService {
     });
   }
 
-  public exportBooksToExcel(books: Book[]): void {
-    const formattedBooks = this.formatBooksToExcel(books);
-    const worksheet = XLSX.utils.json_to_sheet(formattedBooks);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Libros');
-    XLSX.writeFile(workbook, 'libros.xlsx');
-  }
+  public exportBooksToExcel(books: Book[]): boolean {
+    try {
+        const formattedBooks = this.formatBooksToExcel(books);
+        const worksheet = XLSX.utils.json_to_sheet(formattedBooks);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, 'Libros');
+        XLSX.writeFile(workbook, 'libros.xlsx');
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
+
 
   private formatBooksToExcel(books: Book[]): any[] {
     const properties: Option[] = this._bookService.getBookPropertyOptions();

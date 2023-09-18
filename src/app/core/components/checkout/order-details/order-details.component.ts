@@ -36,7 +36,7 @@ export class OrderDetailsComponent {
     });
 
     this.orderDetails = {
-      user: this._userService.getActiveUser(),
+      user: this._userService.getActiveUserData(),
       cartItems: this.cartItems,
     };
   }

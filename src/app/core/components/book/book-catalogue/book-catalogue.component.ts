@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Book } from '@core/models/book';
 import { BookService, CartService, NavigationService, SharedService, WooCommerceApiService } from '@core/services';
-import { BLANK_PAGE, PAGE_SIZE } from '@shared/constants';
+import { BLANK_PAGE, BOOK_DETAIL, PAGE_SIZE } from '@shared/constants';
 
 @Component({
   selector: 'app-book-catalogue',
@@ -81,5 +81,10 @@ export class BookCatalogueComponent implements OnInit {
 
   addToCart(book: Book) {
     this._cartService.addToCart(book, 1);
+  }
+
+  goToBookDetail(book: Book){
+    const url = BOOK_DETAIL.slice(0, -3);
+    this._navigationService.navigateTo(`${url}${book.id}`)
   }
 }

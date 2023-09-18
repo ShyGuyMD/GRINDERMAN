@@ -4,7 +4,6 @@ import { config } from 'src/environments/environment';
 import { Book } from '@core/models/book';
 import { ProductService } from '../product';
 import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
-import { AuthenticationService } from '../authentication';
 import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
 import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
 import { Observable, forkJoin, map, take, takeWhile } from 'rxjs';
@@ -17,12 +16,12 @@ import { ApiBodyRequest } from '@core/models/request/apiBodyRequest';
 })
 export class WooCommerceApiService {
     private baseUrl = config.baseUrl + config.wc;
-    private headers = this._authService.getAuthorizationHeader();
-    private readonly basicAuth = btoa(`${config.apiKey}:${config.apiSecret}`);
+    private headers = new HttpHeaders()
+        .set('Authorization', 'Basic ' + btoa(`${config.apiKey}:${config.apiSecret}`))
+        .set('Content-Type', 'application/json');
 
     constructor(
         private _apiService: ApiService,
-        private _authService: AuthenticationService,
         private _productService: ProductService
     ) { }
 
@@ -45,44 +44,33 @@ export class WooCommerceApiService {
         const url = `${this.baseUrl}/products`;
         const params = new HttpParams().set('page', page.toString());
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         return this._apiService.get(url, this.headers, params);
     }
 
-    getProductsById(productId: number) {
+    public getProductsById(productId: number) {
         const url = `${this.baseUrl}/products/${productId}`;
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         return this._apiService.get(url, this.headers);
     }
 
-    getProductsByKeyword(keyword: string, page: number = 1) {
+    public getProductsByKeyword(keyword: string, page: number = 1) {
         const url = `${this.baseUrl}/products`;
         const params = new HttpParams()
-                            .set('search', keyword)
-                            .set('page', page.toString());
-
-                            this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
+            .set('search', keyword)
+            .set('page', page.toString());
 
         return this._apiService.get(url, this.headers, params);
     }
 
-    getProductAttributes() {
+    public getProductAttributes() {
         const url = `${this.baseUrl}/products/attributes`;
-
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-        console.log('SEND ITTTTTTTT');
 
         return this._apiService.get(url, this.headers);
     }
 
-    getProductAttributeTerms(attrId: number, page: number) {
+    public getProductAttributeTerms(attrId: number, page: number) {
         const url = `${this.baseUrl}/products/attributes/${attrId}/terms`;
         const params = new HttpParams().set('page', page.toString());
-
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
 
         return this._apiService.get(url, this.headers, params);
     }
@@ -102,31 +90,25 @@ export class WooCommerceApiService {
         );
     }
 
-    postProduct(book: Book) {
+    public postProduct(book: Book) {
         const url = `${this.baseUrl}/products`;
 
         const body = this._productService.mapBookToProduct(book);
         console.log('bookproduct', body);
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         return this._apiService.post(url, body, this.headers);
     }
 
-    postProductAttributeTerms(productId: number, termValue: string) {
+    public postProductAttributeTerms(productId: number, termValue: string) {
         const url = `${this.baseUrl}/products/attributes/${productId}/terms`;
         const body = { name: termValue };
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         return this._apiService.post(url, body, this.headers);
     }
 
-    putProductData(productId: number, body: any) {
-        const url = `${this.baseUrl}/products/${productId}`;
-
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
+    public putProductData(partBook: Partial<Book>) {
+        const url = `${this.baseUrl}/products/${partBook.id}`;
+        const body = this._productService.mapPartialBookToProduct(partBook);
         return this._apiService.put(url, body, this.headers);
     }
 
@@ -136,19 +118,17 @@ export class WooCommerceApiService {
 
         const url = `${this.baseUrl}/products/batch`;
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         const request: ApiBodyRequest = {
             create: createProducts,
             update: updateProducts,
             delete: del
         }
+
         return this._apiService.post(url, request, this.headers);
     }
 
     public postCustomer(body: CreateCustomerRequest): any {
         const url = `${this.baseUrl}/customers`;
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
 
         return this._apiService.post(url, body, this.headers);
     }
@@ -156,23 +136,17 @@ export class WooCommerceApiService {
     public postOrder(body: CreateOrderRequest): Observable<CreateOrderResponse> {
         const url = `${this.baseUrl}/orders`;
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         return this._apiService.post(url, body, this.headers);
     }
 
     public getOrdersById(orderId: number): Observable<RetrieveOrderResponse> {
         const url = `${this.baseUrl}/orders/${orderId}`;
 
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
-
         return this._apiService.get(url, this.headers);
     }
 
     public getAllOrders(): Observable<RetrieveOrderResponse[]> {
         const url = `${this.baseUrl}/orders`;
-
-        this.headers = new HttpHeaders().set('Authorization', 'Basic ' + this.basicAuth);
 
         return this._apiService.get(url, this.headers);
     }
