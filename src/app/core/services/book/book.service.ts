@@ -55,6 +55,13 @@ export class BookService {
       return Severity.SUCCESS;
     }
   }
+  public getStatusSeverity(book: Book): string {
+    if (book.isActive) {
+      return Severity.SUCCESS;
+    } else {
+      return Severity.DANGER;
+    }
+  }
 
   public getAllBooks(): Observable<Book[]> {
     return this._wooCommerceAPIService.getAllProducts().pipe(
@@ -305,9 +312,11 @@ export class BookService {
       });
   }
 
-  toggleBookisActive(book: Book): Observable<any> {
+  toggleBookisActive(book: Book): Observable<Book> {
     const partBook : Partial<Book> = { id: book.id, isActive: !book.isActive} 
 
-    return this._wooCommerceAPIService.putProductData(partBook)
+    return this._wooCommerceAPIService
+    .putProductData(partBook)
+    .pipe(map((response) => this.mapProductToBook(response)));
   }
 }

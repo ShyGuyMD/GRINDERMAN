@@ -67,39 +67,6 @@ export class BookDetailComponent implements OnInit {
    this._cartService.addToCart(this.book, 1);
   }
 
-  deactivate() {
-    this._bookService.toggleBookisActive(this.book).subscribe((response) => {
-      if (response) {
-        console.log(`Book ID: ${this.id} deactivated`);
-        this.book.isActive = false;
-      } else {
-        console.log('Error in deactivation');
-      }
-    });
-  }
-
-  public edit(): void {
-    console.log('edit');
-    this.ref = this._dialogService.open(BookEditModalComponent, {
-      header: this.book.title,
-      dismissableMask: true,
-      width: '80%',
-      contentStyle: { 'max-height': '80vh', overflow: 'auto' },
-      baseZIndex: 10000,
-      data: {
-        bookId: this.id,
-        bookData: this.book,
-      },
-      modal: true,
-    });
-    this.ref.onClose.subscribe((result: boolean) => {
-      if(result){
-        this.initBook();
-      }
-    });
-  }
-
-
   listGenres() {
     return this.book.genre.map((obj: any) => obj.name).join(', ');
   }

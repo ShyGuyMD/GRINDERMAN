@@ -7,6 +7,7 @@ import { LayoutComponent } from '@core/components/layout/layout.component';
 import {
   BookCatalogueComponent,
   BookCreateComponent,
+  BookDetailAdminComponent,
   BookDetailComponent,
   BookImportComponent,
 } from '@core/components/book';
@@ -58,7 +59,7 @@ const routes: Routes = [
     children: [
       { path: 'style-template', component: StyleTemplateComponent },
       { path: BOOK_CREATE, component: BookCreateComponent },
-      { path: BOOK_DETAIL, component: BookDetailComponent },
+      { path: BOOK_DETAIL, component: BookDetailAdminComponent },
       { path: BOOK_IMPORT, component: BookImportComponent },
       { path: BOOK_EXPORT, component: InventoryReportComponent },
       { path: BLANK_PAGE, component: BlankPageComponent },
