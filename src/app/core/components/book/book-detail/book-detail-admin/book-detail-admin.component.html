@@ -1,0 +1,43 @@
+<div *ngIf="isLoading">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+<div *ngIf="!isLoading && book" class="grid mt-4">
+    <div class="col-6">
+        <p-carousel *ngIf="book && book.images" [value]="book.images">
+            <ng-template let-image pTemplate="item">
+                <p-image [src]="image.src" alt="Additional Image" class="carousel-image" width=100% ></p-image>
+            </ng-template>
+        </p-carousel>
+        <p-image></p-image>
+    </div>
+    <div class="col-6">
+        <div class="right-content">
+            <div class="book-title">
+                <h2>{{ book.title }}</h2>
+                <h5>{{ book.author }}</h5>
+                <h3>${{ book.price }} </h3>
+            </div>
+            <div class="book-details">
+                <p><b>ISBN:</b> {{ book.isbn }}</p>
+                <p><b>Género:</b> {{ listGenres() }}</p>
+                <p><b>Editorial:</b> {{ book.publisher }}</p>
+                <p><b>Condición:</b> {{ book.isNew ? 'Nuevo' : 'Usado' }}</p>
+                <p><b>Unidades disponibles:</b> {{ book.availableUnits }} <p-tag [value]="book.inventoryStatus" [severity]="getInventorySeverity(book)"
+                    class="ml-2"></p-tag></p> 
+                <p><b>Estado de la publicación:</b><p-tag [value]="book.isActive? 'Activa' : 'Inactiva' " [severity]="getStatusSeverity(book)"
+                    class="ml-2"></p-tag></p> 
+            </div>
+            <p-divider></p-divider>
+            <p>{{ book.synopsis }}</p>
+        </div>
+        <div class="flex justify-content-end mt-4 gap-3">
+            <button pButton  class="p-button-outlined p-button-rounded" icon="pi pi-shopping-cart"
+                (click)="addToCart()"></button>
+            <button pButton label="Editar" (click)="edit()" icon="pi pi-pencil" class="gap-2"></button>
+            <button pButton label="Desactivar" *ngIf="book.isActive" (click)="changeStatus()" [loading]="isChangingStatus"
+            loadingIcon="pi pi-spin pi-spinner" icon="pi pi-circle-off" class="p-button-danger"></button>
+            <button pButton label="Activar" *ngIf="!book.isActive" (click)="changeStatus()" [loading]="isChangingStatus"
+            loadingIcon="pi pi-spin pi-spinner" icon="pi pi-circle-on" class="p-button-success"></button>
+        </div>
+    </div>
+</div>

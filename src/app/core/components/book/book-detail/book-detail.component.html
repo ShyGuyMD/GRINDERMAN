@@ -28,10 +28,8 @@
             <p>{{ book.synopsis }}</p>
         </div>
         <div class="flex justify-content-evenly mt-4">
-            <button pButton label="Add to Cart" class="add-to-cart-button"
+            <button pButton  class="p-button-outlined p-button-rounded" icon="pi pi-shopping-cart"
                 (click)="addToCart()"></button>
-            <button pButton label="Editar" (click)="edit()"></button>
-            <button pButton label="Dar de Baja" *ngIf="book.isActive" (click)="deactivate()"></button>
         </div>
     </div>
 </div>

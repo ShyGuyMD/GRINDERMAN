@@ -2,6 +2,7 @@ import { BlankPageComponent } from './blank-page';
 import {
   BookCatalogueComponent,
   BookCreateComponent,
+  BookDetailAdminComponent,
   BookDetailComponent,
   BookEditModalComponent,
   BookImportComponent,
@@ -69,6 +70,7 @@ export const components = [
   BlankPageComponent,
   BookCreateComponent,
   BookCatalogueComponent,
+  BookDetailAdminComponent,
   BookDetailComponent,
   BookEditModalComponent,
   BookImportComponent,
