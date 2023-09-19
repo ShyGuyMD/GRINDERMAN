@@ -45,6 +45,7 @@ export const CART = 'cart';
 export const DELIVERY = 'delivery-options';
 export const PAYMENT = 'payment';
 export const ORDER_SUMMARY = 'order-summary';
+export const ORDER_REPORT = 'order-report';
 
 //#endregion
 
@@ -92,6 +93,20 @@ export enum Book_Properies {
   IS_NEW = 'isNew',
   IS_HARDCOVER = 'isHardCover',
   IS_ACTIVE = 'isActive',
+}
+
+export enum Order_Properies {
+  ID = 'id',
+  CUSTOMER = 'isbn',
+  DATE = 'date',
+  DISCOUNT_TOTAL = 'discount_total',
+  ITEM_NAME= 'item_name',
+  ITEM_ID = 'item_id',
+  ITEM_QUANTITY = 'item_quantity',
+  ITEM_TOTAL = 'item_total',
+  STATUS = 'status',
+  TIME = 'time',
+  TOTAL = 'total'
 }
 
 export const DEPARTAMENTOS = [

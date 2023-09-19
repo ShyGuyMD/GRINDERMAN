@@ -43,7 +43,7 @@ import {
 } from './user';
 import { InstructionsComponent } from './instructions';
 import { OverlaySpinnerComponent } from './overlay-spinner';
-import { InventoryReportComponent } from './report';
+import { InventoryReportComponent, OrderReportComponent } from './report';
 import { PriceUpdateComponent } from './price-update';
 
 export * from './blank-page';
@@ -99,6 +99,7 @@ export const components = [
   MenuAdminComponent,
   OrderDetailsComponent,
   OrderSummaryComponent,
+  OrderReportComponent,
   OverlaySpinnerComponent,
   PriceUpdateComponent,
   ResultDisplayComponent,
