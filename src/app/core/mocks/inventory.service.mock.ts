@@ -1,6 +1,6 @@
-import { InventoryService } from "@core/services/inventory";
+import { TableService } from "@core/services/inventory";
 
-export const inventoryServiceMock: Partial<InventoryService> = {
+export const inventoryServiceMock: Partial<TableService> = {
     getColDefsFromProperties: jest.fn(),
     getDefaultColDef: jest.fn()
 

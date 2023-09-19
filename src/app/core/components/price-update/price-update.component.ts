@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Book } from '@core/models/book';
 import { PostBatckResponse } from '@core/models/response/postBatchRespomse';
 import { BookService } from '@core/services';
-import { InventoryService } from '@core/services/inventory';
+import { TableService } from '@core/services/inventory';
 import AG_GRID_LOCALE_ES from '@shared/agGridLang';
 import { Book_Properies, Severity } from '@shared/constants';
 import {
@@ -52,7 +52,7 @@ export class PriceUpdateComponent {
   @Output() updatedBooks: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    private _inventoryService: InventoryService,
+    private _inventoryService: TableService,
     private _bookService: BookService,
     private _messageService: MessageService,
     private _config: DynamicDialogConfig,

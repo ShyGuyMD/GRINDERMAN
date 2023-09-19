@@ -2,6 +2,7 @@ import { BlankPageComponent } from './blank-page';
 import {
   BookCatalogueComponent,
   BookCreateComponent,
+  BookDetailAdminComponent,
   BookDetailComponent,
   BookEditModalComponent,
   BookImportComponent,
@@ -42,7 +43,7 @@ import {
 } from './user';
 import { InstructionsComponent } from './instructions';
 import { OverlaySpinnerComponent } from './overlay-spinner';
-import { InventoryReportComponent } from './report';
+import { InventoryReportComponent, OrderReportComponent } from './report';
 import { PriceUpdateComponent } from './price-update';
 
 export * from './blank-page';
@@ -69,6 +70,7 @@ export const components = [
   BlankPageComponent,
   BookCreateComponent,
   BookCatalogueComponent,
+  BookDetailAdminComponent,
   BookDetailComponent,
   BookEditModalComponent,
   BookImportComponent,
@@ -97,6 +99,7 @@ export const components = [
   MenuAdminComponent,
   OrderDetailsComponent,
   OrderSummaryComponent,
+  OrderReportComponent,
   OverlaySpinnerComponent,
   PriceUpdateComponent,
   ResultDisplayComponent,

@@ -1,33 +1,33 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { InventoryReportComponent } from './inventory-report.component';
-import { BookService } from '@core/services';
+
+import { BookService, OrderService } from '@core/services';
 import { bookServiceMock } from '@core/mocks/book.service.mock';
 import { ExcelService } from '@core/services/excel-service/excel.service';
 import { excelServiceMock } from '@core/mocks/excel.service.mock';
-import { DialogService } from 'primeng/dynamicdialog';
-import { dialogServiceMock } from '@core/mocks/dialog.service.mock';
 import { TableService } from '@core/services/inventory';
 import { MessageService } from 'primeng/api';
 import { inventoryServiceMock } from '@core/mocks/inventory.service.mock';
+import { OrderReportComponent } from '@core/components';
+import { orderServiceMock } from '@core/mocks/order.service.mock';
 
-describe('InventoryReportComponent', () => {
-  let component: InventoryReportComponent;
-  let fixture: ComponentFixture<InventoryReportComponent>;
+describe('OrderReportComponent', () => {
+  let component: OrderReportComponent;
+  let fixture: ComponentFixture<OrderReportComponent>;
 
-  let _inventoryService: TableService;
+  let _tableService: TableService;
   let _bookService: BookService;
   let _excelService: ExcelService;
-  let _dialogService: DialogService
+  let _orderService: OrderService;
 
   beforeEach(waitForAsync( () => {
     TestBed.configureTestingModule({
-      declarations: [ InventoryReportComponent ],
+      declarations: [ OrderReportComponent ],
       providers: [
         { provide: TableService, useValue: inventoryServiceMock },
         { provide: BookService, useValue: bookServiceMock },
         { provide: ExcelService, useValue: excelServiceMock},
-        { provide: DialogService, useValue: dialogServiceMock},
+        { provide: OrderService, useValue: orderServiceMock},
         MessageService
       ]
     })
@@ -36,13 +36,13 @@ describe('InventoryReportComponent', () => {
 
   beforeEach(async () => {
   
-    fixture = TestBed.createComponent(InventoryReportComponent);
+    fixture = TestBed.createComponent(OrderReportComponent);
     component = fixture.componentInstance;
 
-    _inventoryService = TestBed.inject(TableService);
+    _tableService = TestBed.inject(TableService);
     _bookService = TestBed.inject(BookService);
-    _dialogService = TestBed.inject(DialogService);
     _excelService = TestBed.inject(ExcelService);
+    _orderService = TestBed.inject(OrderService);
 
     fixture.detectChanges();
   });
@@ -51,5 +51,3 @@ describe('InventoryReportComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-

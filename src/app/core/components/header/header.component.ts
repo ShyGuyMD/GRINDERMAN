@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {  NavigationService, UserService } from '@core/services';
-import { CLIENT_CREATE } from '@shared/constants';
+import { CLIENT_CREATE, LOGIN } from '@shared/constants';
 
 @Component({
     selector: 'app-header',
@@ -17,7 +17,7 @@ export class HeaderComponent {
         this.isLoggedIn = this._userService.isUserLoggedIn();
     }
 
-    public registerCustomer():void{
-        this._navigationService.navigateTo(CLIENT_CREATE);
+    public loginPage():void{
+        this._navigationService.navigateTo(LOGIN);
     }
 }

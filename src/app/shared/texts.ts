@@ -51,3 +51,12 @@ export const PRICE_UPDATE_INSTRUCTIONS_ORDER = {
   'Aplicar Ajuste de Precio': true,
 };
 
+export const ORDER_REPORT_INSTRUCTIONS = {
+  'Instrucciones de Uso General': [
+      'Placeholder',
+  ]
+};
+
+export const ORDER_REPORT_INSTRUCTIONS_ORDER = {
+  'Instrucciones de Uso General': true,
+};
