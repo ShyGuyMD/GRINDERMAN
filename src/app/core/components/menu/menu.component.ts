@@ -16,10 +16,10 @@ export class MenuComponent {
 
     ngOnInit() {
         this.menuItems = [
-            { label: 'Novedades', icon: 'pi pi-home', routerLink: `/${HOME}` },
+            /*{ label: 'Novedades', icon: 'pi pi-home', routerLink: `/${HOME}` },*/
             { label: 'Catálogo', icon: 'pi pi-shopping-cart', routerLink: `/${CATALOGUE}` },
-            { label: 'Sobre Nosotros', icon: 'pi pi-info-circle', routerLink: '' },
-            { label: 'Contacto', icon: 'pi pi-envelope', routerLink: '' }
+            /*{ label: 'Sobre Nosotros', icon: 'pi pi-info-circle', routerLink: '' },
+            { label: 'Contacto', icon: 'pi pi-envelope', routerLink: '' }*/
         ];
 
         // Set the first menu item as the active item

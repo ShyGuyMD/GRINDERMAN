@@ -31,8 +31,6 @@
             <p>{{ book.synopsis }}</p>
         </div>
         <div class="flex justify-content-end mt-4 gap-3">
-            <button pButton  class="p-button-outlined p-button-rounded" icon="pi pi-shopping-cart"
-                (click)="addToCart()"></button>
             <button pButton label="Editar" (click)="edit()" icon="pi pi-pencil" class="gap-2"></button>
             <button pButton label="Desactivar" *ngIf="book.isActive" (click)="changeStatus()" [loading]="isChangingStatus"
             loadingIcon="pi pi-spin pi-spinner" icon="pi pi-circle-off" class="p-button-danger"></button>

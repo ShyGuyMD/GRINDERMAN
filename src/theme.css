@@ -6282,10 +6282,16 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-menubar {
     padding: 1rem;
-    background: transparent;
+    background: #000;
     color: rgba(0, 0, 0, 0.87);
-    border: 1px solid #e5e5e5;
+    border: 0;
     border-radius: 4px;
+    padding: 0;
+    padding-left: 230px;
+}
+
+.p-menubar .p-menuitem {
+    margin: 0;
 }
 
 .p-menubar .p-menuitem-link {
@@ -6333,40 +6339,41 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link {
     padding: 1rem;
-    color: rgba(0, 0, 0, 0.87);
+    color: rgba(255, 255, 255, 0.8);
     border-radius: 4px;
     transition: none;
     user-select: none;
+    margin: 0;
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-menuitem-text {
-    color: rgba(0, 0, 0, 0.87);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-menuitem-icon {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
     margin-right: 0.5rem;
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link .p-submenu-icon {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.8);
     margin-left: 0.5rem;
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover {
-    background: rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-    color: rgba(0, 0, 0, 0.87);
+    color: rgba(255, 255, 255);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:not(.p-disabled):hover .p-submenu-icon {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem>.p-menuitem-link:focus {
@@ -6382,17 +6389,17 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link .p-menuitem-text,
 .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
-    color: rgba(0, 0, 0, 0.87);
+    color: rgba(255, 255, 255);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link .p-menuitem-icon,
 .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255);
 }
 
 .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link .p-submenu-icon,
 .p-menubar .p-menubar-root-list>.p-menuitem.p-menuitem-active>.p-menuitem-link:not(.p-disabled):hover .p-submenu-icon {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255);
 }
 
 .p-menubar .p-submenu-list {
@@ -6401,7 +6408,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
     border: 0 none;
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
         0 1px 10px 0 rgba(0, 0, 0, 0.12);
-    width: 12.5rem;
+    width: 20rem;
 }
 
 .p-menubar .p-submenu-list .p-menu-separator {
@@ -6954,6 +6961,10 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
     margin-right: 0;
+}
+
+.p-tabmenu .p-tabmenuitem {
+    margin: 0;
 }
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {

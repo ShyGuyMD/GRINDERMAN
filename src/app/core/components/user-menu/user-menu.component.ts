@@ -19,7 +19,7 @@ export class UserMenuComponent {
     ngOnInit() {
         this._userService.getActiveUser().subscribe((activeUser)=>{
             if(activeUser){
-                this.userName = activeUser.email
+                this.userName = activeUser.firstName
             }else{
                 this.userName = '';
             }

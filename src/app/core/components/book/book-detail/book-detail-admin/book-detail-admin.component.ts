@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '@core/models/book';
-import { BookService, CartService, NavigationService } from '@core/services';
+import { BookService, NavigationService } from '@core/services';
 import { BLANK_PAGE, Severity } from '@shared/constants';
 import { DynamicDialogRef, DialogService } from 'primeng/dynamicdialog';
 import { BookEditModalComponent } from '../../book-edit-modal/book-edit-modal.component';
@@ -25,7 +25,6 @@ export class BookDetailAdminComponent {
     private _navigationService: NavigationService,
     private _bookService: BookService,
     private _dialogService: DialogService,
-    private _cartService: CartService,
     private _messageService: MessageService
   ) {}
 
@@ -64,10 +63,6 @@ export class BookDetailAdminComponent {
 
   ngOnDestroy() {
     if (this.ref) this.ref.close();
-  }
-
-  addToCart() {
-   this._cartService.addToCart(this.book, 1);
   }
 
   changeStatus() {
