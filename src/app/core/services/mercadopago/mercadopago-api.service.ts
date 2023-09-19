@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class MercadopagoService {
+export class MercadopagoApiService {
 
     // TODO: mover a archivo de environment
     private url = 'https://api.mercadopago.com';

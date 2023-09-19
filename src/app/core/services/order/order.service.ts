@@ -9,15 +9,19 @@ import { OrderLineItem } from '@core/models/orderLineItem';
 import { UserService } from '../user';
 import { User } from '@core/models/user';
 import { OrderDetails } from '@core/models/orderDetails';
+import { ContactDetails } from '@core/models/contactDetails';
+import { MercadopagoApiService } from '../mercadopago/mercadopago-api.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class OrderService {
 
-    constructor(private _wooCommerceApiService: WooCommerceApiService) { }
+    constructor(
+        private _mercadopagoApiService: MercadopagoApiService,
+        private _wooCommerceApiService: WooCommerceApiService) { }
 
-    public mapOrderRequest(orderDetails: OrderDetails): CreateOrderRequest {
+    public mapAdminOrderRequest(orderDetails: OrderDetails): CreateOrderRequest {
         const orderLineItems : OrderLineItem[] = orderDetails.cartItems.map(
             (item: CartItem) => {
                 return {
@@ -32,10 +36,14 @@ export class OrderService {
             line_items: orderLineItems,
             currency: 'UYU',
 
-            status: 'completed', // TODO: handle after payment portals
-            set_paid: true       // TODO: handle after payment portals
+            status: 'completed',
+            set_paid: true
         };
     }
+
+    
+
+
 
     public createOrder(request: CreateOrderRequest): Observable<CreateOrderResponse> {
         return this._wooCommerceApiService.postOrder(request);

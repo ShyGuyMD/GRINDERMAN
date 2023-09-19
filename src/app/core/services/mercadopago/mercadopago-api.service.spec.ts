@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MercadopagoService } from './mercadopago.service';
+import { MercadopagoApiService } from './mercadopago-api.service';
 import { apiServiceMock } from '@core/mocks/api.service.mock';
 import { ApiService } from '../api';
 
-describe('MercadopagoService', () => {
-  let service: MercadopagoService;
+describe('MercadopagoApiService', () => {
+  let service: MercadopagoApiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,7 +13,7 @@ describe('MercadopagoService', () => {
        { provide: ApiService, useValue: apiServiceMock },
      ],
    });
-   service = TestBed.inject(MercadopagoService);
+   service = TestBed.inject(MercadopagoApiService);
  });
 
   it('should be created', () => {
