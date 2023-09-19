@@ -13,6 +13,7 @@ import {
 } from '@core/components/book';
 import {
   AdminCreateComponent,
+  AdminOrderComponent,
   BlankPageComponent,
   CartAdminComponent,
   CartComponent,
@@ -27,7 +28,7 @@ import {
   OrderSummaryComponent,
 } from '@core/components';
 import { AdminGuard } from './guards/admin.guard';
-import { ADMIN_CREATE, BLANK_PAGE, BOOK_CREATE, BOOK_DETAIL, BOOK_EXPORT, BOOK_IMPORT, CART, CATALOGUE, CHECKOUT, CLIENT_CREATE, HOME, LOGIN, ORDER_REPORT, ORDER_SUMMARY } from '@shared/constants';
+import { ADMIN_CREATE, BLANK_PAGE, BOOK_CREATE, BOOK_DETAIL, BOOK_EXPORT, BOOK_IMPORT, CART, CATALOGUE, CHECKOUT, CLIENT_CREATE, HOME, LOGIN, ORDER_REPORT, ORDER_ADMIN } from '@shared/constants';
 
 const routes: Routes = [
   { path: '', redirectTo: LOGIN, pathMatch: 'full' },
@@ -75,7 +76,7 @@ const routes: Routes = [
         children: [
           { path: '', redirectTo: CART, pathMatch: 'full' },
           { path: CART, component: CartAdminComponent },
-          { path: ORDER_SUMMARY, component: OrderSummaryComponent },
+          { path: ORDER_ADMIN, component: AdminOrderComponent },
         ],
       },
     ],
