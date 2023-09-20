@@ -17,6 +17,10 @@ export enum WoocommerceError {
     EMAIL_EXISTS = 'registration-error-email-exists'
 }
 
+export enum WordpressError {
+  USER_EXISTS = 'existing_user_login'
+}
+
 export enum Severity {
     DANGER = 'danger',
     WARNING = 'warn',

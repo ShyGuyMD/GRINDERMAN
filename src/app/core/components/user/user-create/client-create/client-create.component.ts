@@ -52,7 +52,11 @@ export class ClientCreateComponent implements OnInit {
 
     public save(): void {
         if (this.clientForm.invalid) {
-            console.log('invalid!');
+            this._messageService.add(
+                {severity: Severity.WARNING,
+                summary: 'Advertencia',
+                detail: 'Por favor, completa todos los campos obligatorios.'}
+            )
             return;
         }
         this.assignInputToUser();

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FailureComponent } from './failure.component';
+import { DynamicDialogComponent, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 describe('FailureComponent', () => {
   let component: FailureComponent;
@@ -8,7 +9,10 @@ describe('FailureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FailureComponent ]
+      declarations: [ FailureComponent ],
+      providers: [
+        DynamicDialogRef
+      ]
     })
     .compileComponents();
 

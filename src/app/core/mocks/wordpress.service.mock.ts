@@ -1,5 +1,6 @@
-import { WordpressService } from "@core/services/wp-service/wp-service.service";
+import { WordpressService } from "@core/services/wp-service/wordpress.service";
 
 export const  wordpressServiceMock: Partial<WordpressService> = {
-uploadImagesToWordpress: jest.fn()
+uploadImagesToWordpress: jest.fn(),
+postAdmin: jest.fn()
 }

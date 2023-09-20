@@ -4,6 +4,7 @@ import { config } from 'src/environments/environment';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { WordPressImageResponse } from '@core/models/response/wordPressImageResponse';
+import { CreateAdminRequest } from '@core/models/request/createAdminRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,11 @@ export class WordpressService {
   
     return forkJoin(uploadObservables);
   }
+
+  public postAdmin(body: CreateAdminRequest): any {
+    const url = `${this.baseUrl}/users`;
+    console.log("request", body)
+
+    return this._apiService.post(url, body, this.headers);
+}
 }
