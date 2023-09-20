@@ -56,7 +56,7 @@ export class OrderDetailsComponent {
     this._navigationService.navigateTo(CHECKOUT_CART);
   }
 
-  public placeOrder(): void {
+  public placeOrder(): void {/*
     if (this.isContactDetailsFormValid) {
       const request = this._orderService.mapOrderRequest(this.orderDetails);
       console.log("contact details", this.contactDetails);
@@ -82,6 +82,6 @@ export class OrderDetailsComponent {
       });
     } else {
       this._navigationService.navigateTo(BLANK_PAGE, 'Error Creating Order');
-    }
+    }*/
   }
 }

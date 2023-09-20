@@ -9,12 +9,12 @@
         <div class="col-4  text-right" style="color: green;"> {{ discount*-1 | currency }}</div>
     </div>
     <div class="grid" *ngIf="comission !== 0">
-        <div class="col-8">Comisión de Mercado Libre</div>
-        <div class="col-4  text-right" style="color: darkred;">{{ comission*-1 | currency }}</div>
+        <div class="col-8" style="color: darkred;">Comisión de Mercado Libre</div>
+        <div class="col-4  text-right" style="color: darkred;">({{ comission | currency }})</div>
     </div>
     <p-divider></p-divider>
     <div class="total-section p-d-flex p-jc-between grid">
         <div class="col-8">Total:</div>
-        <div class="col-4 text-right"><strong>{{ cartTotal | currency }}</strong></div>
+        <div class="col-4 text-right"><strong>{{ cartSubTotal | currency }}</strong></div>
     </div>
 </div>

@@ -11,7 +11,8 @@ import { CouponType } from '@shared/constants';
 })
 export class OrderSummaryComponent {
     cartItems: CartItem[] = [];
-    cartTotal: number = 0;
+    cartRawTotal: number = 0;
+    cartSubTotal: number = 0;
     discount: number = 0;
     comission: number = 0;
 
@@ -21,26 +22,30 @@ export class OrderSummaryComponent {
         this._cartService.getCartItems().subscribe((cartItems) => {
             this.cartItems = cartItems;
         });
-        this.cartTotal = this._cartService.getTotalAmountWithCoupons();
-        this._cartService.getCoupon().subscribe((coupon)=>{
-            if( coupon !== null ){
-                if(coupon.type === CouponType.CREDIT){
+
+        this.cartSubTotal = this._cartService.getTotalAmountWithCoupons();
+        this.cartRawTotal = this._cartService.getTotalAmount();
+
+        this._cartService.getCoupon().subscribe((coupon) => {
+            if (coupon !== null) {
+                if (coupon.type === CouponType.CREDIT) {
                     this.discount = coupon.value;
-                }else{
+                } else {
                     this.discount = this.getPercentCouponCredit(coupon);
                 }
-            }else{
+            } else {
                 this.discount = 0;
             }
             console.log("coupon", coupon, this.discount)
         })
-        this._cartService.getMercadoLibre().subscribe((isMercadoLibre)=>{
-            if(isMercadoLibre){
+
+        this._cartService.getMercadoLibre().subscribe((isMercadoLibre) => {
+            if (isMercadoLibre) {
                 const mlCoupon = this._cartService.getComisionMercadoLibre();
-                if(mlCoupon !== null){
+                if (mlCoupon !== null) {
                     this.comission = this.getPercentCouponCredit(mlCoupon);
                 }
-            }else{
+            } else {
                 this.comission = 0;
             }
         })
@@ -51,8 +56,8 @@ export class OrderSummaryComponent {
         return selectedItem.quantity * selectedItem.book.price;
     }
 
-    getPercentCouponCredit( coupon: Coupon ){
-        return (coupon.value / 100) * this.cartTotal;
+    getPercentCouponCredit(coupon: Coupon) {
+        return (coupon.value / 100) * this.cartRawTotal;
     }
 
 }

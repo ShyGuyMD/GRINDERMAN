@@ -100,7 +100,7 @@ export enum Book_Properies {
   IS_ACTIVE = 'isActive',
 }
 
-export enum Order_Properies {
+export enum Order_Properties {
   ID = 'id',
   CUSTOMER = 'isbn',
   DATE = 'date',
