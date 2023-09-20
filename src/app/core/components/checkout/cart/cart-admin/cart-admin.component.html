@@ -35,14 +35,14 @@
       <div class="grid">
         <div *ngIf="coupon" class="col-6">Descuento:</div>
         <div
-          *ngIf="coupon && coupon.type === 'Credit'"
+          *ngIf="coupon && coupon.type === 'fixed_cart'"
           class="col-6 text-right"
           style="color: green;"
         >
           {{ coupon.value*-1 | currency }}
         </div>
         <div
-          *ngIf="coupon && coupon.type === 'Percent'"
+          *ngIf="coupon && coupon.type === 'percent'"
           class="col-6 text-right"
           style="color: green;"
         >

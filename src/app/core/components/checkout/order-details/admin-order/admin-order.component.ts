@@ -11,9 +11,9 @@ import { CartService, OrderService, UserService } from '@core/services';
 })
 export class AdminOrderComponent {
 
-    public cartItems: CartItem[] = [];
+    public cartItems : CartItem[] = [];
     public orderDetails !: OrderDetails;
-    public coupon ?: Coupon;
+    public coupon : Coupon | null = null;
     public mercadoLibre : boolean = false;
 
     constructor(
@@ -38,6 +38,7 @@ export class AdminOrderComponent {
     }
 
     public placeOrder(): void {
+        /*
         const request = this._orderService.registerManualOrder(this.orderDetails, this.coupon);
 
         this._orderService.createOrder(request).subscribe({
@@ -60,6 +61,6 @@ export class AdminOrderComponent {
                 );
             },
         });
-        this._navigationService.navigateTo(BLANK_PAGE, 'Error Creating Order');
+        this._navigationService.navigateTo(BLANK_PAGE, 'Error Creating Order');*/
     }
 }
