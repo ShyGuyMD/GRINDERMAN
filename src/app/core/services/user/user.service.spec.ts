@@ -1,12 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { UserService } from './user.service';
-import { apiServiceMock } from '@core/mocks/api.service.mock';
-import { WooCommerceApiService } from '../woo-commerce';
 import { wooCommerceApiServiceMock } from '@core/mocks/woocommerceapi.service.mock';
-import { UserRole } from '@shared/constants';
-import { Admin, Client, User } from '@core/models/user';
-import { of } from 'rxjs';
+import { wordpressServiceMock } from '@core/mocks/wordpress.service.mock';
+import { WooCommerceApiService } from '../woo-commerce';
+import { WordpressService } from '../wp-service';
 
 describe('UserService', () => {
   let service: UserService;
@@ -17,6 +15,7 @@ describe('UserService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: WooCommerceApiService, useValue: wooCommerceApiServiceMock },
+        { provide: WordpressService, useValue: wordpressServiceMock },
       ],
     });
   });

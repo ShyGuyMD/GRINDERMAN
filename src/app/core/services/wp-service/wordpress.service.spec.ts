@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WordpressService } from './wp-service.service';
+import { WordpressService } from './wordpress.service';
 import { ApiService } from '../api';
 import { apiServiceMock } from '@core/mocks/api.service.mock';
 

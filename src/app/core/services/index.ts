@@ -12,6 +12,7 @@ import { UserService } from './user';
 import { UtilsService } from './utils';
 import { WooCommerceApiService } from './woo-commerce';
 import { DeliveryService } from './delivery/delivery.service';
+import { WordpressService } from './wp-service';
 
 export * from './api';
 export * from './authentication';
@@ -27,6 +28,7 @@ export * from './shared';
 export * from './user';
 export * from './utils';
 export * from './woo-commerce';
+export * from './wp-service';
 
 export const services = [
     ApiService,
@@ -42,5 +44,6 @@ export const services = [
     SharedService,
     UserService,
     UtilsService,
-    WooCommerceApiService
+    WooCommerceApiService,
+    WordpressService
 ]

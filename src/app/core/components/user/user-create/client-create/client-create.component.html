@@ -70,7 +70,7 @@
           />
           <div *ngIf="clientForm.get('password')?.invalid && clientForm.get('password')?.touched" class="p-error">
             <ng-container *ngIf="clientForm.get('password')?.hasError('required')">
-              La constraseña es obligatoria
+              La constraseña es obligatoria.
             </ng-container>
             <ng-container *ngIf="clientForm.get('password')?.hasError('passwordInvalid')">
               La constraseña debe tener al menos 12 caracteres, al menos una minuscula, una mayúscula, un numnero y un caracter especial (@#$%^&+=).
