@@ -1,4 +1,5 @@
 import { BillingAddress, ShippingAddress } from "../address";
+import { Metadata } from "../metadata";
 import { OrderLineItem } from "../orderLineItem";
 
 export interface OrderResponse {
@@ -17,6 +18,9 @@ export interface OrderResponse {
      customer_id : number;
      billing : BillingAddress;
      shipping : ShippingAddress;
+
+     // Meta
+     meta_data ?: Metadata[];
 }
 
 export interface CreateOrderResponse extends OrderResponse {}

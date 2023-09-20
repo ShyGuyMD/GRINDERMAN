@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { CartItem } from '@core/models/cartItem';
 import { Coupon } from '@core/models/coupon';
 import { OrderDetails } from '@core/models/orderDetails';
-import { CartService, OrderService, UserService } from '@core/services';
+import { CreateOrderResponse } from '@core/models/response/orderResponse';
+import { MessageService } from 'primeng/api';
+import { CartService, NavigationService, OrderService, UserService } from '@core/services';
+import { CHECKOUT_CART, Severity } from '@shared/constants';
 
 @Component({
     selector: 'app-admin-order',
@@ -11,13 +14,16 @@ import { CartService, OrderService, UserService } from '@core/services';
 })
 export class AdminOrderComponent {
 
-    public cartItems : CartItem[] = [];
+    public cartItems: CartItem[] = [];
     public orderDetails !: OrderDetails;
-    public coupon : Coupon | null = null;
-    public mercadoLibre : boolean = false;
+    public coupon: Coupon | null = null;
+    public mercadoLibre: boolean = false;
+    public isLoading: boolean = false;
 
     constructor(
         private _cartService: CartService,
+        private _messageService: MessageService,
+        private _navigationService: NavigationService,
         private _orderService: OrderService,
         private _userService: UserService
     ) { }
@@ -34,33 +40,37 @@ export class AdminOrderComponent {
 
         this._cartService.getCoupon().subscribe((coupon) => {
             this.coupon = coupon;
+        });
+
+        this._cartService.getMercadoLibre().subscribe((isMercadoLibre) => {
+            this.mercadoLibre = isMercadoLibre;
         })
     }
 
     public placeOrder(): void {
-        /*
-        const request = this._orderService.registerManualOrder(this.orderDetails, this.coupon);
+        this.isLoading = true;
 
-        this._orderService.createOrder(request).subscribe({
+        this._orderService.registerManualOrder(this.orderDetails, this.coupon, this.mercadoLibre).subscribe({
             next: (response: CreateOrderResponse) => {
-                console.log('Order Create Success!');
-                console.log('Order Info: ', response);
-                // TODO: Redirect to an actual page.
-                this._navigationService.navigateTo(
-                    BLANK_PAGE,
-                    undefined,
-                    'Order Create Success!'
-                );
+                this._messageService.add({
+                    severity: Severity.SUCCESS,
+                    summary: 'Órden creada con éxito!',
+                    detail: `La órden número ${response.id} ha sido creada con éxito`,
+                });
                 this._cartService.clearCart();
+                this._navigationService.navigateTo(CHECKOUT_CART);
             },
             error: (e) => {
-                console.error('Order Create Error: ', e);
-                this._navigationService.navigateTo(
-                    BLANK_PAGE,
-                    'Error Creating Order'
-                );
+                console.log('the error:', e);
+                this._messageService.add({
+                    severity: Severity.ERROR,
+                    summary: '¡Upss!',
+                    detail: `Ha ocurrido un error en el registro de la compra.`,
+                });
             },
-        });
-        this._navigationService.navigateTo(BLANK_PAGE, 'Error Creating Order');*/
+            complete: () => {
+                this.isLoading = false;
+            }
+        })
     }
 }

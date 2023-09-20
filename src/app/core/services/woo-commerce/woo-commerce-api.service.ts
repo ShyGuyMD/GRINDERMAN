@@ -10,6 +10,8 @@ import { Observable, forkJoin, map, take, takeWhile } from 'rxjs';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Product } from '@core/models/product';
 import { ApiBodyRequest } from '@core/models/request/apiBodyRequest';
+import { CreateCouponRequest } from '@core/models/request/createCouponRequest';
+import { CouponResponse } from '@core/models/response/couponResponse';
 
 @Injectable({
     providedIn: 'root',
@@ -152,6 +154,18 @@ export class WooCommerceApiService {
 
     public getAllOrders(): Observable<RetrieveOrderResponse[]> {
         const url = `${this.baseUrl}/orders`;
+
+        return this._apiService.get(url, this.headers);
+    }
+
+    public postCoupon(body: CreateCouponRequest) : Observable<CouponResponse> {
+        const url = `${this.baseUrl}/coupons`;
+
+        return this._apiService.post(url, body, this.headers);
+    }
+
+    public getCoupon(couponCode: string): Observable<CouponResponse> {
+        const url = `${this.baseUrl}/coupons/${couponCode}`;
 
         return this._apiService.get(url, this.headers);
     }
