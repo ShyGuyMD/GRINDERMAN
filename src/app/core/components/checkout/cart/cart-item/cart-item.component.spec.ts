@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CartItemComponent } from './cart-item.component';
 import { CartItem } from '@core/models/cartItem';
-import { mockBook1 } from '@core/mocks/book.service.mock';
+import { bookServiceMock, mockBook1 } from '@core/mocks/book.service.mock';
+import { BookService, CartService, NavigationService } from '@core/services';
+import { cartServiceMock } from '@core/mocks/cart.service.mock';
+import { navigationServiceMock } from '@core/mocks/navigation.service.mock';
 
 describe('CartItemComponent', () => {
   let component: CartItemComponent;
@@ -15,7 +18,11 @@ describe('CartItemComponent', () => {
   
   beforeEach(waitForAsync ( () => {
    TestBed.configureTestingModule({
-      declarations: [ CartItemComponent ]
+      declarations: [ CartItemComponent ],
+      providers:[{ provide: CartService, useValue: cartServiceMock },
+      { provide: NavigationService, useValue: navigationServiceMock },
+      { provide: BookService, useValue: bookServiceMock },]
+      
     })
     .compileComponents();
 

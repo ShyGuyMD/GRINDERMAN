@@ -37,7 +37,7 @@
         ></button>
         <div class="deliveryAvilability mt-2">
           <div *ngIf="checkDeliveryAvilability() else deliveryWarningMessage">
-            ¡Genial! Tu compra califica para el envío a domicilio.
+            ¡Genial! Tu compra es candidata para el envío a domicilio.
            </div>
           <ng-template #deliveryWarningMessage>
             ¡Importante! Para optar por el envío a domicilio, tu compra debe superar los ${{ MIN_DELIVERY }}. 

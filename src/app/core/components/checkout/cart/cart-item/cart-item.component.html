@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="col-1">
-    <a [routerLink]="['/book-detail', item.book.id]">
+    <a (click)="goToBookDetail(item.book)">
       <div class="book-image">
         <p-image
           [src]="item.book.cover.src"

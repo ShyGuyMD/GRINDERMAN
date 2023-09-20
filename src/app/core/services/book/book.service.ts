@@ -313,10 +313,9 @@ export class BookService {
   }
 
   toggleBookisActive(book: Book): Observable<Book> {
-    const partBook : Partial<Book> = { id: book.id, isActive: !book.isActive} 
-
+    book.isActive = !book.isActive
     return this._wooCommerceAPIService
-    .putProductData(partBook)
+    .putProductData(book)
     .pipe(map((response) => this.mapProductToBook(response)));
   }
 }
