@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { OrderReportLine, OrderReportLineItem } from '@core/models/orderReportLine';
+import { OrderReportLine } from '@core/models/orderReportLine';
 import { OrderService } from '@core/services';
 import { ExcelService } from '@core/services/excel-service/excel.service';
 import { TableService } from '@core/services/inventory';
@@ -32,7 +32,7 @@ export class OrderReportComponent {
   public instructionsOrder = ORDER_REPORT_INSTRUCTIONS_ORDER;
   public columnDefs: ColDef[] = [];
   public defaultColDef: ColDef = {};
-  public rowData$!: Observable<OrderReportLineItem[]>;
+  public rowData$!: Observable<OrderReportLine[]>;
   @ViewChild(AgGridAngular) agGrid!: AgGridAngular;
   private gridApi!: GridApi;
   private columnApi!: ColumnApi;
@@ -64,7 +64,7 @@ export class OrderReportComponent {
     this._messageService.add({
       severity: Severity.INFO,
       summary: 'Cargando...',
-      detail: 'Escamos cargando el catálogo de libros, por favor aguarda.',
+      detail: 'Estamos cargando las ventas, por favor aguarda.',
     });
     this.loadIOrderData();
   }
@@ -83,6 +83,7 @@ export class OrderReportComponent {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     this.columnApi.applyColumnState({ state: this.sortModel });
+    this.gridApi.sizeColumnsToFit();
   }
 
   onCellClicked(e: CellClickedEvent): void {
@@ -96,7 +97,7 @@ export class OrderReportComponent {
     this.gridApi.setFilterModel(null);
   }
   exportFiltered(): void {
-    const filteredRowData: OrderReportLineItem[] = [];
+    const filteredRowData: OrderReportLine[] = [];
     this.gridApi.forEachNodeAfterFilter((node) => {
       filteredRowData.push(node.data);
     });
@@ -117,7 +118,7 @@ export class OrderReportComponent {
   }
 
   exportAll(): void {
-    const rowData: OrderReportLineItem[] = [];
+    const rowData: OrderReportLine[] = [];
     this.gridApi.forEachNode((node) => {
       rowData.push(node.data);
     });

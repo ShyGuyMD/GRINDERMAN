@@ -6,7 +6,7 @@ import { Observable, map, mergeMap } from 'rxjs';
 import { CartItem } from '@core/models/cartItem';
 import { OrderLineItem } from '@core/models/orderLineItem';
 import { OrderDetails } from '@core/models/orderDetails';
-import { OrderReportLineItem } from '@core/models/orderReportLine';
+import { OrderReportLine } from '@core/models/orderReportLine';
 import { Option } from '@core/models/option';
 import { ComisionMercadoLibre, CouponType, Order_Properties } from '@shared/constants';
 import { Coupon } from '@core/models/coupon';
@@ -14,6 +14,7 @@ import { CreateCouponRequest } from '@core/models/request/createCouponRequest';
 import { CreateCouponResponse } from '@core/models/response/couponResponse';
 import { UtilsService } from '../utils';
 import { CartService } from '../cart';
+import { Metadata } from '@core/models/metadata';
 
 @Injectable({
     providedIn: 'root',
@@ -110,32 +111,27 @@ export class OrderService {
         return this._wooCommerceApiService.getAllOrders();
     }
 
-    public mapOrderReportLine(orderResponse: RetrieveOrderResponse[]): OrderReportLineItem[] {
-        const orderReportLineItems: OrderReportLineItem[] = [];
+    public mapOrderReportLine(orderResponse: RetrieveOrderResponse[]): OrderReportLine[] {
+        const orderReportLines: OrderReportLine[] = [];
 
         orderResponse.forEach((order: RetrieveOrderResponse) => {
-            order.line_items.forEach((item) => {
-                const [datePart, timePart] = order.date_created.split('T');
-
-                const orderReportLineItem: OrderReportLineItem = {
-                    id: order.id,
-                    date: new Date(datePart),
-                    time: timePart.slice(0, 5),
-                    total: parseFloat(order.total),
-                    discount_total: parseFloat(order.discout_total),
-                    status: order.status,
-                    customer: order.customer_id.toString(),
-                    item_name: item.name!,
-                    item_id: item.product_id,
-                    item_quantity: item.quantity,
-                    item_total: item.total!
-                };
-
-                orderReportLineItems.push(orderReportLineItem);
-            });
+            const [datePart, timePart] = order.date_completed.split('T');
+            const  ml_tax : Metadata | undefined = order.meta_data?.find( x => x.key = 'ml_tax');
+            const orderReportLine: OrderReportLine = {
+                id: order.id,
+                date: new Date(datePart),
+                time: timePart.slice(0, 5),
+                subtotal: order.line_items.reduce((acc, item) => acc + parseFloat(item.subtotal), 0),
+                total: parseFloat(order.total),
+                discount_total: order.coupon_lines.length > 0 ? parseFloat(order.coupon_lines[0].discount) : 0,
+                ml_tax:  ml_tax ? parseFloat(ml_tax.value) / 100 * parseFloat(order.total) : 0,
+                status: order.status,
+                customer: order.customer_id.toString(),
+                items: order.line_items
+            };
+            orderReportLines.push(orderReportLine);
         });
-
-        return orderReportLineItems;
+        return orderReportLines;
     }
 
     public getOrderProperties(): Option[] {
@@ -144,12 +140,11 @@ export class OrderService {
             { value: 'Fecha', key: Order_Properties.DATE },
             { value: 'Hora', key: Order_Properties.TIME },
             { value: 'Cliente', key: Order_Properties.CUSTOMER },
-            { value: 'Item', key: Order_Properties.ITEM_NAME },
-            { value: 'Cantidad', key: Order_Properties.ITEM_QUANTITY },
-            { value: 'Subtotal', key: Order_Properties.ITEM_TOTAL },
+            { value: 'Items', key: Order_Properties.ITEMS },
+            { value: 'Subtotal', key: Order_Properties.SUBTOTAL },
             { value: 'Descuento', key: Order_Properties.DISCOUNT_TOTAL },
+            { value: 'Comisión', key: Order_Properties.ML_TAX },
             { value: 'Total', key: Order_Properties.TOTAL },
-            { value: 'Status', key: Order_Properties.STATUS },
         ];
     }
 }

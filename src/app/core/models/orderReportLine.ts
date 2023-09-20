@@ -1,17 +1,14 @@
+import { OrderLineItemResponse } from "./response/orderLineItemResponse";
 
 export interface OrderReportLine {
     id: number,
     date: Date;
     time: string;
-    total: number;
+    subtotal: number;
     discount_total: number;
+    ml_tax: number;
+    total: number;
     status: string;
     customer: string
-}
-
-export interface OrderReportLineItem extends OrderReportLine{
-    item_name: string;
-    item_id: number;
-    item_quantity: number;
-    item_total: number;
+    items: OrderLineItemResponse[];
 }

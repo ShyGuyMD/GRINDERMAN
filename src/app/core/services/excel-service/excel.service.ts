@@ -3,16 +3,18 @@ import { Observable } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { BookService } from '../book';
 import { Option } from '@core/models/option';
-import { Book_Properies } from '@shared/constants';
+import { Book_Properies, Order_Properties } from '@shared/constants';
 import { OrderResponse } from '@core/models/response/orderResponse';
 import { Book } from '@core/models/book';
 import { OrderReportLine } from '@core/models/orderReportLine';
+import { OrderService } from '../order';
+import { OrderLineItem } from '@core/models/orderLineItem';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExcelService {
-  constructor(private _bookService: BookService) {}
+  constructor(private _bookService: BookService, private _orderService: OrderService) {}
 
   readExcelFile(file: File): Observable<any[]> {
     return new Observable((observer) => {
@@ -115,20 +117,26 @@ export class ExcelService {
 }
 
 private formatOrdersToExcel(orders: OrderReportLine[]): any[] {
-  const properties: Option[] = this._bookService.getBookPropertyOptions();
-  const formattedBooks: any[] = [];
+  const properties: Option[] = this._orderService.getOrderProperties();
+  const formattedOrders: any[] = [];
 
   orders.forEach((order) => {
-    const formattedBook: any = {};
+    const formattedOrder: any = {};
 
     properties.forEach((property) => {
-          formattedBook[property.value] = order[property.key as keyof OrderReportLine];
+      if (property.key === Order_Properties.ITEMS) {
+        const items : OrderLineItem[] = order[property.key];
+        formattedOrder[property.value] = items.map((item: any ) => item.name).join(', ');
+      }
+      else{
+        formattedOrder[property.value] = order[property.key as keyof OrderReportLine];
+      }
     });
 
-    formattedBooks.push(formattedBook);
+    formattedOrders.push(formattedOrder);
   });
 
-  return formattedBooks;
+  return formattedOrders;
 }
 
 }

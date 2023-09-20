@@ -1,17 +1,18 @@
 import { BillingAddress, ShippingAddress } from "../address";
+import { CouponLine } from "../couponLine";
 import { Metadata } from "../metadata";
-import { OrderLineItem } from "../orderLineItem";
+import { OrderLineItemResponse } from "./orderLineItemResponse";
 
 export interface OrderResponse {
      // Order Information
      id : number;
      status : string;
      currency : string;
+     date_completed : string;
      date_created : string;
-     discout_total: string;
-     shipping_total: string;
+     coupon_lines: CouponLine[];
      total : string;
-     line_items : OrderLineItem[];
+     line_items : OrderLineItemResponse[];
      needs_payment: boolean;
  
      // Customer Information
