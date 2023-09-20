@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UserLoginResponse } from '@core/models/response/userLoginResponse';
 import { AuthenticationService, NavigationService } from '@core/services';
 import { CLIENT_CREATE, HOME} from '@shared/constants';
 
@@ -21,7 +22,7 @@ export class LoginComponent {
     login(): void {
         this.isLoading= true;
         this._authService.login(this.username, this.password).subscribe({
-            next: () => {
+            next: (response: UserLoginResponse) => {
                 this.isLoading=false;
                 this._navigationService.navigateTo(HOME);
             },

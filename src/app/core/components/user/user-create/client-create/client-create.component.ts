@@ -92,6 +92,8 @@ export class ClientCreateComponent implements OnInit {
     public assignInputToUser(): void {
         this.client.email = this.clientForm.value.email;
         this.client.password = this.clientForm.value.password;
+        this.client.firstName = this.clientForm.value.firstname;
+        this.client.lastName = this.clientForm.value.lastname;
     }
 
     public isPasswordMismatch(): boolean {

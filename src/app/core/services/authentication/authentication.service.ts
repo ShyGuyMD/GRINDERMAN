@@ -34,7 +34,6 @@ export class AuthenticationService {
     }
 
     public handleLoginResponse(response: UserLoginResponse) {
-        //this.setJwtToken(response.extras.jwt_token);
         const userService = this._injector.get(UserService)
         userService.mapUserData(response);
     }
@@ -43,7 +42,6 @@ export class AuthenticationService {
         //this.removeJwtToken();
         const userService = this._injector.get(UserService)
         userService.setActiveUser()
-        console.log("LOGOUT")
     }
 
     // -- ENHANCEMENT: Usar JWT para autenticación de APIs y Usuarios.

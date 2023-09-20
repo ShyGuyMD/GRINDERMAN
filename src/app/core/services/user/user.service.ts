@@ -81,6 +81,8 @@ export class UserService {
         return {
             email: client.email,
             password: this.encryptPassword(client.password!),
+            first_name: client.firstName,
+            last_name: client.lastName,
             role: UserRole.CLIENT
         }
     }
