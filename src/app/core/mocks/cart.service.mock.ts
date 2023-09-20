@@ -13,5 +13,7 @@ export const cartServiceMock: Partial<CartService> = {
     removeFromCart: jest.fn(),
     updateQuantity: jest.fn(),
     getCoupon: jest.fn().mockReturnValue(of({})),
+    getComisionMercadoLibre: jest.fn(),
+    getMercadoLibre: jest.fn().mockReturnValue(of({})),
 
   };
