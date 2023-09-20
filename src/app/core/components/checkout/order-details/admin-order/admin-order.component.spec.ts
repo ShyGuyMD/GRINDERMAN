@@ -5,6 +5,7 @@ import { CartService, OrderService, UserService } from '@core/services';
 import { userServiceMock } from '@core/mocks/user.service.mock';
 import { orderServiceMock } from '@core/mocks/order.service.mock';
 import { cartServiceMock } from '@core/mocks/cart.service.mock';
+import { MessageService } from 'primeng/api';
 
 describe('AdminOrderComponent', () => {
   let component: AdminOrderComponent;
@@ -16,7 +17,8 @@ describe('AdminOrderComponent', () => {
       providers: [
         { provide: UserService, useValue: userServiceMock },
         { provide: OrderService, useValue: orderServiceMock },
-        { provide: CartService, useValue: cartServiceMock}
+        { provide: CartService, useValue: cartServiceMock},
+        MessageService
       ],
     })
     .compileComponents();

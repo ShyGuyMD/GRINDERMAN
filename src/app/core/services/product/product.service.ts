@@ -11,9 +11,6 @@ export class ProductService {
   constructor() {}
 
   public mapBookToProduct(book: Book): Product {
-    const bookImages = [];
-    if (book.cover) bookImages.push(book.cover);
-    if (book.images) bookImages.push(...book.images);
 
     return {
       id: book.id,
@@ -24,7 +21,7 @@ export class ProductService {
       stock_quantity: book.availableUnits || 0,
       stock_status: this.injectStockStatus(book.inventoryStatus),
 
-      images: bookImages.length ? bookImages : [],
+      images: book.images.length > 0 ? book.images : [],
       meta_data: this.buildMetadata(book),
       attributes: book.genre
         ? this.injectGenreOptions(book.genre)

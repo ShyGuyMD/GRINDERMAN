@@ -108,7 +108,13 @@ export class WooCommerceApiService {
         return this._apiService.post(url, body, this.headers);
     }
 
-    public putProductData(partBook: Partial<Book>) {
+    public putProductData(book: Book) {
+        const url = `${this.baseUrl}/products/${book.id}`;
+        const body = this._productService.mapBookToProduct(book);
+        return this._apiService.put(url, body, this.headers);
+    }
+
+    public putPartialProductData(partBook: Partial<Book>) {
         const url = `${this.baseUrl}/products/${partBook.id}`;
         const body = this._productService.mapPartialBookToProduct(partBook);
         return this._apiService.put(url, body, this.headers);

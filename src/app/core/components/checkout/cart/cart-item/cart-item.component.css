@@ -7,3 +7,6 @@
  font-size: medium;
   }
 
+.carousel-image{
+  cursor: pointer;
+}

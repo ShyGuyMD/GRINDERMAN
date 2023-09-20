@@ -46,7 +46,6 @@ export class BookCatalogueComponent implements OnInit {
   public loadProducts(page: number = 1): void {
       this.isLoading = true;
       this.currentPage = page;
-      console.log("currentPage", this.currentPage, this.keyword)
 
     this._bookService.getBooks(this.keyword, page).subscribe({
       next: (response) => {
@@ -85,6 +84,7 @@ export class BookCatalogueComponent implements OnInit {
 
   goToBookDetail(book: Book){
     const url = BOOK_DETAIL.slice(0, -3);
+    this._bookService.setBookData(book);
     this._navigationService.navigateTo(`${url}${book.id}`)
   }
 }
