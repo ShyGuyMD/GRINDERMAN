@@ -4,10 +4,9 @@ import { Book } from '@core/models/book';
 import {
   BookService,
   NavigationService,
-  WooCommerceApiService,
 } from '@core/services';
-import { WordpressService } from '@core/services/wp-service/wp-service.service';
-import { BLANK_PAGE, BOOK_DETAIL, Severity } from '@shared/constants';
+import { WordpressService } from '@core/services/wp-service/wordpress.service';
+import { BOOK_DETAIL, Severity } from '@shared/constants';
 import { MessageService } from 'primeng/api';
 import { lastValueFrom } from 'rxjs';
 @Component({

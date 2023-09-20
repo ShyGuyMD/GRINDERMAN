@@ -1,9 +1,10 @@
 import { Component, OnInit  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Admin } from '@core/models/user';
-import { NavigationService, UserService } from '@core/services';
-import { BLANK_PAGE, UserRole, WoocommerceError } from '@shared/constants';
+import { UserService } from '@core/services';
+import { Severity, UserRole, WordpressError } from '@shared/constants';
 import { passwordValidator } from '@shared/customValidators';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-admin-create',
@@ -30,7 +31,7 @@ export class AdminCreateComponent implements OnInit {
     constructor(
         private _formBuilder: FormBuilder,
         private _userService: UserService,
-        private _navigationService: NavigationService,
+        private _messageService: MessageService
     ) { }
 
     ngOnInit(): void {
@@ -39,6 +40,8 @@ export class AdminCreateComponent implements OnInit {
 
     private initForm(): void {
         this.adminForm = this._formBuilder.group({
+            firstname: ['', Validators.required],
+            lastname: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, passwordValidator()]],
             confirmPassword: ['', Validators.required],
@@ -47,35 +50,48 @@ export class AdminCreateComponent implements OnInit {
 
     public save(): void {
         if (this.adminForm.invalid) {
-            console.log('invalid!');
+            this._messageService.add(
+                {severity: Severity.WARNING,
+                summary: 'Advertencia',
+                detail: 'Por favor, completa todos los campos obligatorios.'}
+            )
             return;
         }
+        this.adminForm.disable();
         this.assignInputToUser();
         this.isLoading = true;
         this._userService.registerAdministrator(this.admin).subscribe({
             next: (v: any) => {
                 this.isLoading = false;
-                console.log('submitting: ', this.admin);
-                console.log('response: ', v);
+                this._messageService.add(
+                    {severity: Severity.SUCCESS,
+                    summary: `Felicidades`,
+                    detail: `¡El registro de ${this.admin.firstName} ha sido exitoso!`}
+                )
                 this.adminForm.reset();
-                const successMessage = 'The admin was succesfully created!';
-                this._navigationService.navigateTo(BLANK_PAGE, undefined, successMessage);
             },
             error: (e: any) => {
-                const errorMessage = 'Error creating admin.';
-                console.log('error: ', e.error.code);
-                if (e.error.code === WoocommerceError.EMAIL_EXISTS) {
+                if (e.error.code === WordpressError.USER_EXISTS) {
                     this.registrationError = true;
-                    this.isLoading = false;
+                    this.isLoading = false
+                    this.adminForm.enable();
                     return;
                 }
-                this._navigationService.navigateTo(BLANK_PAGE, errorMessage);
+                this._messageService.add(
+                    {severity: Severity.ERROR,
+                    summary: '¡Upsss!',
+                    detail: 'El registro no ha sido completado.'})
+            },
+            complete: () => {
+                this.isLoading = false
+                this.adminForm.enable();
             }
         });
-
     }
 
     public assignInputToUser(): void {
+        this.admin.firstName = this.adminForm.value.firstname;
+        this.admin.lastName = this.adminForm.value.lastname;
         this.admin.email = this.adminForm.value.email;
         this.admin.password = this.adminForm.value.password;
     }

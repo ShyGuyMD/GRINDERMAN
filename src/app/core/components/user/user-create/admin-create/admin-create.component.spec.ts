@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AdminCreateComponent } from './admin-create.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '@core/services';
 import { activatedRouteMock } from '@core/mocks/activatedroute.mock';
 import { routerMock } from '@core/mocks/router.mock';
 import { ActivatedRoute, Router } from '@angular/router';
 import { userServiceMock } from '@core/mocks/user.service.mock';
+import { MessageService } from 'primeng/api';
 
 describe('AdminCreateComponent', () => {
   let component: AdminCreateComponent;
   let fixture: ComponentFixture<AdminCreateComponent>;
 
   let _userService: UserService;
-  let _router: Router;
-  let _activatedRoute: ActivatedRoute;
   
 
   beforeEach(waitForAsync( () => {
@@ -22,9 +21,9 @@ describe('AdminCreateComponent', () => {
       declarations: [ AdminCreateComponent ],
       imports: [FormsModule, ReactiveFormsModule],
       providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteMock },
-        { provide: Router, useValue: routerMock },
-        { provide: UserService, useValue: userServiceMock }
+        { provide: UserService, useValue: userServiceMock },
+        FormBuilder,
+        MessageService
       ]
     })
     .compileComponents();
@@ -35,8 +34,6 @@ describe('AdminCreateComponent', () => {
     fixture = TestBed.createComponent(AdminCreateComponent);
     component = fixture.componentInstance;
 
-    _activatedRoute = TestBed.inject(ActivatedRoute);
-    _router = TestBed.inject(Router);
     _userService = TestBed.inject(UserService);
 
     fixture.detectChanges();

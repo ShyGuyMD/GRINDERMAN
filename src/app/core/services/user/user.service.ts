@@ -5,6 +5,8 @@ import { UserRole } from '@shared/constants';
 import { WooCommerceApiService } from '../woo-commerce';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserLoginResponse } from '@core/models/response/userLoginResponse';
+import { WordpressService } from '../wp-service/wordpress.service';
+import { CreateAdminRequest } from '@core/models/request/createAdminRequest';
 
 @Injectable({
     providedIn: 'root',
@@ -13,7 +15,8 @@ export class UserService {
     private activeUser$: BehaviorSubject<User | undefined> = new BehaviorSubject<User | undefined>(undefined);
 
     constructor(
-        private _wooCommerceApiService: WooCommerceApiService
+        private _wooCommerceApiService: WooCommerceApiService,
+        private _wpService: WordpressService
     ) { }
 
     public mapUserData(loginResponse: UserLoginResponse): void {
@@ -66,8 +69,8 @@ export class UserService {
     }
 
     public registerAdministrator(admin: Admin): Observable<any> {
-        const bodyRequest = this.mapCreateAdminRequest(admin);
-        return this._wooCommerceApiService.postCustomer(bodyRequest)
+        const bodyRequest : CreateAdminRequest = this.mapCreateAdminRequest(admin);
+        return this._wpService.postAdmin(bodyRequest);
     }
 
     private encryptPassword(password: string): string {
@@ -82,11 +85,14 @@ export class UserService {
         }
     }
 
-    public mapCreateAdminRequest(admin: Admin): CreateCustomerRequest {
+    public mapCreateAdminRequest(admin: Admin): CreateAdminRequest {
         return {
+            username: admin.email,
+            first_name: admin.firstName,
+            last_name: admin.lastName,
             email: admin.email,
             password: this.encryptPassword(admin.password!),
-            role: UserRole.ADMIN
+            roles: [UserRole.ADMIN]
         }
     }
 }

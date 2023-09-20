@@ -11,6 +11,7 @@ import {
 import { CartPreviewComponent } from './cart-preview';
 import {
   AddressRegistrationComponent,
+  AdminOrderComponent,
   CartAdminComponent,
   CartComponent,
   CartItemComponent,
@@ -65,8 +66,9 @@ export * from './report';
 export * from './price-update';
 
 export const components = [
-  AdminCreateComponent,
   AddressRegistrationComponent,
+  AdminCreateComponent,
+  AdminOrderComponent,
   BlankPageComponent,
   BookCreateComponent,
   BookCatalogueComponent,

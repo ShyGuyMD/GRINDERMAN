@@ -8,7 +8,7 @@ import {
   UtilsService,
   WooCommerceApiService,
 } from '@core/services';
-import { WordpressService } from '@core/services/wp-service/wp-service.service';
+import { WordpressService } from '@core/services/wp-service/wordpress.service';
 import { Severity } from '@shared/constants';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';

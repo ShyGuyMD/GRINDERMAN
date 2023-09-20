@@ -17,6 +17,10 @@ export enum WoocommerceError {
     EMAIL_EXISTS = 'registration-error-email-exists'
 }
 
+export enum WordpressError {
+  USER_EXISTS = 'existing_user_login'
+}
+
 export enum Severity {
     DANGER = 'danger',
     WARNING = 'warn',
@@ -45,6 +49,7 @@ export const CART = 'cart';
 export const DELIVERY = 'delivery-options';
 export const PAYMENT = 'payment';
 export const ORDER_SUMMARY = 'order-summary';
+export const ORDER_ADMIN = 'order-admin';
 export const ORDER_REPORT = 'order-report';
 
 //#endregion
@@ -53,7 +58,7 @@ export const ORDER_REPORT = 'order-report';
 export const CHECKOUT_CART = '/checkout/cart';
 export const CHECKOUT_DELIVERY = '/checkout/delivery-options';
 export const CHECKOUT_PAYMENT = '/checkout/payment';
-export const CHECKOUT_ORDER_SUMMARY = '/checkout/order-summary';
+export const CHECKOUT_ORDER_SUMMARY = '/checkout/order-admin';
 
 export const CHECKOUT_ROUTEMAPPINGS: { [key: string]: number } = {
   [CHECKOUT_CART]: 0,
@@ -132,8 +137,8 @@ export const DEPARTAMENTOS = [
 ]
 
 export enum CouponType {
-  CREDIT = 'Credit',
-  PERCENT = 'Percent',
+  CREDIT = 'fixed_cart',
+  PERCENT = 'percent',
 }
 
 export const ComisionMercadoLibre = 15;
