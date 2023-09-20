@@ -12,5 +12,6 @@ export const cartServiceMock: Partial<CartService> = {
     incrementQuantity: jest.fn(),
     removeFromCart: jest.fn(),
     updateQuantity: jest.fn(),
+    getCoupon: jest.fn().mockReturnValue(of({})),
 
   };
