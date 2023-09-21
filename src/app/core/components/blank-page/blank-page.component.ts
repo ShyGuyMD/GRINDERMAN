@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OrderService } from '@core/services';
+import { CartService, OrderService } from '@core/services';
 
 @Component({
     selector: 'app-blank-page',
@@ -16,6 +16,7 @@ export class BlankPageComponent {
 
     constructor(
         private _route: ActivatedRoute,
+        private _cartService: CartService,
         private _orderService: OrderService
     ) { }
 
@@ -31,7 +32,10 @@ export class BlankPageComponent {
                     : { status: 'failed '}
             
             this._orderService.updateOrder(parseInt(this.orderId), data).subscribe({
-                next: (response: any) => console.log('response', response),
+                next: (response: any) => {
+                    console.log('response', response);
+                    this._cartService.clearCart();
+                },
                 error: (e) => console.log('error', e)
             });
         }

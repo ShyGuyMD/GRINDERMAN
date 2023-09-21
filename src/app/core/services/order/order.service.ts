@@ -100,7 +100,8 @@ export class OrderService {
             currency: 'UYU',
             status: 'completed',
             set_paid: true,
-            coupon_lines: discountCode ? [{code: discountCode}] : []
+            coupon_lines: discountCode ? [{code: discountCode}] : [],
+            meta_data: []
         }
 
         const orderLineItems: OrderLineItem[] = orderDetails.cartItems.map(
@@ -140,7 +141,8 @@ export class OrderService {
             customer_id: orderDetails.user?.userId || 0, // should never be 0
             line_items: orderLineItems,
             currency: 'UYU',
-            set_paid: false
+            set_paid: false,
+            meta_data: []
         }
 
         request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_CUSTOMER_FIRST_NAME, value: contactDetails.firstName });

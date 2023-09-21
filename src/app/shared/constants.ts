@@ -162,7 +162,7 @@ export enum OrderMetadataKeys {
 //#endregion
 
 export enum MercadoPagoCallbackURLs {
-  MERCADOPAGO_PAYMENT_SUCCESS = 'http://localhost/blank?success=order success',
+  MERCADOPAGO_PAYMENT_SUCCESS = 'http://localhost:4200/blank?success=order success',
   MERCADOPAGO_PAYMENT_PENDING = '',
-  MERCADOPAGO_PAYMENT_FAILURE = 'http://localhost/blank?error=Errrrrrrrrrrror'
+  MERCADOPAGO_PAYMENT_FAILURE = 'http://localhost:4200/blank?error=Errrrrrrrrrrror'
 }
