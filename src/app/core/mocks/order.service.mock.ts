@@ -8,4 +8,5 @@ export const orderServiceMock: Partial<OrderService> = {
   registerManualOrder: jest.fn(),
   retrieveOrder: jest.fn().mockReturnValue(of({})),
   retrieveAllOrders: jest.fn().mockReturnValue(of([])),
+  updateOrder: jest.fn().mockReturnValue(of({}))
 };

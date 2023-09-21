@@ -142,4 +142,27 @@ export enum CouponType {
 
 export const ComisionMercadoLibre = 15;
 
+export enum OrderType {
+  ORDER_TYPE_GUEST = 'GUEST',
+  ORDER_TYPE_CUSTOMER = 'CUSTOMER',
+  ORDER_TYPE_ADMIN_STORE = 'STORE',
+  ORDER_TYPE_ADMIN_ML = 'MERCADOLIBRE'
+}
+
+export enum OrderMetadataKeys {
+  ORDER_META_CUSTOMER_FIRST_NAME = 'customer_first_name',
+  ORDER_META_CUSTOMER_LAST_NAME = 'customer_last_name',
+  ORDER_META_CUSTOMER_EMAIL = 'customer_email',
+  ORDER_META_CUSTOMER_PHONE = 'customer_phone',
+  ORDER_META_CUSTOMER_DELIVERY = 'customer_delivery_address',
+  ORDER_META_ORDER_TYPE = 'order_type',
+  ORDER_META_ML_TAX = 'ml_tax'
+
+}
 //#endregion
+
+export enum MercadoPagoCallbackURLs {
+  MERCADOPAGO_PAYMENT_SUCCESS = 'http://localhost/blank?success=order success',
+  MERCADOPAGO_PAYMENT_PENDING = '',
+  MERCADOPAGO_PAYMENT_FAILURE = 'http://localhost/blank?error=Errrrrrrrrrrror'
+}

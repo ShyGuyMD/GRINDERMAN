@@ -34,8 +34,8 @@ export class ContactDetailsComponent implements OnInit{
     
       this.contactDetailsForm = this._formBuilder.group({
           email: [ user? user.email :'', [Validators.required, Validators.email]],
-          name: [user? user.firstName :'', [Validators.required]],
-          lastname: [user? user.lastName :'', Validators.required],
+          firstName: [user? user.firstName :'', [Validators.required]],
+          lastName: [user? user.lastName :'', Validators.required],
           phone: ['', Validators.required],
       });
 
@@ -47,8 +47,8 @@ export class ContactDetailsComponent implements OnInit{
 
   public assignInput(): void {
       this.contactDetails.email = this.contactDetailsForm.value.email;
-      this.contactDetails.name = this.contactDetailsForm.value.name;
-      this.contactDetails.lastname = this.contactDetailsForm.value.lastname;
+      this.contactDetails.firstName = this.contactDetailsForm.value.firstName;
+      this.contactDetails.lastName = this.contactDetailsForm.value.lastName;
       this.contactDetails.phone = this.contactDetailsForm.value.phone;
   }
 

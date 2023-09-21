@@ -8,12 +8,12 @@
               type="text"
               id="customer-name"
               pInputText
-              formControlName="name"
-              name="name"
+              formControlName="firstName"
+              name="firstName"
               required
             />
-            <div *ngIf="contactDetailsForm.get('name')?.invalid && contactDetailsForm.get('name')?.touched" class="p-error">
-              <ng-container *ngIf="contactDetailsForm.get('email')?.hasError('required')">
+            <div *ngIf="contactDetailsForm.get('firstName')?.invalid && contactDetailsForm.get('firstName')?.touched" class="p-error">
+              <ng-container *ngIf="contactDetailsForm.get('firstName')?.hasError('required')">
                 Por favor, completa tu nombre.
               </ng-container>
             </div>
@@ -24,12 +24,12 @@
               type="text"
               id="customer-lastname"
               pInputText
-              formControlName="lastname"
-              name="lastname"
+              formControlName="lastName"
+              name="lastName"
               required
             />
-            <div *ngIf="contactDetailsForm.get('lastname')?.invalid && contactDetailsForm.get('lastname')?.touched" class="p-error">
-              <ng-container *ngIf="contactDetailsForm.get('lastname')?.hasError('required')">
+            <div *ngIf="contactDetailsForm.get('lastName')?.invalid && contactDetailsForm.get('lastName')?.touched" class="p-error">
+              <ng-container *ngIf="contactDetailsForm.get('lastName')?.hasError('required')">
                 Por favor, completa tu apellido.
               </ng-container>
             </div>

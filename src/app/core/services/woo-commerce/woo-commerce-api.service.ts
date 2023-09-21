@@ -5,7 +5,7 @@ import { Book } from '@core/models/book';
 import { ProductService } from '../product';
 import { CreateCustomerRequest } from '@core/models/request/createCustomerRequest';
 import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
-import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
+import { CreateOrderResponse, UpdateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
 import { Observable, forkJoin, map, take, takeWhile } from 'rxjs';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Product } from '@core/models/product';
@@ -144,6 +144,12 @@ export class WooCommerceApiService {
         const url = `${this.baseUrl}/orders`;
 
         return this._apiService.post(url, body, this.headers);
+    }
+
+    public putOrder(orderId: number, body: any): Observable<UpdateOrderResponse> {
+        const url = `${this.baseUrl}/orders/${orderId}`;
+
+        return this._apiService.put(url, body, this.headers);
     }
 
     public getOrdersById(orderId: number): Observable<RetrieveOrderResponse> {

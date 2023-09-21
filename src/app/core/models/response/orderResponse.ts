@@ -25,5 +25,5 @@ export interface OrderResponse {
 }
 
 export interface CreateOrderResponse extends OrderResponse {}
-
+export interface UpdateOrderResponse extends OrderResponse {}
 export interface RetrieveOrderResponse extends OrderResponse {}
