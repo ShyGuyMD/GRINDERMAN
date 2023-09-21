@@ -4,11 +4,11 @@ import * as XLSX from 'xlsx';
 import { BookService } from '../book';
 import { Option } from '@core/models/option';
 import { Book_Properies, Order_Properties } from '@shared/constants';
-import { OrderResponse } from '@core/models/response/orderResponse';
 import { Book } from '@core/models/book';
 import { OrderReportLine } from '@core/models/orderReportLine';
 import { OrderService } from '../order';
 import { OrderLineItem } from '@core/models/orderLineItem';
+import { Genre } from '@core/models/genre';
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +91,9 @@ export class ExcelService {
             formattedBook[property.value] = book[property.key as keyof Book]
               ? 'Nuevo'
               : 'Usado';
+          }else if (property.key === Book_Properies.GENRE) {
+            const genres : Genre[] = book[property.key];
+            formattedBook[property.value] = genres.map((genre: any ) => genre.name).join(', ');
           } else {
             formattedBook[property.value] = book[property.key as keyof Book];
           }

@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { PriceUpdateComponent } from '@core/components/price-update';
 import { Book } from '@core/models/book';
-import { Genre } from '@core/models/genre';
 import { PostBatckResponse } from '@core/models/response/postBatchRespomse';
 import { ApiService, BookService } from '@core/services';
 import { ExcelService } from '@core/services/excel-service/excel.service';
@@ -73,7 +71,7 @@ export class InventoryReportComponent {
     this._messageService.add({
       severity: Severity.INFO,
       summary: 'Cargando...',
-      detail: 'Escamos cargando el catálogo de libros, por favor aguarda.',
+      detail: 'Estamos cargando el catálogo de libros, por favor aguarda.',
     });
     this.loadInventoryData();
   }

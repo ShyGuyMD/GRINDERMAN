@@ -121,8 +121,8 @@ export class WooCommerceApiService {
     }
 
     public batchUpdateProducts(create: Book[], update: Book[], del: number[] = []) {
-        const createProducts = create.map(book => this._productService.mapBookToProduct(book));
-        const updateProducts = update.map(book => this._productService.mapBookToProduct(book));
+        const createProducts = create.map(book => this._productService.mapPartialBookToProduct(book));
+        const updateProducts = update.map(book => this._productService.mapPartialBookToProduct(book));
 
         const url = `${this.baseUrl}/products/batch`;
 
