@@ -1,21 +1,21 @@
 export const config = {
 	production: false,
     
-    apiKey: 'ck_69b9a4b2b1cbfa53d233f76b7778e7d7aba63e22',
-    apiSecret: 'cs_e307504cc5fd0e5bd51a850165444c9315e5eed0',
+    apiKey: '',                                         // WooCommerce REST API Key.
+    apiSecret: '',                                      // WooCommerce REST API Secret
     
-    baseUrl: 'https://localhost/wordpress/wp-json/',
+    baseUrl: '{TU URL DE WORDPRESS}/wp-json/',          // Tu URL de Wordpress
     cc: 'cocart/v2',
     jwt: 'jwt-auth/v1',
     wp: 'wp/v2',
     wc: 'wc/v3',
     
-    gmApiKey: 'AIzaSyDnUWoGzlbF8GofSzrozaoExbhRhxZWkaY',
-    gmUrl: 'https://maps.googleapis.com/maps/api/js?key=',
+    gmApiKey: '',                                       // Google Maps API Key
+    gmUrl: '',                                          // Google Maps URL
     
-    ourUser: 'wp_admin',
-    ourPassword: 'VLME 2koZ 0XAF 0Jnq eURo mT5D',
+    ourUser: '',                                        // Wordpress Admin User
+    ourPassword: '',                                    // Wordpress Application Password for that admin
 
-    mercadoPagoUrl: 'https://api.mercadopago.com',
-    mercadoPagoToken: 'TEST-5723048693599353-060916-0559d3086c95aa0c3255cf8ff3eef133-1395552730',
+    mercadoPagoUrl: '',                                 // URL de Mercado Pago para acceder a las API
+    mercadoPagoToken: '',                               // Access Token de Mercado Pago para un usuario vendedor
 };
