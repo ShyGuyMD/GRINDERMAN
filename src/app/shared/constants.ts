@@ -162,7 +162,7 @@ export enum OrderMetadataKeys {
 //#endregion
 
 export enum MercadoPagoCallbackURLs {
-  MERCADOPAGO_PAYMENT_SUCCESS = 'http://localhost:4200/blank?success=order success',
+  MERCADOPAGO_PAYMENT_SUCCESS = 'http://grinderman-alpha-1.s3-website-us-east-1.amazonaws.com/blank?success=Órden creada satisfactoriamente.',
   MERCADOPAGO_PAYMENT_PENDING = '',
-  MERCADOPAGO_PAYMENT_FAILURE = 'http://localhost:4200/blank?error=Errrrrrrrrrrror'
+  MERCADOPAGO_PAYMENT_FAILURE = 'http://grinderman-alpha-1.s3-website-us-east-1.amazonaws.com/blank?error=Ha habido un error en la creación de la órden.'
 }
