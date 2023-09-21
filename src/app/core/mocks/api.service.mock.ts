@@ -1,4 +1,4 @@
-import { ApiService, ProductService } from "@core/services";
+import { ApiService } from "@core/services";
 import { of } from "rxjs";
 
 export const apiServiceMock: Partial<ApiService> = {
