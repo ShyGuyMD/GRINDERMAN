@@ -198,7 +198,7 @@ export class OrderService {
         const orderReportLines: OrderReportLine[] = [];
 
         orderResponse.forEach((order: RetrieveOrderResponse) => {
-            const [datePart, timePart] = order.date_completed.split('T');
+            const [datePart, timePart] = order.date_created.split('T');
             const  ml_tax : Metadata | undefined = order.meta_data?.find( x => x.key = 'ml_tax');
             const orderReportLine: OrderReportLine = {
                 id: order.id,
