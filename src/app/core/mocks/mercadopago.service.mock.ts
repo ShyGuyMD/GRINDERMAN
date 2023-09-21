@@ -1,4 +1,4 @@
-import { MercadopagoService } from '@core/services/mercadopago/mercadopago.service';
+import { MercadopagoService } from '@core/services';
 import { of } from 'rxjs';
 
 export const mercadopagoServiceMock: Partial<MercadopagoService> = {

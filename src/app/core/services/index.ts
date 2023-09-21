@@ -3,15 +3,16 @@ import { AuthenticationService } from './authentication';
 import { BookService } from './book';
 import { CartService } from './cart';
 import { CoCartApiService } from './co-cart-api';
+import { DeliveryService } from './delivery/delivery.service';
 import { ExceptionService } from './exception';
-import { OrderService } from './order';
+import { MercadopagoService } from './mercadopago';
 import { NavigationService } from './navigation';
+import { OrderService } from './order';
 import { ProductService } from './product';
 import { SharedService } from './shared';
 import { UserService } from './user';
 import { UtilsService } from './utils';
 import { WooCommerceApiService } from './woo-commerce';
-import { DeliveryService } from './delivery/delivery.service';
 import { WordpressService } from './wp-service';
 
 export * from './api';
@@ -21,8 +22,9 @@ export * from './cart';
 export * from './co-cart-api';
 export * from './delivery';
 export * from './exception';
-export * from './order';
+export * from './mercadopago';
 export * from './navigation';
+export * from './order';
 export * from './product';
 export * from './shared';
 export * from './user';
@@ -38,6 +40,7 @@ export const services = [
     CoCartApiService,
     DeliveryService,
     ExceptionService,
+    MercadopagoService,
     NavigationService,
     OrderService,
     ProductService,
