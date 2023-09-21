@@ -92,6 +92,25 @@ export class BookService {
     );
   }
 
+  public createBookFromImport(input: any): Book {
+    const newBook: Book = {
+      author: input.author,
+      availableUnits: input.availableUnits,
+      isActive: input.isActive === 'Activo',
+      isbn: input.isbn,
+      isHardcover: input.isHardcover === 'Tapa Dura',
+      price: input.price,
+      isNew: input.isNew === 'Nuevo',
+      publisher: input.publisher,
+      title: input.title,
+      genre: input.genre,
+      id: input.id,
+      inventoryStatus: input.inventoryStatus,
+      synopsis: input.synopsis,
+    };
+    return newBook;
+  }
+
   public createBook(input: any): Book {
     const newBook: Book = {
       author: input.author,
@@ -166,7 +185,7 @@ export class BookService {
     const newGenres: string[] = inputGenres.filter(
       (x) => !this.genreOptions$.getValue().find((g) => g.name === x)
     );
-    if (newGenres.length === 0) {
+    if (!newGenres || newGenres.length === 0) {
       return of({});
     }
     const result = newGenres.map((item) => {

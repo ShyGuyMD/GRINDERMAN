@@ -102,15 +102,14 @@ export enum Book_Properies {
 
 export enum Order_Properties {
   ID = 'id',
-  CUSTOMER = 'isbn',
+  CUSTOMER = 'customer',
   DATE = 'date',
   DISCOUNT_TOTAL = 'discount_total',
-  ITEM_NAME= 'item_name',
-  ITEM_ID = 'item_id',
-  ITEM_QUANTITY = 'item_quantity',
-  ITEM_TOTAL = 'item_total',
+  ITEMS= 'items',
+  ML_TAX= 'ml_tax',
   STATUS = 'status',
   TIME = 'time',
+  SUBTOTAL = 'subtotal',
   TOTAL = 'total'
 }
 

@@ -47,7 +47,11 @@ export class BookImportComponent {
   ) {}
 
   ngOnInit(): void {
-    this.bookProperties = this._bookService.getBookPropertyOptions();
+    this.bookProperties = this._bookService.getBookPropertyOptions().filter(
+      (property) =>
+        property.key !== Book_Properies.COVER &&
+        property.key !== Book_Properies.IMAGES
+    );
     this.initForm(this.bookProperties);
   }
 
@@ -157,7 +161,7 @@ export class BookImportComponent {
           }
         }
       }
-      const book: Book = this._bookService.createBook(mappedRow);
+      const book: Book = this._bookService.createBookFromImport(mappedRow);
       books.push(book);
     });
 

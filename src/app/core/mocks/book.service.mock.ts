@@ -21,6 +21,7 @@ export const bookServiceMock: Partial<BookService> = {
   getInventorySeverity: jest.fn(),
   mapProductToBook: jest.fn(),
   createBook: jest.fn(),
+  createBookFromImport: jest.fn(),
   toggleBookisActive: jest.fn(),
   getAllBooks: jest.fn().mockReturnValue(of([])),
   getBookById: jest.fn(),
