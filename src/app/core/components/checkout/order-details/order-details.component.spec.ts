@@ -5,7 +5,9 @@ import { cartServiceMock } from '@core/mocks/cart.service.mock';
 import { navigationServiceMock } from '@core/mocks/navigation.service.mock';
 import { orderServiceMock } from '@core/mocks/order.service.mock';
 import { userServiceMock } from '@core/mocks/user.service.mock';
-import { CartService, NavigationService, OrderService, UserService } from '@core/services';
+import { CartService, DeliveryService, NavigationService, OrderService, UserService } from '@core/services';
+import { deliveryServiceMock } from '@core/mocks/delivery.service.mock';
+import { MessageService } from 'primeng/api';
 
 describe('OrderDetailsComponent', () => {
   let component: OrderDetailsComponent;
@@ -23,6 +25,8 @@ describe('OrderDetailsComponent', () => {
         { provide: NavigationService, useValue: navigationServiceMock },
         { provide: OrderService, useValue: orderServiceMock },
         { provide: UserService, useValue: userServiceMock },
+        { provide: DeliveryService, useValue: deliveryServiceMock },
+        MessageService
       ],
     }).compileComponents();
   }));
