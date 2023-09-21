@@ -4,4 +4,5 @@ export interface OrderLineItemResponse extends OrderLineItem {
     name: string;
     total: string;
     subtotal: string;
+    price: number;
 }

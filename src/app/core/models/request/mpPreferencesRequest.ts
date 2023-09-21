@@ -2,7 +2,8 @@ export interface MPPreferencesRequest {
     items : MercadoPagoItem[],
     payer : MercadoPagoPayerInfo,
     auto_return : string,
-    back_urls : MercadoPagoCallbacks
+    back_urls : MercadoPagoCallbacks,
+    external_reference: string
 }
 
 export interface MercadoPagoItem {

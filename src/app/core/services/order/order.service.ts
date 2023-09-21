@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CreateOrderRequest } from '@core/models/request/createOrderRequest';
-import { CreateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
+import { CreateOrderResponse, UpdateOrderResponse, RetrieveOrderResponse } from '@core/models/response/orderResponse';
 import { WooCommerceApiService } from '../woo-commerce';
 import { Observable, map, mergeMap } from 'rxjs';
 import { CartItem } from '@core/models/cartItem';
@@ -8,13 +8,18 @@ import { OrderLineItem } from '@core/models/orderLineItem';
 import { OrderDetails } from '@core/models/orderDetails';
 import { OrderReportLine } from '@core/models/orderReportLine';
 import { Option } from '@core/models/option';
-import { ComisionMercadoLibre, CouponType, Order_Properties } from '@shared/constants';
+import { ComisionMercadoLibre, CouponType, MercadoPagoCallbackURLs, OrderMetadataKeys, OrderType, Order_Properties } from '@shared/constants';
 import { Coupon } from '@core/models/coupon';
 import { CreateCouponRequest } from '@core/models/request/createCouponRequest';
 import { CreateCouponResponse } from '@core/models/response/couponResponse';
 import { UtilsService } from '../utils';
 import { CartService } from '../cart';
+import { ContactDetails } from '@core/models/contactDetails';
+import { MPPreferencesRequest, MercadoPagoCallbacks, MercadoPagoItem, MercadoPagoPayerInfo } from '@core/models/request/mpPreferencesRequest';
+import { MercadopagoService } from '../mercadopago/mercadopago.service';
+import { MPPreferencesResponse } from '@core/models/response/mpPreferencesResponse';
 import { Metadata } from '@core/models/metadata';
+import { OrderLineItemResponse } from '@core/models/response/orderLineItemResponse';
 
 @Injectable({
     providedIn: 'root',
@@ -24,9 +29,26 @@ export class OrderService {
     constructor(
         private _cartService: CartService,
         private _utilsService: UtilsService,
+        private _mercadoPagoApiService: MercadopagoService,
         private _wooCommerceApiService: WooCommerceApiService
     ) { }
 
+    
+    public registerWebOrder(orderDetails: OrderDetails, contactDetails: ContactDetails, deliveryAddress: string = ''): Observable<MPPreferencesResponse> {
+        const orderRequest = this.buildWebOrderRequest(orderDetails, contactDetails, deliveryAddress);
+
+        return this.createOrder(orderRequest).pipe(
+            mergeMap((response : CreateOrderResponse) => {
+                const preferenceRequest = this.createMercadoPagoPreference(response, contactDetails);
+
+                return this._mercadoPagoApiService.checkout(preferenceRequest).pipe(
+                    map((checkoutResponse: MPPreferencesResponse) => {
+                        return checkoutResponse;
+                    })
+                )
+            })
+        )
+    }
 
     public registerManualOrder(orderDetails: OrderDetails, coupon: Coupon | null = null, mercadoLibre: boolean = false): Observable<CreateOrderResponse> {
         
@@ -57,7 +79,7 @@ export class OrderService {
     private registerManualOrderNoDiscount(orderDetails: OrderDetails, isMercadoLibre: boolean): Observable<CreateOrderResponse> {
         const orderRequest = this.buildAdminOrderRequest(orderDetails, isMercadoLibre);
 
-        return this._wooCommerceApiService.postOrder(orderRequest);
+        return this.createOrder(orderRequest);
     }
 
     private buildCouponRequest(coupon: Coupon, overrideValue: number = -1): CreateCouponRequest {
@@ -92,23 +114,82 @@ export class OrderService {
 
         request.line_items = orderLineItems;
         request.coupon_lines = discountCode ? [{code: discountCode}] : [];
-        request.meta_data = isMercadoLibre ? [{ key: "ml_tax",
-                                                value: ComisionMercadoLibre.toString() }] : [];
+
+        if (isMercadoLibre) {
+            request.meta_data?.push({ key: OrderMetadataKeys.ORDER_META_ML_TAX, value: ComisionMercadoLibre.toString() });
+            request.meta_data?.push({ key: OrderMetadataKeys.ORDER_META_ORDER_TYPE, value: OrderType.ORDER_TYPE_ADMIN_ML })
+        } else {
+            request.meta_data?.push({ key: OrderMetadataKeys.ORDER_META_ORDER_TYPE, value: OrderType.ORDER_TYPE_ADMIN_STORE });
+        }
 
         return request;
     }
 
-    public createOrder(request: CreateOrderRequest): Observable<CreateOrderResponse> {
-        console.log('Create Order Request: ', request);
-        return this._wooCommerceApiService.postOrder(request);
+    private buildWebOrderRequest(orderDetails : OrderDetails, contactDetails: ContactDetails, deliveryAddress: string) : CreateOrderRequest {
+
+        const orderLineItems: OrderLineItem[] = orderDetails.cartItems.map(
+            (item: CartItem) => {
+                return {
+                    product_id: item.book.id || 0,
+                    quantity: item.quantity
+                };
+            }
+        )
+
+        const request : CreateOrderRequest = {
+            customer_id: orderDetails.user?.userId || 0, // should never be 0
+            line_items: orderLineItems,
+            currency: 'UYU',
+            set_paid: false
+        }
+
+        request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_CUSTOMER_FIRST_NAME, value: contactDetails.firstName });
+        request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_CUSTOMER_LAST_NAME, value: contactDetails.lastName });
+        request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_CUSTOMER_EMAIL, value: contactDetails.email });
+        request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_CUSTOMER_PHONE, value: contactDetails.phone });
+
+        request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_ORDER_TYPE, value: orderDetails.user ? OrderType.ORDER_TYPE_CUSTOMER : OrderType.ORDER_TYPE_GUEST });
+        
+        if (deliveryAddress) request.meta_data?.push( { key: OrderMetadataKeys.ORDER_META_CUSTOMER_DELIVERY, value: deliveryAddress });
+
+        console.log('Web Order Request: ', request);
+
+        return request;
     }
 
-    public retrieveOrder(orderId: number): Observable<RetrieveOrderResponse> {
-        return this._wooCommerceApiService.getOrdersById(orderId);
-    }
+    private createMercadoPagoPreference(data: CreateOrderResponse, contactDetails: ContactDetails) : MPPreferencesRequest {
 
-    public retrieveAllOrders(): Observable<RetrieveOrderResponse[]> {
-        return this._wooCommerceApiService.getAllOrders();
+        const mpItems : MercadoPagoItem[] = data.line_items.map((item : OrderLineItemResponse) => {
+            return {
+                id: item.product_id.toString(),
+                title: item.name || '',
+                quantity: item.quantity,
+                unit_price: item.price || 0
+            }
+        });
+
+        const payerInfo : MercadoPagoPayerInfo = {
+            name: contactDetails.firstName,
+            surname: contactDetails.lastName,
+            email: contactDetails.email
+        }
+
+        const callbackURLs : MercadoPagoCallbacks = {
+            success: MercadoPagoCallbackURLs.MERCADOPAGO_PAYMENT_SUCCESS,
+            pending: MercadoPagoCallbackURLs.MERCADOPAGO_PAYMENT_PENDING,
+            failure: MercadoPagoCallbackURLs.MERCADOPAGO_PAYMENT_FAILURE
+        };
+
+        //build the request
+        const preferencesRequest : MPPreferencesRequest = {
+            items: mpItems,
+            payer: payerInfo,
+            back_urls: callbackURLs,
+            auto_return: 'approved',
+            external_reference: data.id.toString()
+        };
+
+        return preferencesRequest;
     }
 
     public mapOrderReportLine(orderResponse: RetrieveOrderResponse[]): OrderReportLine[] {
@@ -146,5 +227,26 @@ export class OrderService {
             { value: 'Comisión', key: Order_Properties.ML_TAX },
             { value: 'Total', key: Order_Properties.TOTAL },
         ];
+    
+    }
+
+    // - WooCommerce API Calls.
+
+    public createOrder(request: CreateOrderRequest): Observable<CreateOrderResponse> {
+        console.log('Create Order Request: ', request);
+        return this._wooCommerceApiService.postOrder(request);
+    }
+
+    public updateOrder(orderId: number, body: any): Observable<UpdateOrderResponse> {
+        console.log('Update Order Request: ', orderId, body);
+        return this._wooCommerceApiService.putOrder(orderId, body);
+    }
+
+    public retrieveOrder(orderId: number): Observable<RetrieveOrderResponse> {
+        return this._wooCommerceApiService.getOrdersById(orderId);
+    }
+
+    public retrieveAllOrders(): Observable<RetrieveOrderResponse[]> {
+        return this._wooCommerceApiService.getAllOrders();
     }
 }

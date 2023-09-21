@@ -9,5 +9,6 @@ export interface MPPreferencesResponse {
     auto_return : string,
     back_urls : MercadoPagoCallbacks,
     items : MercadoPagoItem[],
-    payer : MercadoPagoPayerInfo
+    payer : MercadoPagoPayerInfo,
+    external_reference: string
 }
